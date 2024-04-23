@@ -5,6 +5,8 @@ import { GridTileImage } from './grid/tile';
 export async function Carousel() {
   // Collections that start with `hidden-*` are hidden from the search page.
   const products = await getCollectionProducts({ collection: 'hidden-homepage-carousel' });
+  // console.log('products')
+  // console.log(products)
 
   if (!products?.length) return null;
 
