@@ -465,7 +465,7 @@ export async function getCollectionProducts({
       console.log(`No collection found for \`${collection}\``);
       return [];
     }
-    // console.log('featured')
+    console.log('featured');
     const productList = res.body.data.site.featuredProducts.edges.map((item) => item.node);
     // console.log(productList)
 
