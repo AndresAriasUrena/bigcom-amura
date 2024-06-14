@@ -14,7 +14,6 @@ const { SITE_NAME } = process.env;
 
 export default async function Navbar() {
   const menu = await getMenu('next-js-frontend-header-menu');
-
   return (
     <nav className="relative flex items-center justify-between bg-black/85 text-white">
       <div

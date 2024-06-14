@@ -17,7 +17,7 @@ function SubmitButton({
 }) {
   const { pending } = useFormStatus();
   const buttonClasses =
-    'relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white';
+    'border-2 border-white px-[8%] py-3 text-white relative flex justify-center w-[250px] ';
   const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
 
   if (!availableForSale) {
@@ -38,7 +38,7 @@ function SubmitButton({
         <div className="absolute left-0 ml-4">
           <PlusIcon className="h-5" />
         </div>
-        Add To Cart
+        Agregar al carrito
       </button>
     );
   }
@@ -50,15 +50,12 @@ function SubmitButton({
       }}
       aria-label="Add to cart"
       aria-disabled={pending}
-      className={clsx(buttonClasses, {
-        'hover:opacity-90': true,
-        disabledClasses: pending
-      })}
+      className={clsx(buttonClasses)}
     >
       <div className="absolute left-0 ml-4">
-        {pending ? <LoadingDots className="mb-3 bg-white" /> : <PlusIcon className="h-5" />}
+        {pending && <LoadingDots className="mb-3 bg-white" />}
       </div>
-      Add To Cart
+      Agregar al carrito
     </button>
   );
 }

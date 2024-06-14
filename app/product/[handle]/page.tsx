@@ -81,24 +81,31 @@ export default async function ProductPage({ params }: { params: { handle: string
           __html: JSON.stringify(productJsonLd)
         }}
       />
-      <div className="mx-auto max-w-screen-2xl px-4">
-        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row lg:gap-8">
-          <div className="h-full w-full basis-full lg:basis-4/6">
-            <Gallery
-              images={product.images.map((image: Image) => ({
-                src: image.url,
-                altText: image.altText
-              }))}
-            />
-          </div>
+      <div
+        style={{
+          background:
+            'linear-gradient(to bottom, #232323 0%, #313131 20%, #444444 40%, #707070 60%, #686767 80%, #525050 100%)'
+        }}
+      >
+        <div className="mx-auto max-w-screen-2xl px-4">
+          <div className="flex flex-col rounded-lg  p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
+            <div className="h-full w-full basis-full lg:basis-3/6">
+              <Gallery
+                images={product.images.map((image: Image) => ({
+                  src: image.url,
+                  altText: image.altText
+                }))}
+              />
+            </div>
 
-          <div className="basis-full lg:basis-2/6">
-            <ProductDescription product={product} />
+            <div className="basis-full lg:basis-3/6">
+              <ProductDescription product={product} />
+            </div>
           </div>
+          <Suspense>
+            <RelatedProducts id={product.id} />
+          </Suspense>
         </div>
-        <Suspense>
-          <RelatedProducts id={product.id} />
-        </Suspense>
       </div>
       <Suspense>
         <Footer />
@@ -114,8 +121,10 @@ async function RelatedProducts({ id }: { id: string }) {
 
   return (
     <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
+      <h2 className="py-12 pb-20 text-center text-3xl font-extralight uppercase  text-white lg:py-4 lg:pb-9">
+        También te puede interesar
+      </h2>
+      <ul className="flex w-full gap-4 overflow-x-auto pb-10 pt-1">
         {relatedProducts.map((product) => (
           <li
             key={product.handle}

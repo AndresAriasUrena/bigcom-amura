@@ -1,6 +1,5 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { GridTileImage } from 'components/grid/tile';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
@@ -28,72 +27,75 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
 
   return (
     <>
-      <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
-        {images[imageIndex] && (
-          <Image
-            className="h-full w-full object-contain"
-            fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            alt={images[imageIndex]?.altText as string}
-            src={images[imageIndex]?.src as string}
-            priority={true}
-          />
-        )}
+      <div className="flex h-full flex-col gap-2 lg:flex-row">
+        <div className="flex h-full max-w-full gap-2 overflow-hidden lg:h-full  lg:flex-col">
+          {images.length > 1 ? (
+            <ul className="flex h-full w-[70%] justify-between gap-3  overflow-auto  lg:flex-col">
+              {images.map((image, index) => {
+                const isActive = index === imageIndex;
+                const imageSearchParams = new URLSearchParams(searchParams.toString());
 
-        {images.length > 1 ? (
-          <div className="absolute bottom-[15%] flex w-full justify-center">
-            <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80">
-              <Link
-                aria-label="Previous product image"
-                href={previousUrl}
-                className={buttonClassName}
-                scroll={false}
-              >
-                <ArrowLeftIcon className="h-5" />
-              </Link>
-              <div className="mx-1 h-6 w-px bg-neutral-500"></div>
-              <Link
-                aria-label="Next product image"
-                href={nextUrl}
-                className={buttonClassName}
-                scroll={false}
-              >
-                <ArrowRightIcon className="h-5" />
-              </Link>
-            </div>
-          </div>
-        ) : null}
-      </div>
+                imageSearchParams.set('image', index.toString());
 
-      {images.length > 1 ? (
-        <ul className="my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0">
-          {images.map((image, index) => {
-            const isActive = index === imageIndex;
-            const imageSearchParams = new URLSearchParams(searchParams.toString());
+                return (
+                  <li key={image.src} className="h-full w-auto">
+                    <Link
+                      aria-label="Enlarge product image"
+                      href={createUrl(pathname, imageSearchParams)}
+                      scroll={false}
+                      className="h-full w-full"
+                    >
+                      <GridTileImage
+                        alt={image.altText}
+                        src={image.src}
+                        width={80}
+                        height={100}
+                        active={isActive}
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+        </div>
+        <div className="relative aspect-square h-full w-full overflow-hidden">
+          {images[imageIndex] && (
+            <Image
+              className="h-full w-full bg-white object-cover"
+              fill
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              alt={images[imageIndex]?.altText as string}
+              src={images[imageIndex]?.src as string}
+              priority={true}
+            />
+          )}
 
-            imageSearchParams.set('image', index.toString());
-
-            return (
-              <li key={image.src} className="h-20 w-20">
+          {/* {images.length > 1 ? (
+            <div className="absolute bottom-[5%] flex w-full justify-center">
+              <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80">
                 <Link
-                  aria-label="Enlarge product image"
-                  href={createUrl(pathname, imageSearchParams)}
+                  aria-label="Previous product image"
+                  href={previousUrl}
+                  className={buttonClassName}
                   scroll={false}
-                  className="h-full w-full"
                 >
-                  <GridTileImage
-                    alt={image.altText}
-                    src={image.src}
-                    width={80}
-                    height={80}
-                    active={isActive}
-                  />
+                  <ArrowLeftIcon className="h-5" />
                 </Link>
-              </li>
-            );
-          })}
-        </ul>
-      ) : null}
+                <div className="mx-1 h-6 w-px bg-neutral-500"></div>
+                <Link
+                  aria-label="Next product image"
+                  href={nextUrl}
+                  className={buttonClassName}
+                  scroll={false}
+                >
+                  <ArrowRightIcon className="h-5" />
+                </Link>
+              </div>
+            </div>
+          ) : null} */}
+        </div>
+      </div>
     </>
   );
 }
