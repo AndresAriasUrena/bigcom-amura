@@ -27,10 +27,10 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
 
   return (
     <>
-      <div className="flex h-full flex-col gap-2 lg:flex-row">
-        <div className="flex h-full max-w-full gap-2 overflow-hidden lg:h-full  lg:flex-col">
+      <div className="mb-8 flex h-full flex-col gap-2 lg:mb-0 lg:flex-row">
+        <div className="flex  max-w-full gap-2 overflow-hidden lg:h-full  lg:flex-col">
           {images.length > 1 ? (
-            <ul className="flex h-full w-[70%] justify-between gap-3  overflow-auto  lg:flex-col">
+            <ul className="flex  h-[50%] w-full items-end justify-between gap-3 overflow-auto lg:h-full  lg:w-[70%]  lg:flex-col">
               {images.map((image, index) => {
                 const isActive = index === imageIndex;
                 const imageSearchParams = new URLSearchParams(searchParams.toString());
@@ -38,18 +38,18 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 imageSearchParams.set('image', index.toString());
 
                 return (
-                  <li key={image.src} className="h-full w-auto">
+                  <li key={image.src} className="h-full w-auto object-cover">
                     <Link
                       aria-label="Enlarge product image"
                       href={createUrl(pathname, imageSearchParams)}
                       scroll={false}
-                      className="h-full w-full"
+                      className="h-full w-full object-cover"
                     >
                       <GridTileImage
                         alt={image.altText}
                         src={image.src}
                         width={80}
-                        height={100}
+                        height={150}
                         active={isActive}
                       />
                     </Link>

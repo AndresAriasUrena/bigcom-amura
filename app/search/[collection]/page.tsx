@@ -1,10 +1,12 @@
-import { getCollection, getCollectionProducts } from 'lib/bigcommerce';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-
+// 'use client';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
+import { getCollection, getCollectionProducts } from 'lib/bigcommerce';
 import { defaultSort, sorting } from 'lib/constants';
+import { Metadata } from 'next';
+
+import { notFound } from 'next/navigation';
+// import { useState } from 'react';
 
 export const runtime = 'edge';
 
@@ -34,6 +36,11 @@ export default async function CategoryPage({
   const { sort } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
+  // const [filtersOpen, setFiltersOpen] = useState(false);
+
+  // const handleFiltersClick = () => {
+  //   setFiltersOpen(!filtersOpen);
+  // };
 
   return (
     <section>
