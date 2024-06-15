@@ -30,7 +30,10 @@
     "react": "18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
-    "react-icons": "^5.2.1"
+    "react-icons": "^5.2.1",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.4"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
@@ -38,6 +41,7 @@
     "@types/node": "20.8.9",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
+    "@types/react-slick": "^0.23.13",
     "@vercel/git-hooks": "^1.0.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.52.0",

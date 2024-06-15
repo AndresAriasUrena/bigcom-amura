@@ -444,13 +444,7 @@ export async function getCollectionProducts({
       }
     });
 
-    if (!res.body.data.site.newestProducts) {
-      console.log(`No collection found for \`${collection}\``);
-      return [];
-    }
-    const productList = res.body.data.site.newestProducts.edges.map((item) => item.node);
-
-    return bigCommerceToVercelProducts(productList);
+    throw new Error(`Carousel collection response erorrrrrrrrr: ${JSON.stringify(res)}`);
   }
 
   if (expectedCollectionBreakpoints[collection] === 'featured_collection') {
