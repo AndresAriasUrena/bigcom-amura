@@ -1,6 +1,12 @@
 'use client';
+import background2 from 'assets/SliderBG2.png';
+import Sliderimg1 from 'assets/slider21.png';
+import Sliderimg2 from 'assets/slider22.png';
+import Sliderimg3 from 'assets/slider23.png';
+import Sliderimg4 from 'assets/slider24.png';
 import background from 'assets/sliderBG.png';
 import Image from 'next/image';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { default as image1, default as image5, default as image9 } from '../assets/Gift1.png';
 import { default as image10, default as image2, default as image6 } from '../assets/Gift2.png';
 import { default as image3, default as image7 } from '../assets/Gift3.png';
@@ -8,7 +14,12 @@ import { default as image4, default as image8 } from '../assets/Gift4.png';
 
 export async function Slider() {
   const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
-
+  const images2 = [
+    { src: Sliderimg1, title: 'Pure XS', brand: 'Paco Rabanne', price: '$500' },
+    { src: Sliderimg2, title: 'Layton', brand: 'Parfums de Marly', price: '$330' },
+    { src: Sliderimg3, title: 'Vetiver Parfum Cologne', brand: 'Roja Dove', price: '$260' },
+    { src: Sliderimg4, title: 'Acqua di Giò Parfum', brand: 'Giorgio Armani', price: '$540' }
+  ];
   //   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
   //     e.preventDefault();
   //     setStartIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -38,6 +49,43 @@ export async function Slider() {
           ))}
         </div>
       </div>
+
+      <h1 className="mt-12 px-[12%] py-12 text-3xl font-extralight uppercase">
+        La colección de amura
+      </h1>
+      <div
+        className="mx-auto h-[600px] w-[90%]"
+        style={{
+          backgroundImage: `url(${background2.src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="grid w-full grid-cols-3 text-xl font-light">
+          <button className="bg-black/40 py-6">Diseñador</button>
+          <button className="border border-white bg-black/40 py-6">Alta Gama</button>
+          <button className="bg-black/40 py-6">Árabes</button>
+        </div>
+
+        <div className="flex justify-between px-[6%] py-[3%]">
+          <FaChevronLeft className="h-14 w-auto" />
+          <FaChevronRight className="h-14 w-auto" />
+        </div>
+
+        <div className="grid grid-cols-4 gap-6 px-[6%] pb-[5%]">
+          {images2.map((image, index) => (
+            <div key={index} className="group relative flex-shrink-0 cursor-pointer">
+              <Image src={image.src} alt="image" className="h-full w-auto object-cover" />
+              <div className="absolute bottom-0 w-full bg-black/50 px-4 py-4 text-start font-light duration-500 group-hover:bg-black/80 group-hover:py-[60%] group-hover:text-center ">
+                <p className="font-extralight">{image.title}</p>
+                <p>{image.brand}</p>
+                <p>{image.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <style jsx>{`
         .scrollbar-hide {
           -ms-overflow-style: none; /* IE and Edge */
