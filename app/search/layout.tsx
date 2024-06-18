@@ -1,32 +1,19 @@
 import backgroung from 'assets/items.png';
 import Footer from 'components/layout/footer';
-import Collections from 'components/layout/search/collections';
-import FilterList from 'components/layout/search/filter';
-import { sorting } from 'lib/constants';
+
 import Image from 'next/image';
-import { Suspense } from 'react';
+import Filters from './Filters';
 
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
+  // let open = false;
   return (
-    <Suspense>
+    <>
       <div className="min w-full">
         <Image src={backgroung} alt="bg" />
       </div>
 
-      <div className="md:text-md flex w-full justify-between px-[6%] py-[5%] text-sm">
-        <button>Filtros ▼</button>
-        <p>Ayudame a encontrar mi aroma ⓘ</p>
-      </div>
-      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8  px-[6%] pb-4 text-black md:flex-row dark:text-white">
-        <div className="order-first hidden w-full flex-none md:max-w-[125px]">
-          <Collections />
-        </div>
-        <div className="order-last min-h-screen w-full md:order-none">{children}</div>
-        <div className="order-none hidden flex-none  md:w-[125px]">
-          <FilterList list={sorting} title="Sort by" />
-        </div>
-      </div>
+      <Filters children={children} />
       <Footer />
-    </Suspense>
+    </>
   );
 }
