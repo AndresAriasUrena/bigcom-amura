@@ -1,0 +1,11 @@
+.toggle-checkbox {
+  display: none;
+}
+
+.filter-toggle .filter-content {
+  display: none;
+}
+
+.toggle-checkbox:checked + .filter-toggle .filter-content {
+  display: block;
+}

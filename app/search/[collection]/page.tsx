@@ -36,11 +36,6 @@ export default async function CategoryPage({
   const { sort } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse });
-  // const [filtersOpen, setFiltersOpen] = useState(false);
-
-  // const handleFiltersClick = () => {
-  //   setFiltersOpen(!filtersOpen);
-  // };
 
   return (
     <section>
