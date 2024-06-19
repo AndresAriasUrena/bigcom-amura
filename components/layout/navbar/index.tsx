@@ -26,11 +26,14 @@ export default async function Navbar() {
         }}
       ></div>
       <div className="absolute top-0 h-[40px] w-full bg-black"></div>
-      <div className="block flex-none md:hidden">
+      <div className="absolute left-14 top-16 z-50 block flex-none md:hidden">
         <MobileMenu menu={menu} />
       </div>
       <div className="z-20 w-full">
-        <Link href="/" className="mt-4 flex w-full items-center justify-center py-8 text-white">
+        <Link
+          href="/"
+          className="mt-4 flex w-full items-center justify-center pb-20 pt-8 text-white lg:py-8"
+        >
           <Image src={LogoSquare} alt="" className="h-14 w-auto" />
         </Link>
         <div className="flex w-full">
@@ -47,8 +50,8 @@ export default async function Navbar() {
           ) : null}
         </div>
         <div
-          className="absolute right-14 top-14 flex items-center justify-center
-       gap-4 text-white"
+          className="absolute right-6 top-[120px] flex items-center justify-center gap-4 text-white
+       md:right-14 md:top-14"
         >
           <Search />
           <Suspense fallback={<OpenCart />}>
