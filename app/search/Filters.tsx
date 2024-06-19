@@ -1,6 +1,4 @@
 import Collections from 'components/layout/search/collections';
-import FilterList from 'components/layout/search/filter';
-import { sorting } from 'lib/constants';
 import React from 'react';
 import './styles.css';
 
@@ -16,14 +14,16 @@ const Filters = ({ children }: { children: React.ReactNode }) => {
           <p>Ayudame a encontrar mi aroma ⓘ</p>
         </div>
         <div className="">
-          <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-[6%] pb-4 text-black md:flex-row dark:text-white">
-            <div className="filter-content order-first w-full flex-none md:max-w-[125px]">
+          <div className="mx-auto flex max-w-screen-2xl  gap-8 px-[6%] pb-4 text-black  dark:text-white">
+            <div className="filter-content order-first w-[50%] flex-none lg:w-[33%]">
               <Collections />
             </div>
-            <div className="order-last min-h-screen w-full md:order-none ">{children}</div>
-            <div className="order-none hidden flex-none md:w-[125px]">
-              <FilterList list={sorting} title="Sort by" />
+            <div className="filter-cards order-last min-h-screen  w-full md:order-none ">
+              {children}
             </div>
+            {/* <div className="order-none hidden flex-none md:w-[125px]">
+              <FilterList list={sorting} title="Sort by" />
+            </div> */}
           </div>
         </div>
       </div>
