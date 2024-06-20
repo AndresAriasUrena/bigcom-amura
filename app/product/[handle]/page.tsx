@@ -88,7 +88,7 @@ export default async function ProductPage({ params }: { params: { handle: string
         }}
       >
         <div className="mx-auto max-w-screen-2xl px-4">
-          <div className="grid overflow-hidden  rounded-lg p-8 md:p-12 lg:grid-cols-2 lg:gap-8 dark:border-neutral-800 dark:bg-black">
+          <div className="grid overflow-hidden  rounded-lg py-4 md:p-12 lg:grid-cols-2 lg:gap-8 dark:border-neutral-800 dark:bg-black">
             <div className="h-full w-full basis-full ">
               <Gallery
                 images={product.images.map((image: Image) => ({
