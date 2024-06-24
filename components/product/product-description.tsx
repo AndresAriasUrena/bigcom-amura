@@ -13,9 +13,8 @@ import p4 from '../../assets/p4.png';
 import p5 from '../../assets/p5.png';
 
 export function ProductDescription({ product }: { product: Product }) {
-  const options: any[] = [p1, p2, p3, p4, p5];
-  const [selectedImage, setSelectedImage] = useState(p1);
-  console.log(product);
+  const options: string[] = [p1, p2, p3, p4, p5].map((path) => path.src);
+  const [selectedImage, setSelectedImage] = useState(options[0]); // Set initial selected image URL
 
   return (
     <>
@@ -23,10 +22,7 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="space-y-2">
           <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.title}</h1>
           {product.descriptionHtml ? (
-            <Prose
-              className="font-sm font-sm  py-3  font-light text-white"
-              html={product.descriptionHtml}
-            />
+            <Prose className="font-sm py-3 font-light text-white" html={product.descriptionHtml} />
           ) : null}
           <div className="text-2xl">
             <Price
@@ -49,9 +45,6 @@ export function ProductDescription({ product }: { product: Product }) {
               </option>
             </select>
             <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
-            {/* <button className="border-2 border-white px-[8%] py-3 text-white ">
-              Agregar al carrito
-            </button> */}
           </div>
           <Image src={elem} alt="none" className="w-full pt-3 lg:w-3/4" />
         </div>
@@ -59,7 +52,7 @@ export function ProductDescription({ product }: { product: Product }) {
         <div>
           <p>{product?.options ? '' : 'Notas principales:'}</p>
           <div className="grid w-[80%] grid-cols-5 gap-[2px] lg:w-[60%]">
-            {product?.options.map((img, index) => (
+            {options.map((img, index) => (
               <div
                 key={index}
                 className={`cursor-pointer ${selectedImage === img ? 'border-2 border-white' : ''}`}
@@ -85,7 +78,6 @@ export function ProductDescription({ product }: { product: Product }) {
             </button>
           </div>
         </div>
-        {/* <VariantSelector options={product.options} variants={product.variants} /> */}
       </div>
     </>
   );

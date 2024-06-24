@@ -4,18 +4,14 @@ import clsx from 'clsx';
 import { createUrl } from 'lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type {
-  ListItem,
-  PathFilterItem as PathFilterItemType,
-  SortFilterItem as SortFilterItemType
-} from '.';
+import type { ListItem, PathFilterItem, SortFilterItem } from '.';
 
-function PathFilterItem({
+function PathFilterItemComponent({
   item,
   isSelected,
   onSelect
 }: {
-  item: PathFilterItemType;
+  item: PathFilterItem;
   isSelected: boolean;
   onSelect: (path: string) => void;
 }) {
@@ -44,6 +40,7 @@ function PathFilterItem({
         type="checkbox"
         className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
         checked={active}
+        onChange={() => {}} // This is empty because checkbox state is handled by onClick
       />
       <Link
         href={createUrl(item.path, newParams)}
@@ -60,12 +57,12 @@ function PathFilterItem({
   );
 }
 
-function SortFilterItem({
+function SortFilterItemComponent({
   item,
   isSelected,
   onSelect
 }: {
-  item: SortFilterItemType;
+  item: SortFilterItem;
   isSelected: boolean;
   onSelect: (slug: string) => void;
 }) {
@@ -78,12 +75,12 @@ function SortFilterItem({
     pathname,
     new URLSearchParams({
       ...(q && { q }),
-      ...(item.slug && item.slug.length && { sort: item.slug })
+      ...(item.slug && { sort: item.slug }) // Simplified condition
     })
   );
 
   const handleCheckboxChange = () => {
-    if (!active) {
+    if (!active && item.slug) {
       onSelect(item.slug);
       router.push(href);
     }
@@ -91,7 +88,12 @@ function SortFilterItem({
 
   return (
     <li className="flex items-center text-sm text-black dark:text-white" key={item.title}>
-      <input type="checkbox" className="mr-2" checked={active} onChange={handleCheckboxChange} />
+      <input
+        type="checkbox"
+        className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
+        checked={active}
+        onChange={() => {}} // This is empty because checkbox state is handled by onClick
+      />
       <Link
         href={href}
         className={clsx('my-auto h-full w-full hover:underline hover:underline-offset-4', {
@@ -114,8 +116,8 @@ export function FilterItem({
   onSelect: (pathOrSlug: string) => void;
 }) {
   return 'path' in item ? (
-    <PathFilterItem item={item} isSelected={isSelected} onSelect={onSelect} />
+    <PathFilterItemComponent item={item} isSelected={isSelected} onSelect={onSelect} />
   ) : (
-    <SortFilterItem item={item} isSelected={isSelected} onSelect={onSelect} />
+    <SortFilterItemComponent item={item} isSelected={isSelected} onSelect={onSelect} />
   );
 }

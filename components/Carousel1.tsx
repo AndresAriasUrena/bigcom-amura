@@ -7,13 +7,13 @@ import Sliderimg4 from 'assets/slider24.png';
 import background from 'assets/sliderBG.png';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import Slider1 from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import { default as image1, default as image5, default as image9 } from '../assets/Gift1.png';
 import { default as image10, default as image2, default as image6 } from '../assets/Gift2.png';
 import { default as image3, default as image7 } from '../assets/Gift3.png';
 import { default as image4, default as image8 } from '../assets/Gift4.png';
-import Slider1 from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 export async function Slider() {
   const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
@@ -24,15 +24,6 @@ export async function Slider() {
     { src: Sliderimg4, title: 'Acqua di Giò Parfum', brand: 'Giorgio Armani', price: '$540' },
     { src: Sliderimg4, title: 'Acqua di Giò Parfum', brand: 'Giorgio Armani', price: '$540' }
   ];
-  //   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //     e.preventDefault();
-  //     setStartIndex((prevIndex) => (prevIndex + 1) % images.length);
-  //   };
-
-  //   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //     e.preventDefault();
-  //     setStartIndex((prevIndex) => (prevIndex === 0 ? images.length - 4 : prevIndex - 1));
-  //   };
 
   const SampleNextArrow = (props: any) => {
     const { className, style, onClick } = props;
@@ -42,11 +33,10 @@ export async function Slider() {
         style={{
           ...style,
           display: 'block',
-          color: 'black',
+          color: 'white',
           zIndex: 2,
           right: '-40px',
           top: '20px',
-          color: 'white',
           height: '60px',
           width: '75px'
         }}
@@ -63,11 +53,10 @@ export async function Slider() {
         style={{
           ...style,
           display: 'block',
-          color: 'black',
+          color: 'white',
           zIndex: 2,
           left: '-40px',
           top: '20px',
-          color: 'white',
           height: '60px',
           width: '75px'
         }}
@@ -77,7 +66,6 @@ export async function Slider() {
   };
 
   const settings = {
-    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -122,7 +110,7 @@ export async function Slider() {
     >
       <h1 className="px-[12%] py-6 text-3xl font-extralight uppercase">Ideas para Regalar</h1>
       <div className="scrollbar-hide w-full overflow-x-auto px-[5%]">
-        <div className="flex animate-carousel  gap-6  px-2">
+        <div className="flex animate-carousel gap-6 px-2">
           {images.map((image, index) => (
             <div key={index} className="flex-shrink-0">
               <Image src={image} alt="image" className="h-full w-auto" />
@@ -136,7 +124,7 @@ export async function Slider() {
       </h1>
 
       <div
-        className="mx-auto  w-[90%] lg:h-[650px]"
+        className="mx-auto w-[90%] lg:h-[650px]"
         style={{
           backgroundImage: `url(${background2.src})`,
           backgroundSize: 'cover',
@@ -157,7 +145,7 @@ export async function Slider() {
                 className="group relative mt-20 h-[400px] flex-shrink-0 cursor-pointer overflow-hidden"
               >
                 <Image src={image.src} alt="image" className="mx-2 h-full w-auto object-cover" />
-                <div className="absolute bottom-0 mx-2 flex h-[30%] w-full flex-col justify-center bg-black/50 px-2 text-start font-light duration-500 group-hover:h-full group-hover:bg-black/80 group-hover:text-center ">
+                <div className="absolute bottom-0 mx-2 flex h-[30%] w-full flex-col justify-center bg-black/50 px-2 text-start font-light duration-500 group-hover:h-full group-hover:bg-black/80 group-hover:text-center">
                   <p className="font-extralight">{image.title}</p>
                   <p>{image.brand}</p>
                   <p>{image.price}</p>

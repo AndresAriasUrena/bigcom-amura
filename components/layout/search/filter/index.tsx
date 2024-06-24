@@ -1,10 +1,15 @@
 'use client';
-import { SortFilterItem } from 'lib/constants';
+import { SortFilterItem as SortFilterItemType } from 'lib/constants'; // Renamed import for clarity
 import { useState } from 'react';
 import FilterItemDropdown from './dropdown';
 import { FilterItem } from './item';
-export type ListItem = SortFilterItem | PathFilterItem;
+
+// Define type aliases for clarity
+export type ListItem = SortFilterItemType | PathFilterItem;
 export type PathFilterItem = { title: string; path: string };
+
+// Export SortFilterItem with alias
+export type SortFilterItem = SortFilterItemType;
 
 function FilterItemList({ list }: { list: ListItem[] }) {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -12,6 +17,7 @@ function FilterItemList({ list }: { list: ListItem[] }) {
   const handleSelect = (itemPath: string) => {
     setSelectedItem(itemPath);
   };
+
   return (
     <>
       {list.map((item: ListItem, i) => (
