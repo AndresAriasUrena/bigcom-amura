@@ -1,14 +1,11 @@
 'use client';
 
 import clsx from 'clsx';
+import { SortFilterItem as SortFilterItemType } from 'lib/constants';
 import { createUrl } from 'lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type {
-  ListItem,
-  PathFilterItem as PathFilterItemType,
-  SortFilterItem as SortFilterItemType
-} from '.';
+import type { ListItem, PathFilterItem as PathFilterItemType } from '.';
 
 function PathFilterItem({
   item,
@@ -84,8 +81,19 @@ function SortFilterItem({
 
   const handleCheckboxChange = () => {
     if (!active) {
-      onSelect(item.slug);
-      router.push(href);
+      if (item.slug !== null && typeof item.slug === 'string') {
+        onSelect(item.slug);
+
+        if (href !== null) {
+          router.push(href);
+        } else {
+          // Handle the case where href is null
+          console.error('href is null');
+        }
+      } else {
+        // Handle the case where item.slug is null or not a string
+        console.error('item.slug is null or not a string');
+      }
     }
   };
 

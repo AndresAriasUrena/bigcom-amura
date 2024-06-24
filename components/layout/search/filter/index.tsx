@@ -41,3 +41,5 @@ export default function FilterList({ list, title }: { list: ListItem[]; title?: 
     </>
   );
 }
+
+// export type SortFilterItem = { title: string; slug: string };
