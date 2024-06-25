@@ -11,8 +11,8 @@ export const runtime = 'edge';
 export const metadata = {
   description: 'High-performance ecommerce store built with Next.js, Vercel, and BigCommerce.',
   openGraph: {
-    type: 'website'
-  }
+    type: 'website',
+  },
 };
 
 export default async function HomePage() {
@@ -22,7 +22,7 @@ export default async function HomePage() {
       <GridSection />
       {/* <ThreeItemGrid /> */}
       <Suspense>
-        {/* <Carousel /> */}
+        {/* <Carousel /> old commented code */}
         <Banner />
         <Slider />
         <Boutique />
