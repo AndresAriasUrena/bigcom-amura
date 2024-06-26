@@ -15,13 +15,13 @@ export default async function Navbar() {
   return (
     <nav className="relative bg-black/85 text-white" style={{ backgroundImage: `url(${PatternImage.src})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8 }}>
       <div className="w-full bg-black py-3 text-center text-xs">Lorem ipsum dolor sit amet consectetur adipiscing elit</div>
-      <div className="relative mx-[5%] flex items-center justify-center py-8">
+      <div className="relative mx-[5%] flex items-center justify-center pb-[80px] pt-4 lg:py-8">
         <Link href="/" className=" text-white">
           <Image src={LogoSquare} alt="logo" className="w-[85px]" />
         </Link>
         {/* mobile menu */}
         <MobileMenu menu={menu} />
-        <div className="absolute right-0 flex h-14 w-fit min-w-[100px] text-white">
+        <div className="absolute right-0 flex h-14 w-fit min-w-[100px] text-white  maxlg:top-[85px]">
           <Search />
           <Suspense fallback={<OpenCart />}>
             <Cart />
@@ -31,10 +31,10 @@ export default async function Navbar() {
       {/* links */}
       <div className="flex w-full justify-center maxlg:hidden">
         {menu.length ? (
-          <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 font-extralight text-white">
+          <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 font-extralight">
             {menu.map((item: Menu) => (
               <li key={item.title}>
-                <Link href={item.path} className="text-white underline-offset-4">
+                <Link href={item.path} className="text-white underline-offset-4 hover:!text-c2 ">
                   {item.title}
                 </Link>
               </li>

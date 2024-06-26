@@ -13,11 +13,7 @@ import Link from 'next/link';
 
 export const runtime = 'edge';
 
-export async function generateMetadata({
-  params
-}: {
-  params: { handle: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
   const product = await getProduct(params.handle);
 
   if (!product) return notFound();
@@ -33,8 +29,8 @@ export async function generateMetadata({
       follow: indexable,
       googleBot: {
         index: indexable,
-        follow: indexable
-      }
+        follow: indexable,
+      },
     },
     openGraph: url
       ? {
@@ -43,11 +39,11 @@ export async function generateMetadata({
               url,
               width,
               height,
-              alt
-            }
-          ]
+              alt,
+            },
+          ],
         }
-      : null
+      : null,
   };
 }
 
@@ -64,13 +60,11 @@ export default async function ProductPage({ params }: { params: { handle: string
     image: product.featuredImage.url,
     offers: {
       '@type': 'AggregateOffer',
-      availability: product.availableForSale
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
+      availability: product.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       priceCurrency: product.priceRange.minVariantPrice.currencyCode,
       highPrice: product.priceRange.maxVariantPrice.amount,
-      lowPrice: product.priceRange.minVariantPrice.amount
-    }
+      lowPrice: product.priceRange.minVariantPrice.amount,
+    },
   };
 
   return (
@@ -78,13 +72,12 @@ export default async function ProductPage({ params }: { params: { handle: string
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd)
+          __html: JSON.stringify(productJsonLd),
         }}
       />
       <div
         style={{
-          background:
-            'linear-gradient(to bottom, #232323 0%, #313131 20%, #444444 40%, #707070 60%, #686767 80%, #525050 100%)'
+          background: 'linear-gradient(to bottom, #232323 0%, #313131 20%, #444444 40%, #707070 60%, #686767 80%, #525050 100%)',
         }}
       >
         <div className="mx-auto max-w-screen-2xl px-4">
@@ -93,7 +86,7 @@ export default async function ProductPage({ params }: { params: { handle: string
               <Gallery
                 images={product.images.map((image: Image) => ({
                   src: image.url,
-                  altText: image.altText
+                  altText: image.altText,
                 }))}
               />
             </div>
@@ -121,22 +114,17 @@ async function RelatedProducts({ id }: { id: string }) {
 
   return (
     <div className="py-8">
-      <h2 className="py-12 pb-20 text-center text-3xl font-extralight uppercase  text-white lg:py-4 lg:pb-9">
-        También te puede interesar
-      </h2>
+      <h2 className="py-12 pb-20 text-center text-3xl font-extralight uppercase  text-white lg:py-4 lg:pb-9">También te puede interesar</h2>
       <ul className="flex w-full gap-4 overflow-x-auto pb-10 pt-1">
         {relatedProducts.map((product) => (
-          <li
-            key={product.handle}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
-          >
+          <li key={product.handle} className="min-[475px]:w-1/2 aspect-square w-full flex-none sm:w-1/3 md:w-1/4 lg:w-1/5">
             <Link className="relative h-full w-full" href={`${product.handle}`}>
               <GridTileImage
                 alt={product.title}
                 label={{
                   title: product.title,
                   amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
                 }}
                 src={product.featuredImage?.url}
                 fill

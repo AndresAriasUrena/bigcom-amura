@@ -32,6 +32,10 @@ module.exports = {
       'lg-to-xl': { min: '992px', max: '1199px' },
     },
     extend: {
+      colors: {
+        c1: '#4E014F',
+        c2: '#947691',
+      },
       fontFamily: {
         sans: ['var(--font-inter)'],
       },
