@@ -1,8 +1,9 @@
 import { isVercelCommerceError } from './type-guards';
 import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
 import { getMenuQuery } from './queries/menu';
+import { getCartQuery } from './queries/cart';
 import { getStoreProductsQuery } from './queries/product';
-import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, VercelProduct } from './types';
+import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, VercelCart, BigCommerceCartOperation } from './types';
 
 // ----------------------------------------------------------------------------------------------------------
 
@@ -45,4 +46,22 @@ export async function getMenu() {
 export async function getProducts() {
   const res = await bigCommerceFetch<BigCommerceSearchProductsOperation>({ query: getStoreProductsQuery });
   return res.body.data.site.products.edges.map((item) => item.node);
+}
+
+export async function getCart(cartId: string): Promise<VercelCart | undefined> {
+  const res = await bigCommerceFetch<BigCommerceCartOperation>({
+    query: getCartQuery,
+    variables: { entityId: cartId },
+    cache: 'no-store',
+  });
+
+  if (!res.body.data.site.cart) {
+    return undefined;
+  }
+
+  const cart = res.body.data.site.cart;
+  const lines = vercelFromBigCommerceLineItems(cart.lineItems);
+  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
+
+  return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
 }
