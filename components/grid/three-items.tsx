@@ -1,4 +1,4 @@
-import { GridTileImage } from 'components/grid/tile';
+import { GridTileImage } from '@/components/grid/tile';
 import { getCollectionProducts } from '@/lib/bigcommerce';
 import type { VercelProduct as Product } from '@/lib/bigcommerce/types';
 import Link from 'next/link';

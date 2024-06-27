@@ -20,7 +20,7 @@ export type VercelPage = {
 };
 
 export type VercelMenu = {
-  title: string;
+  name: string;
   path: string;
 };
 

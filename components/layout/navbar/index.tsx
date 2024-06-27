@@ -20,25 +20,25 @@ export default async function Navbar() {
           <Image src={LogoSquare} alt="logo" className="w-[85px]" />
         </Link>
         {/* mobile menu */}
-        {/* <MobileMenu menu={menu} /> */}
+        <MobileMenu menu={menu} />
         <div className="maxlg:top-[85px] absolute right-0 flex h-14 w-fit min-w-[100px]  text-white">
           <Search />
-          <Suspense fallback={<OpenCart />}>
+          {/* <Suspense fallback={<OpenCart />}>
             <Cart />
-          </Suspense>
+          </Suspense> */}
         </div>
       </div>
       {/* links */}
       <div className="maxlg:hidden flex w-full justify-center">
         {menu.length ? (
           <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 font-extralight">
-            {/* {menu.map((item: Menu) => (
-              <li key={item.title}>
-                <Link href={item.path} className="text-white underline-offset-4 hover:!text-c2 ">
-                  {item.title}
+            {menu.map((item: Menu) => (
+              <li key={item.name}>
+                <Link href={item.path} className="hover:!text-c2 text-white underline-offset-4 ">
+                  {item.name}
                 </Link>
               </li>
-            ))} */}
+            ))}
           </ul>
         ) : null}
       </div>

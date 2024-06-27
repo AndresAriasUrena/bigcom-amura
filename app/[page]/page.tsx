@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import Prose from 'components/prose';
+import Prose from '@/components/prose';
 import { getPage } from '@/lib/bigcommerce';
 import { notFound } from 'next/navigation';
 

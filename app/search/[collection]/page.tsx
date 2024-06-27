@@ -1,6 +1,6 @@
 // 'use client';
-import Grid from 'components/grid';
-import ProductGridItems from 'components/layout/product-grid-items';
+import Grid from '@/components/grid';
+import ProductGridItems from '@/components/layout/product-grid-items';
 import { getCollection, getCollectionProducts } from '@/lib/bigcommerce';
 import { defaultSort, sorting } from '@/lib/constants';
 import { Metadata } from 'next';

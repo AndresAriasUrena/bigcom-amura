@@ -1,4 +1,4 @@
-import Collections from 'components/layout/search/collections';
+import Collections from '@/components/layout/search/collections';
 import React from 'react';
 import './styles.css';
 
@@ -18,9 +18,7 @@ const Filters = ({ children }: { children: React.ReactNode }) => {
             <div className="filter-content order-first w-[50%] flex-none lg:w-[33%]">
               <Collections />
             </div>
-            <div className="filter-cards order-last min-h-screen  w-full md:order-none ">
-              {children}
-            </div>
+            <div className="filter-cards order-last min-h-screen  w-full md:order-none ">{children}</div>
             {/* <div className="order-none hidden flex-none md:w-[125px]">
               <FilterList list={sorting} title="Sort by" />
             </div> */}

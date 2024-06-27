@@ -2,8 +2,8 @@
 
 import { PlusIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { addItem } from 'components/cart/actions';
-import LoadingDots from 'components/loading-dots';
+import { addItem } from '@/components/cart/actions';
+import LoadingDots from '@/components/loading-dots';
 import { VercelProductVariant as ProductVariant } from '@/lib/bigcommerce/types';
 import { useSearchParams } from 'next/navigation';
 import { useFormState, useFormStatus } from 'react-dom';
