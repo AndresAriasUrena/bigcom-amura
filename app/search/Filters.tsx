@@ -1,4 +1,4 @@
-import Collections from '@/components/layout/search/collections';
+import Collections from 'components/layout/search/collections';
 import React from 'react';
 import './styles.css';
 

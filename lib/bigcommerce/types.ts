@@ -20,7 +20,7 @@ export type VercelPage = {
 };
 
 export type VercelMenu = {
-  name: string;
+  title: string;
   path: string;
 };
 
@@ -261,8 +261,18 @@ export type BigCommerceRecommendationsOperation = {
 export type BigCommerceSearchProductsOperation = {
   data: {
     site: {
-      products: Connection<BigCommerceProduct>;
+      search: {
+        searchProducts: {
+          products: Connection<BigCommerceProduct>;
+        };
+      };
     };
+  };
+  variables: {
+    filters: {
+      searchTerm: string;
+    };
+    sort: string | null;
   };
 };
 

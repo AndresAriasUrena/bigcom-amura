@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { createUrl } from '@/lib/utils';
+import { createUrl } from 'lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem, SortFilterItem } from '.';

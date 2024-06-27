@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { VercelMenu as Menu } from '@/lib/bigcommerce/types';
+import { VercelMenu as Menu } from 'lib/bigcommerce/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';

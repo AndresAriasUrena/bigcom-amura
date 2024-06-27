@@ -1,5 +1,5 @@
-import el from '@/assets/element1.png';
-import el2 from '@/assets/element2.png';
+import el from 'assets/element1.png';
+import el2 from 'assets/element2.png';
 import Image from 'next/image';
 export async function Hero() {
   return (

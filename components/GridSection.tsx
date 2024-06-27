@@ -1,5 +1,5 @@
-import PARAELLA from '@/assets/ella.png';
-import PARAEL from '@/assets/parael.png';
+import PARAELLA from 'assets/ella.png';
+import PARAEL from 'assets/parael.png';
 import Link from 'next/link';
 
 export async function GridSection() {

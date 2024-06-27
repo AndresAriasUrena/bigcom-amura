@@ -1,5 +1,5 @@
 'use client';
-import { createUrl } from '@/lib/utils';
+import { createUrl } from 'lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Search() {

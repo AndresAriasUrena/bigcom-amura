@@ -1,7 +1,7 @@
 'use server';
 
-import { addToCart, removeFromCart, updateCart } from '@/lib/bigcommerce';
-import { TAGS } from '@/lib/constants';
+import { addToCart, removeFromCart, updateCart } from 'lib/bigcommerce';
+import { TAGS } from 'lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 

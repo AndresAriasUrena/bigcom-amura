@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { GridTileImage } from '@/components/grid/tile';
-import Footer from '@/components/layout/footer';
-import { Gallery } from '@/components/product/gallery';
-import { ProductDescription } from '@/components/product/product-description';
-import { getProduct, getProductRecommendations } from '@/lib/bigcommerce';
-import { Image } from '@/lib/bigcommerce/types';
-import { HIDDEN_PRODUCT_TAG } from '@/lib/constants';
+import { GridTileImage } from 'components/grid/tile';
+import Footer from 'components/layout/footer';
+import { Gallery } from 'components/product/gallery';
+import { ProductDescription } from 'components/product/product-description';
+import { getProduct, getProductRecommendations } from 'lib/bigcommerce';
+import { Image } from 'lib/bigcommerce/types';
+import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import Link from 'next/link';
 
 export const runtime = 'edge';
@@ -117,7 +117,7 @@ async function RelatedProducts({ id }: { id: string }) {
       <h2 className="py-12 pb-20 text-center text-3xl font-extralight uppercase  text-white lg:py-4 lg:pb-9">También te puede interesar</h2>
       <ul className="flex w-full gap-4 overflow-x-auto pb-10 pt-1">
         {relatedProducts.map((product) => (
-          <li key={product.handle} className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
+          <li key={product.handle} className="min-[475px]:w-1/2 aspect-square w-full flex-none sm:w-1/3 md:w-1/4 lg:w-1/5">
             <Link className="relative h-full w-full" href={`${product.handle}`}>
               <GridTileImage
                 alt={product.title}

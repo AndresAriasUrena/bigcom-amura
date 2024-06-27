@@ -1,13 +1,13 @@
-import Grid from '@/components/grid';
-import { GridTileImage } from '@/components/grid/tile';
-import { VercelProduct as Product } from '@/lib/bigcommerce/types';
+import Grid from 'components/grid';
+import { GridTileImage } from 'components/grid/tile';
+import { VercelProduct as Product } from 'lib/bigcommerce/types';
 import Link from 'next/link';
 
 export default function ProductGridItems({ products }: { products: Product[] }) {
   return (
     <>
       {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn h-[150px] lg:h-[300px]">
+        <Grid.Item key={product.handle} className="h-[150px] animate-fadeIn lg:h-[300px]">
           <Link className="relative inline-block h-full w-full" href={`${product.handle}`}>
             <GridTileImage
               alt={product.title}

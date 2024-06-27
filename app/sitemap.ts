@@ -1,5 +1,5 @@
-import { getCollections, getPages, getProducts } from '@/lib/bigcommerce';
-import { validateEnvironmentVariables } from '@/lib/utils';
+import { getCollections, getPages, getProducts } from 'lib/bigcommerce';
+import { validateEnvironmentVariables } from 'lib/utils';
 import { MetadataRoute } from 'next';
 
 type Route = {

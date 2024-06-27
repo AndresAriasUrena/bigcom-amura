@@ -1,8 +1,8 @@
 'use client';
-import { AddToCart } from '@/components/cart/add-to-cart';
-import Price from '@/components/price';
-import Prose from '@/components/prose';
-import { VercelProduct as Product } from '@/lib/bigcommerce/types';
+import { AddToCart } from 'components/cart/add-to-cart';
+import Price from 'components/price';
+import Prose from 'components/prose';
+import { VercelProduct as Product } from 'lib/bigcommerce/types';
 import Image from 'next/image';
 import { useState } from 'react';
 import elem from '../../assets/Group 11.png';

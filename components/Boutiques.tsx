@@ -1,8 +1,8 @@
-import Curridabat from '@/assets/Curridabat.png';
-import escazu from '@/assets/Escazu.png';
-import sabana from '@/assets/Sabana.png';
-import boutique from '@/assets/boutiques.png';
-import momentum from '@/assets/mementum.png';
+import Curridabat from 'assets/Curridabat.png';
+import escazu from 'assets/Escazu.png';
+import sabana from 'assets/Sabana.png';
+import boutique from 'assets/boutiques.png';
+import momentum from 'assets/mementum.png';
 
 export async function Boutique() {
   return (

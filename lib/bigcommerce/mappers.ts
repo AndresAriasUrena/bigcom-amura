@@ -1,4 +1,4 @@
-import { BigCommerceSortKeys, VercelSortKeys, vercelToBigCommerceSortKeys } from '../constants';
+import { BigCommerceSortKeys, VercelSortKeys, vercelToBigCommerceSortKeys } from 'lib/constants';
 import { BigCommerceCart, BigCommerceCheckout, BigCommerceCollection, BigCommercePage, BigCommerceProduct, BigCommerceProductOption, BigCommerceProductVariant, CartCustomItem, DigitalOrPhysicalItem, VercelCart, VercelCartItem, VercelCollection, VercelPage, VercelProduct, VercelProductOption, VercelProductVariant } from './types';
 
 type ProductsList = { productId: number; productData: BigCommerceProduct }[];
@@ -91,6 +91,22 @@ const bigCommerceToVercelProduct = (product: BigCommerceProduct): VercelProduct 
     tags: [product.seo.metaKeywords] || [],
     updatedAt: product.createdAt.utc.toString(),
   };
+};
+
+const bigCommerceToVercelProducts = (products: BigCommerceProduct[]) => {
+  const reshapedProducts = [];
+
+  for (const product of products) {
+    if (product) {
+      const reshapedProduct = bigCommerceToVercelProduct(product);
+
+      if (reshapedProduct) {
+        reshapedProducts.push(reshapedProduct);
+      }
+    }
+  }
+
+  return reshapedProducts;
 };
 
 const bigCommerceToVercelCartItems = (lineItems: BigCommerceCart['lineItems'], products: ProductsList) => {

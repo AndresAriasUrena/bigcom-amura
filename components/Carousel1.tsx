@@ -1,10 +1,10 @@
 'use client';
-import background2 from '@/assets/SliderBG2.png';
-import Sliderimg1 from '@/assets/slider21.png';
-import Sliderimg2 from '@/assets/slider22.png';
-import Sliderimg3 from '@/assets/slider23.png';
-import Sliderimg4 from '@/assets/slider24.png';
-import background from '@/assets/sliderBG.png';
+import background2 from 'assets/SliderBG2.png';
+import Sliderimg1 from 'assets/slider21.png';
+import Sliderimg2 from 'assets/slider22.png';
+import Sliderimg3 from 'assets/slider23.png';
+import Sliderimg4 from 'assets/slider24.png';
+import background from 'assets/sliderBG.png';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import Slider1 from 'react-slick';
@@ -15,7 +15,7 @@ import { default as image10, default as image2, default as image6 } from '../ass
 import { default as image3, default as image7 } from '../assets/Gift3.png';
 import { default as image4, default as image8 } from '../assets/Gift4.png';
 
-export function Slider() {
+export async function Slider() {
   const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
   const images2 = [
     { src: Sliderimg1, title: 'Pure XS', brand: 'Paco Rabanne', price: '$500' },
@@ -110,7 +110,7 @@ export function Slider() {
     >
       <h1 className="px-[12%] py-6 text-3xl font-extralight uppercase">Ideas para Regalar</h1>
       <div className="scrollbar-hide w-full overflow-x-auto px-[5%]">
-        <div className="animate-carousel flex gap-6 px-2">
+        <div className="flex animate-carousel gap-6 px-2">
           {images.map((image, index) => (
             <div key={index} className="flex-shrink-0">
               <Image src={image} alt="image" className="h-full w-auto" />

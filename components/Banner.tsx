@@ -1,5 +1,5 @@
-import banner from '@/assets/Assesoria.png';
-import logo from '@/assets/logo.png';
+import banner from 'assets/Assesoria.png';
+import logo from 'assets/logo.png';
 import Image from 'next/image';
 
 export async function Banner() {

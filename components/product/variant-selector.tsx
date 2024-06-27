@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { VercelProductOption as ProductOption, VercelProductVariant as ProductVariant } from '@/lib/bigcommerce/types';
-import { createUrl } from '@/lib/utils';
+import { VercelProductOption as ProductOption, VercelProductVariant as ProductVariant } from 'lib/bigcommerce/types';
+import { createUrl } from 'lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type Combination = {

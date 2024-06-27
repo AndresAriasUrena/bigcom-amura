@@ -14,7 +14,7 @@ export const getProductQuery = /* GraphQL */ `
 export const getStoreProductsQuery = /* GraphQL */ `
   query getStoreProducts($entityIds: [Int!]) {
     site {
-      products(entityIds: $entityIds, first: 50) {
+      products(entityIds: $entityIds) {
         edges {
           node {
             ...product
