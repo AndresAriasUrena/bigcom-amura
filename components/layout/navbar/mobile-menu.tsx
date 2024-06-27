@@ -1,8 +1,8 @@
 'use client';
 import { Dialog, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import PatternImage from 'assets/pattern.jpeg';
-import { VercelMenu as Menu } from 'lib/bigcommerce/types';
+import PatternImage from '@/assets/pattern.jpeg';
+import { VercelMenu as Menu } from '@/lib/bigcommerce/types';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
@@ -31,7 +31,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
 
   return (
     <>
-      <button onClick={openMobileMenu} aria-label="Open mobile menu" className="absolute left-0 h-11 w-11 text-white lg:hidden maxlg:top-[90px]">
+      <button onClick={openMobileMenu} aria-label="Open mobile menu" className="maxlg:top-[90px] absolute left-0 h-11 w-11 text-white lg:hidden">
         <Bars3Icon />
       </button>
 
@@ -53,13 +53,13 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
 
                 {menu.length ? (
                   <ul className="flex h-[80%] w-full flex-col items-center justify-evenly">
-                    {menu.map((item: Menu) => (
+                    {/* {menu.map((item: Menu) => (
                       <li className="py-2 text-xl text-white transition-colors hover:text-neutral-500 dark:text-white" key={item.title}>
                         <Link href={item.path} onClick={closeMobileMenu}>
                           {item.title}
                         </Link>
                       </li>
-                    ))}
+                    ))} */}
                   </ul>
                 ) : null}
               </div>

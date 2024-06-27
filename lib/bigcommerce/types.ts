@@ -234,14 +234,7 @@ export type BigCommerceEntityIdOperation = {
     site: {
       route: {
         node: {
-          __typename:
-            | 'Product'
-            | 'Category'
-            | 'Brand'
-            | 'NormalPage'
-            | 'ContactPage'
-            | 'RawHtmlPage'
-            | 'BlogIndexPage';
+          __typename: 'Product' | 'Category' | 'Brand' | 'NormalPage' | 'ContactPage' | 'RawHtmlPage' | 'BlogIndexPage';
           entityId: number;
         };
       };
@@ -268,18 +261,8 @@ export type BigCommerceRecommendationsOperation = {
 export type BigCommerceSearchProductsOperation = {
   data: {
     site: {
-      search: {
-        searchProducts: {
-          products: Connection<BigCommerceProduct>;
-        };
-      };
+      products: Connection<BigCommerceProduct>;
     };
-  };
-  variables: {
-    filters: {
-      searchTerm: string;
-    };
-    sort: string | null;
   };
 };
 

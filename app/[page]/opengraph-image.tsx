@@ -1,5 +1,5 @@
 import OpengraphImage from 'components/opengraph-image';
-import { getPage } from 'lib/bigcommerce';
+import { getPage } from '@/lib/bigcommerce';
 
 export const runtime = 'edge';
 

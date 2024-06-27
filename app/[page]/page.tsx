@@ -1,18 +1,14 @@
 import type { Metadata } from 'next';
 
 import Prose from 'components/prose';
-import { getPage } from 'lib/bigcommerce';
+import { getPage } from '@/lib/bigcommerce';
 import { notFound } from 'next/navigation';
 
 export const runtime = 'edge';
 
 export const revalidate = 43200; // 12 hours in seconds
 
-export async function generateMetadata({
-  params
-}: {
-  params: { page: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { page: string } }): Promise<Metadata> {
   const page = await getPage(params.page);
 
   if (!page) return notFound();
@@ -23,8 +19,8 @@ export async function generateMetadata({
     openGraph: {
       publishedTime: page.createdAt,
       modifiedTime: page.updatedAt,
-      type: 'article'
-    }
+      type: 'article',
+    },
   };
 }
 
@@ -41,7 +37,7 @@ export default async function Page({ params }: { params: { page: string } }) {
         {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
           year: 'numeric',
           month: 'long',
-          day: 'numeric'
+          day: 'numeric',
         }).format(new Date(page.updatedAt))}.`}
       </p>
     </>

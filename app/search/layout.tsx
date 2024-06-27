@@ -1,4 +1,4 @@
-import backgroung from 'assets/items.png';
+import backgroung from '@/assets/items.png';
 import Footer from 'components/layout/footer';
 
 import Image from 'next/image';

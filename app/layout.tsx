@@ -1,5 +1,5 @@
-import Navbar from 'components/layout/navbar';
-import { ensureStartsWith } from 'lib/utils';
+import Navbar from '@/components/layout/navbar';
+import { ensureStartsWith } from '@/lib/utils';
 import { Inter } from 'next/font/google';
 import { ReactNode, Suspense } from 'react';
 import './globals.css';

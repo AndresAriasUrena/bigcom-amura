@@ -1,9 +1,9 @@
-import { Banner } from 'components/Banner';
-import { Boutique } from 'components/Boutiques';
-import { Slider } from 'components/Carousel1';
-import { GridSection } from 'components/GridSection';
-import { Hero } from 'components/Hero';
-import Footer from 'components/layout/footer';
+import { Banner } from '@/components/Banner';
+import { Boutique } from '@/components/Boutiques';
+import { Slider } from '@/components/Carousel1';
+import { GridSection } from '@/components/GridSection';
+import { Hero } from '@/components/Hero';
+import Footer from '@/components/layout/footer';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';

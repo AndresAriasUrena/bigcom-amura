@@ -1,4 +1,4 @@
-import { getCart } from 'lib/bigcommerce';
+import { getCart } from '@/lib/bigcommerce';
 import { cookies } from 'next/headers';
 import CartModal from './modal';
 

@@ -2,10 +2,10 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import Price from 'components/price';
-import type { VercelCart as Cart } from 'lib/bigcommerce/types';
-import { DEFAULT_OPTION } from 'lib/constants';
-import { createUrl } from 'lib/utils';
+import Price from '@/components/price';
+import type { VercelCart as Cart } from '@/lib/bigcommerce/types';
+import { DEFAULT_OPTION } from '@/lib/constants';
+import { createUrl } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useRef, useState } from 'react';

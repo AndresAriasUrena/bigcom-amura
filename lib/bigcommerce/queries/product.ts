@@ -14,7 +14,7 @@ export const getProductQuery = /* GraphQL */ `
 export const getStoreProductsQuery = /* GraphQL */ `
   query getStoreProducts($entityIds: [Int!]) {
     site {
-      products(entityIds: $entityIds) {
+      products(entityIds: $entityIds, first: 50) {
         edges {
           node {
             ...product
@@ -27,12 +27,7 @@ export const getStoreProductsQuery = /* GraphQL */ `
 `;
 
 export const getProductsCollectionQuery = /* GraphQL */ `
-  query getProductsCollection(
-    $entityId: Int!
-    $sortBy: CategoryProductSort
-    $hideOutOfStock: Boolean
-    $first: Int
-  ) {
+  query getProductsCollection($entityId: Int!, $sortBy: CategoryProductSort, $hideOutOfStock: Boolean, $first: Int) {
     site {
       category(entityId: $entityId) {
         products(sortBy: $sortBy, hideOutOfStock: $hideOutOfStock, first: $first) {

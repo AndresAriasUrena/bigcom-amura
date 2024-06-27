@@ -1,7 +1,7 @@
 'use client';
 
 import { GridTileImage } from 'components/grid/tile';
-import { createUrl } from 'lib/utils';
+import { createUrl } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -22,8 +22,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
   previousSearchParams.set('image', previousImageIndex.toString());
   const previousUrl = createUrl(pathname, previousSearchParams);
 
-  const buttonClassName =
-    'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
+  const buttonClassName = 'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
 
   return (
     <>
@@ -39,20 +38,8 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
 
                 return (
                   <li key={image.src} className="h-full w-full">
-                    <Link
-                      aria-label="Enlarge product image"
-                      href={createUrl(pathname, imageSearchParams)}
-                      scroll={false}
-                      className="h-full w-full overflow-hidden"
-                    >
-                      <GridTileImage
-                        alt={image.altText}
-                        src={image.src}
-                        width={150}
-                        height={150}
-                        className="h-full object-cover"
-                        active={isActive}
-                      />
+                    <Link aria-label="Enlarge product image" href={createUrl(pathname, imageSearchParams)} scroll={false} className="h-full w-full overflow-hidden">
+                      <GridTileImage alt={image.altText} src={image.src} width={150} height={150} className="h-full object-cover" active={isActive} />
                     </Link>
                   </li>
                 );
@@ -61,16 +48,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
           ) : null}
         </div>
         <div className="relative aspect-square h-[75%] w-full overflow-hidden lg:h-full">
-          {images[imageIndex] && (
-            <Image
-              className="h-[20%] w-full bg-white object-cover lg:h-full"
-              fill
-              sizes="(min-width: 1024px) 66vw, 100vw"
-              alt={images[imageIndex]?.altText as string}
-              src={images[imageIndex]?.src as string}
-              priority={true}
-            />
-          )}
+          {images[imageIndex] && <Image className="h-[20%] w-full bg-white object-cover lg:h-full" fill sizes="(min-width: 1024px) 66vw, 100vw" alt={images[imageIndex]?.altText as string} src={images[imageIndex]?.src as string} priority={true} />}
 
           {/* {images.length > 1 ? (
             <div className="absolute bottom-[5%] flex w-full justify-center">

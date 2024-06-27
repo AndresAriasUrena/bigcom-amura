@@ -1,4 +1,4 @@
-import { getMenu } from 'lib/bigcommerce';
+import { getMenu } from '@/lib/bigcommerce';
 import Image from 'next/image';
 import { CiFacebook, CiInstagram } from 'react-icons/ci';
 import { FaWhatsapp } from 'react-icons/fa';
