@@ -1,9 +1,17 @@
-import { isVercelCommerceError } from './type-guards';
-import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
+import { notFound } from 'next/navigation';
+//---------------- queries ----------------//
 import { getMenuQuery } from './queries/menu';
-import { getCartQuery } from './queries/cart';
-import { getStoreProductsQuery } from './queries/product';
-import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, VercelCart, BigCommerceCartOperation } from './types';
+import { getPageQuery } from './queries/page';
+import { getCategoryQuery } from './queries/category';
+import { getEntityIdByRouteQuery } from './queries/route';
+import { getStoreProductsQuery, getCategoryProductsQuery } from './queries/product';
+//---------------- mappers ----------------//
+// import { bigCommerceToVercelPageContent } from './mappers';
+//---------------- constants ----------------//
+import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
+//---------------- types ----------------//
+import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, BigCommerceCategoryPageOperation, BigCommerceEntityIdOperation } from './types';
+import { isVercelCommerceError } from './type-guards';
 
 // ----------------------------------------------------------------------------------------------------------
 
@@ -12,6 +20,8 @@ const domain = `https://store-${process.env.BIGCOMMERCE_STORE_HASH!}${channelIdS
 const endpoint = `${domain}.${BIGCOMMERCE_GRAPHQL_API_ENDPOINT}`;
 
 type ExtractVariables<T> = T extends { variables: object } ? T['variables'] : never;
+
+// ------------------------------------------------------------------------------------------------------------
 
 export async function bigCommerceFetch<T>({ query, variables, headers, cache = 'force-cache' }: { query: string; variables?: ExtractVariables<T>; headers?: HeadersInit; cache?: RequestCache }): Promise<{ status: number; body: T } | never> {
   try {
@@ -48,20 +58,32 @@ export async function getProducts() {
   return res.body.data.site.products.edges.map((item) => item.node);
 }
 
-export async function getCart(cartId: string): Promise<VercelCart | undefined> {
-  const res = await bigCommerceFetch<BigCommerceCartOperation>({
-    query: getCartQuery,
-    variables: { entityId: cartId },
-    cache: 'no-store',
+// get Entity Id By Handle
+const getEntityIdByHandle = async (entityHandle: string) => {
+  const res = await bigCommerceFetch<BigCommerceEntityIdOperation>({
+    query: getEntityIdByRouteQuery,
+    variables: {
+      path: `/${entityHandle}`,
+    },
   });
 
-  if (!res.body.data.site.cart) {
-    return undefined;
-  }
+  return res.body.data.site.route.node?.entityId;
+};
 
-  const cart = res.body.data.site.cart;
-  const lines = vercelFromBigCommerceLineItems(cart.lineItems);
-  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
+// get page
+export async function getPage(category: string) {
+  const entityId = await getEntityIdByHandle(category);
 
-  return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
+  const res = await bigCommerceFetch<BigCommerceCategoryPageOperation>({
+    query: getCategoryProductsQuery,
+    variables: {
+      entityId: entityId,
+    },
+  });
+
+  // console.log('---------------------------');
+  // console.log(res.body.data.site);
+  // console.log('---------------------------');
+
+  return res.body.data.site.category;
 }

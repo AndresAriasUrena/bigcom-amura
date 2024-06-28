@@ -222,6 +222,22 @@ const bigCommerceToVercelCollection = (collection: BigCommerceCollection): Verce
   };
 };
 
+const bigCommerceToVercelProducts = (products: BigCommerceProduct[]) => {
+  const reshapedProducts = [];
+
+  for (const product of products) {
+    if (product) {
+      const reshapedProduct = bigCommerceToVercelProduct(product);
+
+      if (reshapedProduct) {
+        reshapedProducts.push(reshapedProduct);
+      }
+    }
+  }
+
+  return reshapedProducts;
+};
+
 export { bigCommerceToVercelCart, bigCommerceToVercelCollection, bigCommerceToVercelProduct, bigCommerceToVercelProducts, vercelFromBigCommerceLineItems };
 
 export const vercelToBigCommerceSorting = (isReversed: boolean, sortKey?: string): keyof typeof BigCommerceSortKeys | null => {

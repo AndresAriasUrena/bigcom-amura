@@ -26,3 +26,17 @@ export const getStoreCategoriesQuery = /* GraphQL */ `
     }
   }
 `;
+export const getCategoryTreeQuery = /* GraphQL */ `
+  query MyQuery {
+    site {
+      categoryTree {
+        description
+        entityId
+        hasChildren
+        path
+        productCount
+        name
+      }
+    }
+  }
+`;

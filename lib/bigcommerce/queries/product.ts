@@ -123,3 +123,53 @@ export const getPopularProductsQuery = /* GraphQL */ `
   }
   ${productFragment}
 `;
+
+export const getCategoryProductsQuery = /* GraphQL */ `
+  query categoryProducts($entityId: Int!) {
+    site {
+      category(entityId: $entityId) {
+        id
+        entityId
+        name
+        path
+        description
+        defaultImage {
+          url(height: 10, width: 10)
+          altText
+        }
+        seo {
+          metaDescription
+          metaKeywords
+          pageTitle
+        }
+        products {
+          edges {
+            node {
+              id
+              addToCartUrl
+              availabilityV2 {
+                status
+              }
+              description
+              images {
+                edges {
+                  node {
+                    altText
+                    url(width: 390, height: 490)
+                  }
+                }
+              }
+              name
+              path
+              seo {
+                metaDescription
+                metaKeywords
+                pageTitle
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

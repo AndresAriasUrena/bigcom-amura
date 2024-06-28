@@ -34,7 +34,7 @@ export default async function Navbar() {
           <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 font-extralight">
             {menu.map((item: Menu) => (
               <li key={item.name}>
-                <Link href={item.path} className="hover:!text-c2 text-white underline-offset-4 ">
+                <Link href={'/categories' + item.path} className="hover:!text-c2 text-white underline-offset-4 ">
                   {item.name}
                 </Link>
               </li>

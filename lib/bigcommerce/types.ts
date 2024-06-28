@@ -342,16 +342,62 @@ export type BigCommerceCollectionsOperation = {
   };
 };
 
-export type BigCommercePageOperation = {
+// --------------------------------------------
+type SEO = {
+  metaDescription: string;
+  metaKeywords: string;
+  pageTitle: string;
+};
+
+type ProductImage = {
+  altText: string;
+  url: string;
+};
+
+type Product = {
+  id: string;
+  addToCartUrl: string;
+  availabilityV2: {
+    status: string;
+  };
+  description: string;
+  images: {
+    edges: {
+      node: ProductImage;
+    }[];
+  };
+  name: string;
+  path: string;
+  seo: SEO;
+};
+
+type Category = {
+  id: string;
+  entityId: number;
+  name: string;
+  path: string;
+  description: string;
+  defaultImage: ProductImage | null;
+  seo: SEO;
+  products: {
+    edges: {
+      node: Product;
+    }[];
+  };
+};
+
+export type BigCommerceCategoryPageOperation = {
   data: {
     site: {
-      content: {
-        page: BigCommercePage;
-      };
+      category: Category;
     };
   };
-  variables: { entityId: number };
+  variables: {
+    entityId: number;
+  };
 };
+
+// --------------------------------------------
 
 export type BigCommercePagesOperation = {
   data: {
