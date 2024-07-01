@@ -4,13 +4,13 @@ import { getMenuQuery } from './queries/menu';
 import { getPageQuery } from './queries/page';
 import { getCategoryQuery } from './queries/category';
 import { getEntityIdByRouteQuery } from './queries/route';
-import { getStoreProductsQuery, getCategoryProductsQuery } from './queries/product';
+import { getStoreProductsQuery, getCategoryProductsQuery, getCategoryProductQuery, getProductQuery } from './queries/product';
 //---------------- mappers ----------------//
 // import { bigCommerceToVercelPageContent } from './mappers';
 //---------------- constants ----------------//
 import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
 //---------------- types ----------------//
-import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, BigCommerceCategoryPageOperation, BigCommerceEntityIdOperation } from './types';
+import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, BigCommerceCategoryPageOperation, BigCommerceEntityIdOperation, BigCommerceProductOperation } from './types';
 import { isVercelCommerceError } from './type-guards';
 
 // ----------------------------------------------------------------------------------------------------------
@@ -80,10 +80,15 @@ export async function getPage(category: string) {
       entityId: entityId,
     },
   });
-
-  // console.log('---------------------------');
-  // console.log(res.body.data.site);
-  // console.log('---------------------------');
-
   return res.body.data.site.category;
+}
+// get product
+export async function getProduct(id: string) {
+  const res = await bigCommerceFetch<BigCommerceProductOperation>({
+    query: getProductQuery,
+    variables: {
+      productId: id,
+    },
+  });
+  return res.body.data.site.product;
 }

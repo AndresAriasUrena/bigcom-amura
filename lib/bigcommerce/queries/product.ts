@@ -1,9 +1,8 @@
 import { productFragment } from '../fragments/product';
-
 export const getProductQuery = /* GraphQL */ `
-  query productById($productId: Int!) {
+  query productById($productId: ID!) {
     site {
-      product(entityId: $productId) {
+      product(id: $productId) {
         ...product
       }
     }
@@ -169,6 +168,27 @@ export const getCategoryProductsQuery = /* GraphQL */ `
             }
           }
         }
+      }
+    }
+  }
+`;
+
+export const getCategoryProductQuery = /* GraphQL */ `
+  query GetProdcutcus($productId: ID!) {
+    site {
+      product(id: $productId) {
+        id
+        addToCartUrl
+        images {
+          edges {
+            node {
+              altText
+              url(width: 435, height: 500, lossy: false)
+            }
+          }
+        }
+        name
+        description
       }
     }
   }

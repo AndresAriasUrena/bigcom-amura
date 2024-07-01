@@ -214,7 +214,7 @@ export type BigCommerceProductOperation = {
     };
   };
   variables: {
-    productId: number;
+    productId: string;
   };
 };
 
@@ -369,6 +369,7 @@ type Product = {
   name: string;
   path: string;
   seo: SEO;
+  sku: string;
 };
 
 type Category = {
