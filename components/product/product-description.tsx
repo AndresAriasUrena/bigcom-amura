@@ -8,7 +8,7 @@ import { useState } from 'react';
 import elem from '../../assets/Group 11.png';
 
 export function ProductDescription({ product }: { product: Product }) {
-  // console.log(product);
+  console.log(product);
 
   const productImages: string[] = product.images.map((image) => image.url);
   const [selectedImage, setSelectedImage] = useState(productImages[0]); // Set initial selected image URL
@@ -19,7 +19,9 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="space-y-2">
           <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.title}</h1>
           {product.description ? <Prose className="font-sm py-3 font-light text-white" html={product.description} /> : null}
-          <div className="text-2xl">{/* <Price amount={product.prices.price.value} currencyCode={product.prices.price.currencyCode} /> */}</div>
+          <div className="text-2xl">
+            <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} />
+          </div>
         </div>
         <div>
           <div className="flex gap-2">
@@ -50,14 +52,14 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>
         </div> */}
 
-        {/* <div>
+        <div>
           <p>Acordes:</p>
           <div className="flex flex-col gap-2 space-x-[1px] lg:flex-row lg:gap-3">
             <button className="w-[80%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">intenso</button>
             <button className="w-[65%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">sensual</button>
             <button className="w-[50%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">cálido</button>
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );
