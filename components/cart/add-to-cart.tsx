@@ -8,61 +8,66 @@ import { VercelProductVariant as ProductVariant } from '@/lib/bigcommerce/types'
 import { useSearchParams } from 'next/navigation';
 import { useFormState, useFormStatus } from 'react-dom';
 
-function SubmitButton({ availableForSale, selectedVariantId }: { availableForSale: boolean; selectedVariantId: string | undefined }) {
-  const { pending } = useFormStatus();
-  const buttonClasses = 'border-2 border-white px-[8%] py-3 text-white relative flex justify-center w-[250px] ';
-  const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
+// function SubmitButton({ availableForSale, selectedVariantId }: { availableForSale: boolean; selectedVariantId: string | undefined }) {
+//   const { pending } = useFormStatus();
+//   const buttonClasses = 'border-2 border-white px-[8%] py-3 text-white relative flex justify-center w-[250px] ';
+//   const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
 
-  if (!availableForSale) {
-    return (
-      <button aria-disabled className={clsx(buttonClasses, disabledClasses)}>
-        Out Of Stock
-      </button>
-    );
-  }
+//   if (!availableForSale) {
+//     return (
+//       <button aria-disabled className={clsx(buttonClasses, disabledClasses)}>
+//         Out Of Stock
+//       </button>
+//     );
+//   }
 
-  if (!selectedVariantId) {
-    return (
-      <button aria-label="Please select an option" aria-disabled className={clsx(buttonClasses, disabledClasses)}>
-        <div className="absolute left-0 ml-4">
-          <PlusIcon className="h-5" />
-        </div>
-        Agregar al carrito
-      </button>
-    );
-  }
+//   if (!selectedVariantId) {
+//     return (
+//       <button aria-label="Please select an option" aria-disabled className={clsx(buttonClasses, disabledClasses)}>
+//         <div className="absolute left-0 ml-4">
+//           <PlusIcon className="h-5" />
+//         </div>
+//         Agregar al carrito
+//       </button>
+//     );
+//   }
+
+//   return (
+//     <button
+//       onClick={(e: React.FormEvent<HTMLButtonElement>) => {
+//         if (pending) e.preventDefault();
+//       }}
+//       aria-label="Add to cart"
+//       aria-disabled={pending}
+//       className={clsx(buttonClasses)}
+//     >
+//       <div className="absolute left-0 ml-4">{pending && <LoadingDots className="mb-3 bg-white" />}</div>
+//       Agregar al carrito
+//     </button>
+//   );
+// }
+
+export function AddToCart({ variants }: { variants: ProductVariant[] }) {
+  console.log('----------------------');
+  console.log(variants);
+  console.log('----------------------');
+
+  // const [message, formAction] = useFormState(addItem, null);
+  // const searchParams = useSearchParams();
+  // const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
+  // const defaultProductId = variants.length === 1 ? variants[0]?.parentId : undefined;
+  // const variant = variants.find((variant: ProductVariant) => variant.selectedOptions.every((option) => option.value === searchParams.get(option.name.toLowerCase())));
+  // const selectedVariantId = variant?.id || defaultVariantId;
+  // const selectedProductId = variant?.parentId || defaultProductId;
+  // const actionWithVariant = formAction.bind(null, { selectedProductId, selectedVariantId });
 
   return (
-    <button
-      onClick={(e: React.FormEvent<HTMLButtonElement>) => {
-        if (pending) e.preventDefault();
-      }}
-      aria-label="Add to cart"
-      aria-disabled={pending}
-      className={clsx(buttonClasses)}
-    >
-      <div className="absolute left-0 ml-4">{pending && <LoadingDots className="mb-3 bg-white" />}</div>
-      Agregar al carrito
-    </button>
-  );
-}
-
-export function AddToCart({ variants, availableForSale }: { variants: ProductVariant[]; availableForSale: boolean }) {
-  const [message, formAction] = useFormState(addItem, null);
-  const searchParams = useSearchParams();
-  const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
-  const defaultProductId = variants.length === 1 ? variants[0]?.parentId : undefined;
-  const variant = variants.find((variant: ProductVariant) => variant.selectedOptions.every((option) => option.value === searchParams.get(option.name.toLowerCase())));
-  const selectedVariantId = variant?.id || defaultVariantId;
-  const selectedProductId = variant?.parentId || defaultProductId;
-  const actionWithVariant = formAction.bind(null, { selectedProductId, selectedVariantId });
-
-  return (
-    <form action={actionWithVariant}>
-      <SubmitButton availableForSale={availableForSale} selectedVariantId={selectedVariantId} />
-      <p aria-live="polite" className="sr-only" role="status">
-        {message}
-      </p>
-    </form>
+    // <form action={actionWithVariant}>
+    //   <SubmitButton availableForSale={availableForSale} selectedVariantId={selectedVariantId} />
+    //   <p aria-live="polite" className="sr-only" role="status">
+    //     {message}
+    //   </p>
+    // </form>
+    <p>add to cart space</p>
   );
 }

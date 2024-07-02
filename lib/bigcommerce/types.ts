@@ -72,15 +72,36 @@ export type VercelProductOption = {
 };
 
 export type VercelProductVariant = {
-  parentId?: string;
-  id: string;
-  title: string;
-  availableForSale: boolean;
-  selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-  price: VercelMoney;
+  node: {
+    id: number;
+    entityId: number;
+    sku: string;
+    upc: string | null;
+    isPurchasable: boolean;
+    prices: {
+      price: BigCommerceMoney;
+      priceRange: {
+        min: BigCommerceMoney;
+        max: BigCommerceMoney;
+      };
+    };
+    options: {
+      edges: Array<{
+        node: {
+          entityId: number;
+          displayName: string;
+          values: {
+            edges: Array<{
+              node: {
+                entityId: number;
+                label: string;
+              };
+            }>;
+          };
+        };
+      }>;
+    };
+  };
 };
 
 export type VercelSEO = {
@@ -594,6 +615,7 @@ export type BigCommerceProductOption = {
 
 export type BigCommerceProduct = {
   id: number;
+  addToCartUrl: string;
   entityId: number;
   sku: string;
   upc: string | null;

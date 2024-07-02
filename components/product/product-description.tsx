@@ -41,7 +41,8 @@ export function ProductDescription({ product }: { product: BigCommerceProduct })
                 500 ml
               </option>
             </select>
-            {/* <AddToCart variants={product.variants} availableForSale={product.availableForSale} /> */}
+            <AddToCart variants={product.variants.edges} />
+            {/* <AddToCart variants={product.variants.edges} availableForSale={product.availableForSale} /> */}
           </div>
           <Image src={elem} alt="none" className="w-full pt-3 lg:w-3/4" />
         </div>
