@@ -2,31 +2,24 @@
 import { AddToCart } from '@/components/cart/add-to-cart';
 import Price from '@/components/price';
 import Prose from '@/components/prose';
-import { BigCommerceProduct } from '@/lib/bigcommerce/types';
+import { VercelProduct as Product } from '@/lib/bigcommerce/types';
 import Image from 'next/image';
 import { useState } from 'react';
 import elem from '../../assets/Group 11.png';
-import p1 from '../../assets/p1.png';
-import p2 from '../../assets/p2.png';
-import p3 from '../../assets/p3.png';
-import p4 from '../../assets/p4.png';
-import p5 from '../../assets/p5.png';
 
-export function ProductDescription({ product }: { product: BigCommerceProduct }) {
-  console.log(product);
+export function ProductDescription({ product }: { product: Product }) {
+  // console.log(product);
 
-  const productImages: string[] = product.images.edges.map((image) => image.node.url);
+  const productImages: string[] = product.images.map((image) => image.url);
   const [selectedImage, setSelectedImage] = useState(productImages[0]); // Set initial selected image URL
 
   return (
     <>
       <div className="flex flex-col gap-2 text-start text-white">
         <div className="space-y-2">
-          <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.name}</h1>
+          <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.title}</h1>
           {product.description ? <Prose className="font-sm py-3 font-light text-white" html={product.description} /> : null}
-          <div className="text-2xl">
-            <Price amount={product.prices.price.value} currencyCode={product.prices.price.currencyCode} />
-          </div>
+          <div className="text-2xl">{/* <Price amount={product.prices.price.value} currencyCode={product.prices.price.currencyCode} /> */}</div>
         </div>
         <div>
           <div className="flex gap-2">
@@ -41,8 +34,7 @@ export function ProductDescription({ product }: { product: BigCommerceProduct })
                 500 ml
               </option>
             </select>
-            <AddToCart variants={product.variants.edges} />
-            {/* <AddToCart variants={product.variants.edges} availableForSale={product.availableForSale} /> */}
+            <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
           </div>
           <Image src={elem} alt="none" className="w-full pt-3 lg:w-3/4" />
         </div>

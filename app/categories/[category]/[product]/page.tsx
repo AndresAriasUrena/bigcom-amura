@@ -8,7 +8,7 @@ import { Image } from '@/lib/bigcommerce/types';
 export default async function Page({ params }: { params: { product: string } }) {
   const decodedProductId = decodeURIComponent(params.product);
   const product = await getProduct(decodedProductId);
-  console.log(product);
+  // console.log(product);
 
   return (
     <>
@@ -21,9 +21,9 @@ export default async function Page({ params }: { params: { product: string } }) 
           <div className="grid overflow-hidden  rounded-lg py-4 md:p-12 lg:grid-cols-2 lg:gap-8 dark:border-neutral-800 dark:bg-black">
             <div className="h-full w-full basis-full ">
               <Gallery
-                images={product.images.edges.map((image) => ({
-                  src: image.node.url,
-                  altText: image.node.altText,
+                images={product.images.map((image) => ({
+                  src: image.url,
+                  altText: image.altText,
                 }))}
               />
             </div>

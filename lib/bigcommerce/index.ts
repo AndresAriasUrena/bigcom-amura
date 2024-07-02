@@ -1,17 +1,27 @@
 import { notFound } from 'next/navigation';
 //---------------- queries ----------------//
 import { getMenuQuery } from './queries/menu';
-import { getPageQuery } from './queries/page';
-import { getCategoryQuery } from './queries/category';
 import { getEntityIdByRouteQuery } from './queries/route';
-import { getStoreProductsQuery, getCategoryProductsQuery, getCategoryProductQuery, getProductQuery } from './queries/product';
+import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery } from './queries/product';
+import { getCartQuery } from './queries/cart';
+import { getCheckoutQuery } from './queries/checkout';
 //---------------- mappers ----------------//
-// import { bigCommerceToVercelPageContent } from './mappers';
+// import { bigCommerceToVercelProduct, vercelFromBigCommerceLineItems } from './mappers';
+import { bigCommerceToVercelCart, bigCommerceToVercelProduct, vercelFromBigCommerceLineItems } from './mappers';
 //---------------- constants ----------------//
 import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
 //---------------- types ----------------//
-import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation, BigCommerceCategoryPageOperation, BigCommerceEntityIdOperation, BigCommerceProductOperation } from './types';
+// prettier-ignore
+import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation,BigCommerceCategoryPageOperation,BigCommerceEntityIdOperation,
+  BigCommerceProductOperation,VercelCart,BigCommerceCartOperation,BigCommerceCheckoutOperation,BigCommerceProduct,BigCommerceProductsOperation,
+  BigCommerceCart, BigCommerceAddToCartOperation,BigCommerceCreateCartOperation,BigCommerceDeleteCartItemOperation,
+  BigCommerceUpdateCartItemOperation } from './types';
+
 import { isVercelCommerceError } from './type-guards';
+// --------------- mutations ------------------//
+import { addCartLineItemMutation, createCartMutation, deleteCartLineItemMutation, updateCartLineItemMutation } from './mutations/cart';
+// --------------- config ------------------//
+import { memoizedCartRedirectUrl } from './storefront-config';
 
 // ----------------------------------------------------------------------------------------------------------
 
@@ -90,5 +100,214 @@ export async function getProduct(id: string) {
       productId: id,
     },
   });
-  return res.body.data.site.product;
+  return bigCommerceToVercelProduct(res.body.data.site.product);
+  // return res.body.data.site.product;
+}
+
+// --------------------------------------------------------------------------------
+const getBigCommerceProductsWithCheckout = async (cartId: string, lines: { merchandiseId: string; quantity: number; productId?: string }[]) => {
+  const productIds = lines.map(({ merchandiseId, productId }) => parseInt(productId ?? merchandiseId, 10));
+  const bigCommerceProductListRes = await bigCommerceFetch<BigCommerceProductsOperation>({
+    query: getStoreProductsQuery,
+    variables: {
+      entityIds: productIds,
+    },
+    cache: 'no-store',
+  });
+  const bigCommerceProductList = bigCommerceProductListRes.body.data.site.products.edges.map((product) => product.node);
+
+  const createProductList = (idList: number[], products: BigCommerceProduct[]) => {
+    return idList.map((productId) => {
+      const productData = products.find(({ entityId }) => entityId === productId)!;
+
+      return {
+        productId,
+        productData,
+      };
+    });
+  };
+  const bigCommerceProducts = createProductList(productIds, bigCommerceProductList);
+
+  const resCheckout = await bigCommerceFetch<BigCommerceCheckoutOperation>({
+    query: getCheckoutQuery,
+    variables: {
+      entityId: cartId,
+    },
+    cache: 'no-store',
+  });
+  const checkout = resCheckout.body.data.site.checkout ?? {
+    subtotal: {
+      value: 0,
+      currencyCode: '',
+    },
+    grandTotal: {
+      value: 0,
+      currencyCode: '',
+    },
+    taxTotal: {
+      value: 0,
+      currencyCode: '',
+    },
+  };
+
+  const checkoutUrlRes = await memoizedCartRedirectUrl(cartId);
+  const checkoutUrl = checkoutUrlRes.data?.embedded_checkout_url;
+
+  return {
+    productsByIdList: bigCommerceProducts,
+    checkoutUrl,
+    checkout,
+  };
+};
+
+// ------------------------------ cart --------------------------------- //
+
+export async function addToCart(cartId: string, lines: { merchandiseId: string; quantity: number; productId?: string }[]): Promise<VercelCart> {
+  let bigCommerceCart: BigCommerceCart;
+
+  if (cartId) {
+    const res = await bigCommerceFetch<BigCommerceAddToCartOperation>({
+      query: addCartLineItemMutation,
+      variables: {
+        addCartLineItemsInput: {
+          cartEntityId: cartId,
+          data: {
+            lineItems: lines.map(({ merchandiseId, quantity, productId }) => ({
+              productEntityId: parseInt(productId!, 10),
+              variantEntityId: parseInt(merchandiseId, 10),
+              quantity,
+            })),
+          },
+        },
+      },
+      cache: 'no-store',
+    });
+
+    bigCommerceCart = res.body.data.cart.addCartLineItems.cart;
+  } else {
+    const res = await bigCommerceFetch<BigCommerceCreateCartOperation>({
+      query: createCartMutation,
+      variables: {
+        createCartInput: {
+          lineItems: lines.map(({ merchandiseId, quantity, productId }) => ({
+            productEntityId: parseInt(productId!, 10),
+            variantEntityId: parseInt(merchandiseId, 10),
+            quantity,
+          })),
+        },
+      },
+      cache: 'no-store',
+    });
+
+    bigCommerceCart = res.body.data.cart.createCart.cart;
+  }
+
+  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(bigCommerceCart.entityId, lines);
+
+  return bigCommerceToVercelCart(bigCommerceCart, productsByIdList, checkout, checkoutUrl);
+}
+
+export async function removeFromCart(cartId: string, lineIds: string[]): Promise<VercelCart | undefined> {
+  let cartState: { status: number; body: BigCommerceDeleteCartItemOperation };
+  const removeCartItem = async (itemId: string) => {
+    const res = await bigCommerceFetch<BigCommerceDeleteCartItemOperation>({
+      query: deleteCartLineItemMutation,
+      variables: {
+        deleteCartLineItemInput: {
+          cartEntityId: cartId,
+          lineItemEntityId: itemId,
+        },
+      },
+      cache: 'no-store',
+    });
+
+    return res;
+  };
+
+  if (lineIds.length === 1) {
+    cartState = await removeCartItem(lineIds[0]!);
+  } else if (lineIds.length > 1) {
+    // NOTE: can it happen at all??
+    let operations = lineIds.length;
+
+    while (operations > 0) {
+      operations--;
+      cartState = await removeCartItem(lineIds[operations]!);
+    }
+  }
+
+  const cart = cartState!.body.data.cart.deleteCartLineItem.cart;
+
+  if (cart === null) {
+    return undefined;
+  }
+
+  const lines = vercelFromBigCommerceLineItems(cart.lineItems);
+  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
+
+  return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
+}
+
+export async function getProductIdBySlug(path: string): Promise<{ __typename: 'Product' | 'Category' | 'Brand' | 'NormalPage' | 'ContactPage' | 'RawHtmlPage' | 'BlogIndexPage'; entityId: number } | undefined> {
+  const res = await bigCommerceFetch<BigCommerceEntityIdOperation>({
+    query: getEntityIdByRouteQuery,
+    variables: {
+      path,
+    },
+  });
+
+  return res.body.data.site.route.node;
+}
+
+// NOTE: update happens on product & variant levels w/t optionEntityId
+export async function updateCart(cartId: string, lines: { id: string; merchandiseId: string; quantity: number; productSlug?: string }[]): Promise<VercelCart> {
+  let cartState: { status: number; body: BigCommerceUpdateCartItemOperation } | undefined;
+
+  for (let updates = lines.length; updates > 0; updates--) {
+    const { id, merchandiseId, quantity, productSlug } = lines[updates - 1]!;
+    const productEntityId = (await getProductIdBySlug(productSlug!))?.entityId!;
+
+    const res = await bigCommerceFetch<BigCommerceUpdateCartItemOperation>({
+      query: updateCartLineItemMutation,
+      variables: {
+        updateCartLineItemInput: {
+          cartEntityId: cartId,
+          lineItemEntityId: id,
+          data: {
+            lineItem: {
+              variantEntityId: parseInt(merchandiseId, 10),
+              productEntityId,
+              quantity,
+            },
+          },
+        },
+      },
+      cache: 'no-store',
+    });
+
+    cartState = res;
+  }
+
+  const updatedCart = cartState!.body.data.cart.updateCartLineItem.cart;
+  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
+
+  return bigCommerceToVercelCart(updatedCart, productsByIdList, checkout, checkoutUrl);
+}
+
+export async function getCart(cartId: string): Promise<VercelCart | undefined> {
+  const res = await bigCommerceFetch<BigCommerceCartOperation>({
+    query: getCartQuery,
+    variables: { entityId: cartId },
+    cache: 'no-store',
+  });
+
+  if (!res.body.data.site.cart) {
+    return undefined;
+  }
+
+  const cart = res.body.data.site.cart;
+  const lines = vercelFromBigCommerceLineItems(cart.lineItems);
+  const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
+
+  return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
 }
