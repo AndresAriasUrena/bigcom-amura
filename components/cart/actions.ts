@@ -1,7 +1,7 @@
 'use server';
 
-import { addToCart, removeFromCart, updateCart } from '@/lib/bigcommerce';
-import { TAGS } from '@/lib/constants';
+import { addToCart, removeFromCart, updateCart } from 'lib/bigcommerce';
+import { TAGS } from 'lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
@@ -9,7 +9,7 @@ export async function addItem(
   prevState: any,
   {
     selectedProductId,
-    selectedVariantId,
+    selectedVariantId
   }: {
     selectedProductId: string | undefined;
     selectedVariantId: string | undefined;
@@ -22,7 +22,9 @@ export async function addItem(
   }
 
   try {
-    const { id } = await addToCart(cartId ?? '', [{ merchandiseId: selectedVariantId, quantity: 1, productId: selectedProductId }]);
+    const { id } = await addToCart(cartId ?? '', [
+      { merchandiseId: selectedVariantId, quantity: 1, productId: selectedProductId }
+    ]);
     revalidateTag(TAGS.cart);
     cookies().set('cartId', id);
   } catch (e) {
@@ -83,8 +85,8 @@ export async function updateItemQuantity(
         id: lineId,
         merchandiseId: variantId,
         quantity,
-        productSlug,
-      },
+        productSlug
+      }
     ]);
     revalidateTag(TAGS.cart);
   } catch (e) {

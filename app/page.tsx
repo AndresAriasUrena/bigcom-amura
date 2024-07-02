@@ -1,9 +1,9 @@
-import { Banner } from '@/components/Banner';
-import { Boutique } from '@/components/Boutiques';
-import { Slider } from '@/components/Carousel1';
-import { GridSection } from '@/components/GridSection';
-import { Hero } from '@/components/Hero';
-import Footer from '@/components/layout/footer';
+import { Banner } from 'components/Banner';
+import { Boutique } from 'components/Boutiques';
+import { Slider } from 'components/Carousel1';
+import { GridSection } from 'components/GridSection';
+import { Hero } from 'components/Hero';
+import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -11,8 +11,8 @@ export const runtime = 'edge';
 export const metadata = {
   description: 'High-performance ecommerce store built with Next.js, Vercel, and BigCommerce.',
   openGraph: {
-    type: 'website',
-  },
+    type: 'website'
+  }
 };
 
 export default async function HomePage() {
@@ -22,7 +22,7 @@ export default async function HomePage() {
       <GridSection />
       {/* <ThreeItemGrid /> */}
       <Suspense>
-        {/* <Carousel /> old commented code */}
+        {/* <Carousel /> */}
         <Banner />
         <Slider />
         <Boutique />

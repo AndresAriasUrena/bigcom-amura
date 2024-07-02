@@ -1,5 +1,5 @@
-import banner from '@/assets/Assesoria.png';
-import logo from '@/assets/logo.png';
+import banner from 'assets/Assesoria.png';
+import logo from 'assets/logo.png';
 import Image from 'next/image';
 
 export async function Banner() {
@@ -9,7 +9,7 @@ export async function Banner() {
       style={{
         backgroundImage: `linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url(${banner.src})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'center'
       }}
     >
       <div className="hidden lg:block"></div>
@@ -20,7 +20,9 @@ export async function Banner() {
           Encontramos el perfume <br />
           perfecto para vos
         </p>
-        <button className="bg-[#3E191D] px-6 py-2 text-white transition duration-300 hover:bg-[#2b0f12] lg:px-12 lg:py-4">Consultar</button>
+        <button className="bg-[#3E191D] px-6 py-2 text-white transition duration-300 hover:bg-[#2b0f12] lg:px-12 lg:py-4">
+          Consultar
+        </button>
       </div>
     </div>
   );

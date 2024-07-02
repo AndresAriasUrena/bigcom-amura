@@ -1,8 +1,9 @@
 import { productFragment } from '../fragments/product';
+
 export const getProductQuery = /* GraphQL */ `
-  query productById($productId: ID!) {
+  query productById($productId: Int!) {
     site {
-      product(id: $productId) {
+      product(entityId: $productId) {
         ...product
       }
     }
@@ -13,7 +14,7 @@ export const getProductQuery = /* GraphQL */ `
 export const getStoreProductsQuery = /* GraphQL */ `
   query getStoreProducts($entityIds: [Int!]) {
     site {
-      products(entityIds: $entityIds, first: 50) {
+      products(entityIds: $entityIds) {
         edges {
           node {
             ...product
@@ -26,7 +27,12 @@ export const getStoreProductsQuery = /* GraphQL */ `
 `;
 
 export const getProductsCollectionQuery = /* GraphQL */ `
-  query getProductsCollection($entityId: Int!, $sortBy: CategoryProductSort, $hideOutOfStock: Boolean, $first: Int) {
+  query getProductsCollection(
+    $entityId: Int!
+    $sortBy: CategoryProductSort
+    $hideOutOfStock: Boolean
+    $first: Int
+  ) {
     site {
       category(entityId: $entityId) {
         products(sortBy: $sortBy, hideOutOfStock: $hideOutOfStock, first: $first) {
@@ -121,75 +127,4 @@ export const getPopularProductsQuery = /* GraphQL */ `
     }
   }
   ${productFragment}
-`;
-
-export const getCategoryProductsQuery = /* GraphQL */ `
-  query categoryProducts($entityId: Int!) {
-    site {
-      category(entityId: $entityId) {
-        id
-        entityId
-        name
-        path
-        description
-        defaultImage {
-          url(height: 10, width: 10)
-          altText
-        }
-        seo {
-          metaDescription
-          metaKeywords
-          pageTitle
-        }
-        products {
-          edges {
-            node {
-              id
-              addToCartUrl
-              availabilityV2 {
-                status
-              }
-              description
-              images {
-                edges {
-                  node {
-                    altText
-                    url(width: 390, height: 490)
-                  }
-                }
-              }
-              name
-              path
-              seo {
-                metaDescription
-                metaKeywords
-                pageTitle
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const getCategoryProductQuery = /* GraphQL */ `
-  query GetProdcutcus($productId: ID!) {
-    site {
-      product(id: $productId) {
-        id
-        addToCartUrl
-        images {
-          edges {
-            node {
-              altText
-              url(width: 435, height: 500, lossy: false)
-            }
-          }
-        }
-        name
-        description
-      }
-    }
-  }
 `;

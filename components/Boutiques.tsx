@@ -1,8 +1,8 @@
-import Curridabat from '@/assets/Curridabat.png';
-import escazu from '@/assets/Escazu.png';
-import sabana from '@/assets/Sabana.png';
-import boutique from '@/assets/boutiques.png';
-import momentum from '@/assets/mementum.png';
+import Curridabat from 'assets/Curridabat.png';
+import escazu from 'assets/Escazu.png';
+import sabana from 'assets/Sabana.png';
+import boutique from 'assets/boutiques.png';
+import momentum from 'assets/mementum.png';
 
 export async function Boutique() {
   return (
@@ -11,7 +11,7 @@ export async function Boutique() {
       style={{
         backgroundImage: `url(${boutique.src})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'center'
       }}
     >
       <h2 className="pb-14 text-3xl font-extralight uppercase">boutiques</h2>
@@ -32,7 +32,7 @@ export async function Boutique() {
           style={{
             backgroundImage: `url(${sabana.src})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center'
           }}
         >
           <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Sabana Sur</h3>
@@ -42,7 +42,7 @@ export async function Boutique() {
           style={{
             backgroundImage: `url(${momentum.src})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center'
           }}
         >
           <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Momentum</h3>
@@ -52,7 +52,7 @@ export async function Boutique() {
           style={{
             backgroundImage: `url(${escazu.src})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center'
           }}
         >
           <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Escazú</h3>
@@ -65,7 +65,7 @@ export async function Boutique() {
           style={{
             backgroundImage: `url(${Curridabat.src})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center'
           }}
         >
           <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Curridabat</h3>

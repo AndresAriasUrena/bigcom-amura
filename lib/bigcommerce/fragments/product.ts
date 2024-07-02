@@ -104,7 +104,6 @@ const productFragment = /* GraphQL */ `
   fragment product on Product {
     id
     entityId
-    addToCartUrl
     sku
     upc
     name
