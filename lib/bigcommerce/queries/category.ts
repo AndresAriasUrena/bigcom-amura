@@ -20,8 +20,15 @@ export const getStoreCategoriesQuery = /* GraphQL */ `
   query getStoreCategories {
     site {
       categoryTree {
-        entityId
         name
+        productCount
+        description
+        entityId
+        path
+        image {
+          altText
+          urlOriginal
+        }
       }
     }
   }

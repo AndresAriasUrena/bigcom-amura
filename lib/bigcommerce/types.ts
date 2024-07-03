@@ -416,7 +416,7 @@ export type BigCommerceCheckout = {
   taxTotal: BigCommerceMoney;
 };
 
-export type BigCommerceCategoryWithId = Omit<BigCommerceCollection, 'description' | 'seo' | 'path'>;
+export type BigCommerceCategoryWithId = Omit<BigCommerceCollection, 'description' | 'seo'>;
 
 export type BigCommerceSEO = {
   pageTitle: string;
@@ -427,6 +427,11 @@ export type BigCommerceSEO = {
 export type BigCommerceCollection = {
   entityId: number;
   name: string;
+  productCount: number;
+  image: {
+    urlOriginal: string;
+    altText: string;
+  } | null;
   path: string;
   description: string;
   seo: BigCommerceSEO;

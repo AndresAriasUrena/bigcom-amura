@@ -5,6 +5,7 @@ import { getEntityIdByRouteQuery } from './queries/route';
 import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery, getProductsRecommedationsQuery } from './queries/product';
 import { getCartQuery } from './queries/cart';
 import { getCheckoutQuery } from './queries/checkout';
+import { getStoreCategoriesQuery } from './queries/category';
 //---------------- mappers ----------------//
 // import { bigCommerceToVercelProduct, vercelFromBigCommerceLineItems } from './mappers';
 import { bigCommerceToVercelCart, bigCommerceToVercelProduct, vercelFromBigCommerceLineItems, bigCommerceToVercelProducts } from './mappers';
@@ -15,7 +16,8 @@ import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
 import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation,BigCommerceCategoryPageOperation,BigCommerceEntityIdOperation,
   BigCommerceProductOperation,VercelCart,BigCommerceCartOperation,BigCommerceCheckoutOperation,BigCommerceProduct,BigCommerceProductsOperation,
   BigCommerceCart, BigCommerceAddToCartOperation,BigCommerceCreateCartOperation,BigCommerceDeleteCartItemOperation,
-  BigCommerceUpdateCartItemOperation,VercelProduct,BigCommerceRecommendationsOperation } from './types';
+  BigCommerceUpdateCartItemOperation,VercelProduct,BigCommerceRecommendationsOperation,BigCommerceCollectionsOperation,
+  BigCommerceCollectionOperation } from './types';
 
 import { isVercelCommerceError } from './type-guards';
 // --------------- mutations ------------------//
@@ -58,11 +60,21 @@ export async function bigCommerceFetch<T>({ query, variables, headers, cache = '
   }
 }
 
+// ------------------------- menu --------------------------------
 export async function getMenu() {
   const res = await bigCommerceFetch<BigCommerceMenuOperation>({ query: getMenuQuery });
   return res.body.data.site.categoryTree ? res.body.data.site.categoryTree : [];
 }
+// ------------------------- categories --------------------------------
+export async function getCategories() {
+  const res = await bigCommerceFetch<BigCommerceCollectionsOperation>({
+    query: getStoreCategoriesQuery,
+  });
 
+  return res.body.data.site.categoryTree;
+}
+
+// ------------------------- products --------------------------------
 export async function getProducts() {
   const res = await bigCommerceFetch<BigCommerceSearchProductsOperation>({ query: getStoreProductsQuery });
   return res.body.data.site.products.edges.map((item) => item.node);
@@ -80,7 +92,7 @@ const getEntityIdByHandle = async (entityHandle: string) => {
   return res.body.data.site.route.node?.entityId;
 };
 
-// get page
+// get page of products
 export async function getPage(category: string) {
   const entityId = await getEntityIdByHandle(category);
 
