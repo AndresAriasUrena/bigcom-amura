@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  const productsPromise = getProducts({}).then((products) =>
+  const productsPromise = getProducts().then((products) =>
     products.map((product) => ({
       url: `${baseUrl}${product.handle}`,
       lastModified: product.updatedAt,
@@ -41,6 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let fetchedRoutes: Route[] = [];
 
   try {
+    // @ts-ignore
     fetchedRoutes = (await Promise.all([collectionsPromise, productsPromise, pagesPromise])).flat();
   } catch (error) {
     throw JSON.stringify(error, null, 2);

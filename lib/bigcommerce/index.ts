@@ -5,10 +5,12 @@ import { getEntityIdByRouteQuery } from './queries/route';
 import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery, getProductsRecommedationsQuery } from './queries/product';
 import { getCartQuery } from './queries/cart';
 import { getCheckoutQuery } from './queries/checkout';
-import { getStoreCategoriesQuery } from './queries/category';
+import { getStoreCategoriesQuery, getCategoryQuery } from './queries/category';
+import { getPagesQuery } from './queries/page';
 //---------------- mappers ----------------//
-// import { bigCommerceToVercelProduct, vercelFromBigCommerceLineItems } from './mappers';
-import { bigCommerceToVercelCart, bigCommerceToVercelProduct, vercelFromBigCommerceLineItems, bigCommerceToVercelProducts } from './mappers';
+// prettier-ignore
+import { bigCommerceToVercelCart, bigCommerceToVercelProduct, vercelFromBigCommerceLineItems,
+  bigCommerceToVercelProducts, bigCommerceToVercelCollection,bigCommerceToVercelPageContent } from './mappers';
 //---------------- constants ----------------//
 import { BIGCOMMERCE_GRAPHQL_API_ENDPOINT } from './constants';
 //---------------- types ----------------//
@@ -17,7 +19,7 @@ import { BigCommerceMenuOperation, BigCommerceSearchProductsOperation,BigCommerc
   BigCommerceProductOperation,VercelCart,BigCommerceCartOperation,BigCommerceCheckoutOperation,BigCommerceProduct,BigCommerceProductsOperation,
   BigCommerceCart, BigCommerceAddToCartOperation,BigCommerceCreateCartOperation,BigCommerceDeleteCartItemOperation,
   BigCommerceUpdateCartItemOperation,VercelProduct,BigCommerceRecommendationsOperation,BigCommerceCollectionsOperation,
-  BigCommerceCollectionOperation } from './types';
+  BigCommerceCollectionOperation,VercelCollection,VercelPage,BigCommercePagesOperation } from './types';
 
 import { isVercelCommerceError } from './type-guards';
 // --------------- mutations ------------------//
@@ -72,6 +74,26 @@ export async function getCategories() {
   });
 
   return res.body.data.site.categoryTree;
+}
+
+export async function getCollections(): Promise<VercelCollection[]> {
+  const res = await bigCommerceFetch<BigCommerceCollectionsOperation>({
+    query: getStoreCategoriesQuery,
+  });
+  const collectionIdList = res.body.data.site.categoryTree.map(({ entityId }) => entityId);
+  const collections = await Promise.all(
+    collectionIdList.map(async (entityId) => {
+      const res = await bigCommerceFetch<BigCommerceCollectionOperation>({
+        query: getCategoryQuery,
+        variables: {
+          entityId,
+        },
+      });
+      return bigCommerceToVercelCollection(res.body.data.site.category);
+    })
+  );
+
+  return collections;
 }
 
 // ------------------------- products --------------------------------
@@ -338,4 +360,15 @@ export async function getCart(cartId: string): Promise<VercelCart | undefined> {
   const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
 
   return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
+}
+
+// ------------------------------------ other ----------------------------------
+export async function getPages(): Promise<VercelPage[]> {
+  const res = await bigCommerceFetch<BigCommercePagesOperation>({
+    query: getPagesQuery,
+  });
+
+  const pagesList = res.body.data.site.content.pages.edges.map((item) => item.node);
+
+  return pagesList.map((page) => bigCommerceToVercelPageContent(page));
 }

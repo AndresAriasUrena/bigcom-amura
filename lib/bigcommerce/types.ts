@@ -604,6 +604,8 @@ export type BigCommerceProduct = {
   sku: string;
   upc: string | null;
   name: string;
+  handle: string;
+  updatedAt: Date;
   brand: {
     name: string;
   } | null;
