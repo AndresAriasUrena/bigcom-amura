@@ -8,9 +8,9 @@ export type Props = {
 export default async function OpengraphImage(props?: Props): Promise<ImageResponse> {
   const { title } = {
     ...{
-      title: process.env.SITE_NAME
+      title: process.env.SITE_NAME,
     },
-    ...props
+    ...props,
   };
 
   return new ImageResponse(
@@ -28,13 +28,11 @@ export default async function OpengraphImage(props?: Props): Promise<ImageRespon
       fonts: [
         {
           name: 'Inter',
-          data: await fetch(new URL('../fonts/Inter-Bold.ttf', import.meta.url)).then((res) =>
-            res.arrayBuffer()
-          ),
+          data: await fetch(new URL('../fonts/Inter-Bold.ttf', import.meta.url)).then((res) => res.arrayBuffer()),
           style: 'normal',
-          weight: 700
-        }
-      ]
+          weight: 700,
+        },
+      ],
     }
   );
 }
