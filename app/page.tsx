@@ -27,8 +27,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* <Hero /> */}
-      {/* <GridSection /> */}
+      <Hero />
+      <GridSection />
       <div className="relative w-full px-4 md:px-16">
         <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
         <div className="mx-auto max-w-[1400px]">
@@ -38,8 +38,8 @@ export default async function HomePage() {
           <CollectionCarousel collections={collections} />
         </div>
       </div>
-      {/* <Banner /> */}
-      {/* <Boutique /> */}
+      <Banner />
+      <Boutique />
     </>
   );
 }
