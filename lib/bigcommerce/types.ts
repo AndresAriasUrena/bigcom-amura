@@ -354,7 +354,7 @@ type ProductImage = {
   url: string;
 };
 
-type Product = {
+export type Product = {
   id: string;
   addToCartUrl: string;
   availabilityV2: {
@@ -397,6 +397,26 @@ export type BigCommerceCategoryPageOperation = {
     entityId: number;
   };
 };
+
+export type giftProducts = {
+  node: Product;
+};
+
+// id: string;
+// addToCartUrl: string;
+// availabilityV2: {
+//   status: string;
+// };
+// description: string;
+// images: {
+//   edges: {
+//     node: ProductImage;
+//   }[];
+// };
+// name: string;
+// path: string;
+// seo: SEO;
+// sku: string;
 
 // --------------------------------------------
 
