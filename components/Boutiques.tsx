@@ -6,7 +6,7 @@ import momentum from '@/assets/mementum.png';
 
 export async function Boutique() {
   return (
-    <div className=" flex min-h-screen flex-col items-center gap-[10%] px-[12%] py-[10%] text-center text-white" style={{ backgroundImage: `url(${boutique.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className=" flex min-h-screen flex-col items-center gap-[10%] px-[12%] py-[10%] text-center text-white" style={{ backgroundImage: `url(${boutique.src})`, backgroundSize: 'cover', backgroundPosition: 'top center' }}>
       <h2 className="pb-14 text-3xl font-extralight uppercase">boutiques</h2>
       <p className="space-y-4 text-2xl font-extralight capitalize leading-10">
         horarios <br />
