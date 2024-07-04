@@ -53,8 +53,14 @@ export function GiftsCarousel() {
   return (
     <SlickSlider {...settings} className="mx-2 sm:mx-6 sm:px-4">
       {images.map((image, index) => (
-        <div className="h-[600px]" key={index}>
+        <div className="group relative h-[600px] cursor-pointer overflow-hidden" key={index}>
           <img src={image.src} alt="gift image" className="mx-auto h-full w-full max-w-[90%] object-cover sm:max-w-[95%]" />
+          <div className="absolute inset-0 top-[calc(100%+400px)] flex items-center duration-300 group-hover:top-0 group-hover:bg-black/50">
+            <div className="h-fit text-center">
+              <h3 className="text-3xl">B683</h3>
+              <p className="mt-4 text-2xl font-light">Extrait Marc-Antoine Barrois</p>
+            </div>
+          </div>
         </div>
       ))}
     </SlickSlider>

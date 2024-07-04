@@ -11,7 +11,12 @@ import MobileMenu from './mobile-menu';
 import Search from './search';
 
 export default async function Navbar() {
-  const menu = await getMenu();
+  // Fetch the menu data from BigCommerce
+  const res = await getMenu();
+  // Filter the menu items to only include the ones with allowed paths
+  const AllowedListItems = ['/para-el/', '/para-ella/', '/arabes/', '/dise-ador/', '/alta-gama/'];
+  const menu = res.filter((item: Menu) => AllowedListItems.includes(item.path));
+
   return (
     <nav className="relative bg-black/85 text-white" style={{ backgroundImage: `url(${PatternImage.src})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8 }}>
       <div className="w-full bg-black py-3 text-center text-xs">Lorem ipsum dolor sit amet consectetur adipiscing elit</div>
@@ -21,7 +26,7 @@ export default async function Navbar() {
         </Link>
         {/* mobile menu */}
         <MobileMenu menu={menu} />
-        <div className="maxlg:top-[85px] absolute right-0 flex h-14 w-fit min-w-[100px]  text-white">
+        <div className="absolute right-0 flex h-14 w-fit min-w-[100px] text-white  maxlg:top-[85px]">
           <Search />
           <Suspense fallback={<OpenCart />}>
             <Cart />
@@ -29,10 +34,10 @@ export default async function Navbar() {
         </div>
       </div>
       {/* links */}
-      <div className="maxlg:hidden flex w-full justify-center">
+      <div className="flex w-full justify-center maxlg:hidden">
         {menu.length ? (
           <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 font-extralight">
-            {menu.map((item: Menu) => (
+            {menu.map((item) => (
               <li key={item.name}>
                 <Link href={'/categories' + item.path} className="hover:!text-c2 text-white underline-offset-4 ">
                   {item.name}
