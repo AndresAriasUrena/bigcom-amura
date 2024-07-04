@@ -165,6 +165,16 @@ export const getCategoryProductsQuery = /* GraphQL */ `
                 metaKeywords
                 pageTitle
               }
+              prices {
+                price {
+                  value
+                  formatted
+                  currencyCode
+                }
+              }
+              brand {
+                name
+              }
             }
           }
         }

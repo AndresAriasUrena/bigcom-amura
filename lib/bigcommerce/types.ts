@@ -402,21 +402,11 @@ export type giftProducts = {
   node: Product;
 };
 
-// id: string;
-// addToCartUrl: string;
-// availabilityV2: {
-//   status: string;
-// };
-// description: string;
-// images: {
-//   edges: {
-//     node: ProductImage;
-//   }[];
-// };
-// name: string;
-// path: string;
-// seo: SEO;
-// sku: string;
+export type CollectionProducts = {
+  designer: Category;
+  highEnd: Category;
+  arabs: Category;
+};
 
 // --------------------------------------------
 
