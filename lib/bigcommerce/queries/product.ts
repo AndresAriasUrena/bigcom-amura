@@ -142,6 +142,9 @@ export const getCategoryProductsQuery = /* GraphQL */ `
           pageTitle
         }
         products {
+          collectionInfo {
+            totalItems
+          }
           edges {
             node {
               id

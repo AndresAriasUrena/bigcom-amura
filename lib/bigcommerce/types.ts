@@ -381,6 +381,9 @@ type Category = {
   defaultImage: ProductImage | null;
   seo: SEO;
   products: {
+    collectionInfo: {
+      totalItems: number;
+    };
     edges: {
       node: Product;
     }[];
@@ -406,6 +409,15 @@ export type CollectionProducts = {
   designer: Category;
   highEnd: Category;
   arabs: Category;
+};
+
+export type categoryItems = {
+  collectionInfo: {
+    totalItems: number;
+  };
+  edges: {
+    node: Product;
+  }[];
 };
 
 // --------------------------------------------
