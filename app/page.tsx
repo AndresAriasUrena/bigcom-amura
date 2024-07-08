@@ -31,7 +31,7 @@ export default async function HomePage() {
       <GridSection />
       <div className="relative w-full px-4 pb-16 md:px-16">
         <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
-        <div className="mx-auto max-w-[1400px]">
+        <div className="mx-auto ">
           <h1 className="py-16 text-center text-3xl font-normal uppercase lg:text-4xl">Ideas para Regalar</h1>
           <GiftsCarousel gifts={gifts.products.edges} />
           <h1 className="py-16 text-center text-3xl font-normal uppercase md:py-20 lg:py-24 lg:text-4xl">La colección de amura</h1>

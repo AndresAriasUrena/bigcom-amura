@@ -26,10 +26,24 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
     infinite: true,
     speed: 500,
     slidesToScroll: 1,
-    slidesToShow: 3,
+    slidesToShow: 5,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
+      {
+        breakpoint: 1800,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
       {
         breakpoint: 1200,
         settings: {

@@ -22,20 +22,33 @@ export function GiftsCarousel({ gifts }: { gifts: giftProducts[] }) {
     infinite: true,
     speed: 500,
     slidesToScroll: 1,
-    slidesToShow: 3,
+    slidesToShow: 5,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 992,
+        breakpoint: 1800,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
-          initialSlide: 2,
         },
       },
       {
-        breakpoint: 576,
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
