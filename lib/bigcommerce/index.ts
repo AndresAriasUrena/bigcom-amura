@@ -137,8 +137,8 @@ export async function getProduct(id: string) {
       productId: id,
     },
   });
+
   return bigCommerceToVercelProduct(res.body.data.site.product);
-  // return res.body.data.site.product;
 }
 
 export async function getProductRecommendations(productId: string): Promise<VercelProduct[]> {

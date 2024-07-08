@@ -90,6 +90,7 @@ const bigCommerceToVercelProduct = (product: BigCommerceProduct): VercelProduct 
     },
     tags: [product.seo.metaKeywords] || [],
     updatedAt: product.createdAt.utc.toString(),
+    customFields: product.customFields,
   };
 };
 
@@ -156,6 +157,7 @@ const bigCommerceToVercelCartItems = (lineItems: BigCommerceCart['lineItems'], p
           id: isCustomItem ? item.entityId.toString() : (item as DigitalOrPhysicalItem).variantEntityId!.toString(),
           title: `${item.name}`,
           selectedOptions,
+          // @ts-ignore
           product,
         },
       };

@@ -7,19 +7,10 @@ import 'slick-carousel/slick/slick.css';
 import background from '@/assets/SliderBG2.png';
 import arrow from '../assets/icons/right-arrow.png';
 
-import { default as image1, default as image5, default as image9 } from '../assets/Gift1.png';
-import { default as image10, default as image2, default as image6 } from '../assets/Gift2.png';
-import { default as image3, default as image7 } from '../assets/Gift3.png';
-import { default as image4, default as image8 } from '../assets/Gift4.png';
-
 import { CollectionProducts } from '@/lib/bigcommerce/types';
 
 export function CollectionCarousel({ collections }: { collections: CollectionProducts }) {
   const [tab, setTab] = useState('designer');
-  // @ts-ignore
-  console.log(collections[tab]);
-
-  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
 
   const SampleNextArrow = (props: any) => {
     const { onClick } = props;

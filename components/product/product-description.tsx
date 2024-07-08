@@ -1,63 +1,65 @@
-'use client';
+// 'use client';
 import { AddToCart } from '@/components/cart/add-to-cart';
 import Price from '@/components/price';
 import Prose from '@/components/prose';
 import { VercelProduct as Product } from '@/lib/bigcommerce/types';
 import Image from 'next/image';
-import { useState } from 'react';
 import elem from '../../assets/Group 11.png';
 
 export function ProductDescription({ product }: { product: Product }) {
-  console.log(product);
+  const notasarr = product.customFields.edges[0].node.value.split(',');
+  const finalnotas = notasarr.map((nota) => nota.replace(/ /g, ''));
 
-  const productImages: string[] = product.images.map((image) => image.url);
-  const [selectedImage, setSelectedImage] = useState(productImages[0]); // Set initial selected image URL
+  const acordes = product.customFields.edges[1].node.value.split(',');
 
   return (
     <>
       <div className="flex flex-col gap-2 text-start text-white">
         <div className="space-y-2">
-          <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.title}</h1>
+          <h1 className="text-[30px] font-bold text-white lg:text-3xl maxlg:mt-8">{product.title}</h1>
           {product.description ? <Prose className="font-sm py-3 font-light text-white" html={product.description} /> : null}
           <div className="text-2xl">
             <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} />
           </div>
         </div>
         <div>
-          <div className="flex gap-2">
-            <select className="border-2 border-white bg-transparent px-[4%] py-3 ">
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                100 ml
-              </option>
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                200 ml
-              </option>
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                500 ml
-              </option>
-            </select>
+          <div className="mt-6 flex gap-2">
+            <div className="relative">
+              <span className="absolute bottom-0 right-4 top-0 my-auto flex items-center text-xs">▼</span>
+              <select className="appearance-none border-2 border-white bg-transparent py-3 pl-6 pr-8">
+                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  100 ML
+                </option>
+                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  200 ML
+                </option>
+                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  500 ML
+                </option>
+              </select>
+            </div>
             <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
           </div>
-          <Image src={elem} alt="none" className="w-full pt-3 lg:w-3/4" />
+          <Image src={elem} alt="none" className="mt-5 w-full max-w-[450px] " />
         </div>
 
-        {/* <div>
-          <p>{product?.options ? '' : 'Notas principales:'}</p>
-          <div className="grid w-[80%] grid-cols-5 gap-[2px] lg:w-[60%]">
-            {options.map((img, index) => (
-              <div key={index} className={`cursor-pointer ${selectedImage === img ? 'border-2 border-white' : ''}`} onClick={() => setSelectedImage(img)}>
-                <Image src={img} alt={`image-${index}`} />
-              </div>
+        <div>
+          <p className="text-xl">Notas Principales:</p>
+          <div className="mt-2 flex gap-1">
+            {finalnotas.map((nota, index) => (
+              <img src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
             ))}
           </div>
-        </div> */}
+        </div>
 
         <div>
-          <p>Acordes:</p>
-          <div className="flex flex-col gap-2 space-x-[1px] lg:flex-row lg:gap-3">
-            <button className="w-[80%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">intenso</button>
-            <button className="w-[65%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">sensual</button>
-            <button className="w-[50%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">cálido</button>
+          <p className="text-xl">Acordes:</p>
+          <div className="mt-2 flex gap-1">
+            {acordes.map((acorde, index) => (
+              <button className="grow border-2 border-white bg-[#DDDDDD]/50 p-2" key={index}>
+                {acorde}
+              </button>
+            ))}
           </div>
         </div>
       </div>

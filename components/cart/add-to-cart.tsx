@@ -10,7 +10,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 function SubmitButton({ availableForSale, selectedVariantId }: { availableForSale: boolean; selectedVariantId: string | undefined }) {
   const { pending } = useFormStatus();
-  const buttonClasses = 'border-2 border-white px-[8%] py-3 text-white relative flex justify-center w-[250px] ';
+  const buttonClasses = 'border-2 border-white px-4 sm:px-8 xs:uppercase py-3 text-white relative flex justify-center w-full text-nowrap max-w-[250px] ';
   const disabledClasses = 'cursor-not-allowed opacity-60 hover:opacity-60';
 
   if (!availableForSale) {

@@ -7,14 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { giftProducts } from '@/lib/bigcommerce/types';
 
-import { default as image1, default as image5, default as image9 } from '../assets/Gift1.png';
-import { default as image10, default as image2, default as image6 } from '../assets/Gift2.png';
-import { default as image3, default as image7 } from '../assets/Gift3.png';
-import { default as image4, default as image8 } from '../assets/Gift4.png';
-
 export function GiftsCarousel({ gifts }: { gifts: giftProducts[] }) {
-  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
-
   const SampleNextArrow = (props: any) => {
     const { className, style, onClick } = props;
     return <FaChevronRight className="absolute -right-4 bottom-0 top-0 my-auto h-8 w-8 cursor-pointer text-white/25 duration-200 hover:text-white  md:-right-8" onClick={onClick} />;

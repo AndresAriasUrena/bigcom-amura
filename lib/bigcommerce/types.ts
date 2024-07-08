@@ -63,6 +63,9 @@ export type VercelProduct = {
   seo: VercelSEO;
   tags: string[];
   updatedAt: string;
+  customFields: {
+    edges: { node: { name: string; value: string } }[];
+  };
 };
 
 export type VercelProductOption = {
@@ -660,6 +663,9 @@ export type BigCommerceProduct = {
   };
   createdAt: {
     utc: Date;
+  };
+  customFields: {
+    edges: { node: { name: string; value: string } }[];
   };
   variants: Connection<BigCommerceProductVariant>;
   productOptions: Connection<BigCommerceProductOption>;
