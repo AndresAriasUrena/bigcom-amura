@@ -45,7 +45,7 @@ export function ProductDescription({ product }: { product: Product }) {
 
         <div>
           <p className="text-xl">Notas Principales:</p>
-          <div className="mt-2 flex gap-1">
+          <div className="mt-2 flex flex-wrap gap-1">
             {finalnotas.map((nota, index) => (
               <img src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
             ))}
@@ -54,12 +54,10 @@ export function ProductDescription({ product }: { product: Product }) {
 
         <div>
           <p className="text-xl">Acordes:</p>
-          <div className="mt-2 flex gap-1">
-            {acordes.map((acorde, index) => (
-              <button className="grow border-2 border-white bg-[#DDDDDD]/50 p-2" key={index}>
-                {acorde}
-              </button>
-            ))}
+          <div className="mt-2 flex gap-1 maxlg:max-w-[240px] maxlg:flex-col">
+            <button className="block grow border-2 border-white bg-[#DDDDDD]/50 p-2 lg:w-[40%] maxlg:w-full">{acordes[0]}</button>
+            <button className="block grow border-2 border-white bg-[#DDDDDD]/50 p-2 lg:w-[35%] maxlg:w-4/5">{acordes[1]}</button>
+            <button className="block grow border-2 border-white bg-[#DDDDDD]/50 p-2 lg:w-[25%] maxlg:w-2/3">{acordes[2]}</button>
           </div>
         </div>
       </div>
