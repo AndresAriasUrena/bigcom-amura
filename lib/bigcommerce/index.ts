@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 //---------------- queries ----------------//
 import { getMenuQuery } from './queries/menu';
 import { getEntityIdByRouteQuery } from './queries/route';
-import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery, getProductsRecommedationsQuery } from './queries/product';
+import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery, getProductsRecommedationsQuery, searchProductsQuery } from './queries/product';
 import { getCartQuery } from './queries/cart';
 import { getCheckoutQuery } from './queries/checkout';
 import { getStoreCategoriesQuery, getCategoryQuery } from './queries/category';
@@ -360,6 +360,23 @@ export async function getCart(cartId: string): Promise<VercelCart | undefined> {
   const { productsByIdList, checkout, checkoutUrl } = await getBigCommerceProductsWithCheckout(cartId, lines);
 
   return bigCommerceToVercelCart(cart, productsByIdList, checkout, checkoutUrl);
+}
+
+// ------------------------------------ search ----------------------------------
+
+export async function searchProducts({ query, reverse, sortKey }: { query?: string; reverse?: boolean; sortKey?: string }): Promise<VercelProduct[]> {
+  const res = await bigCommerceFetch<BigCommerceSearchProductsOperation>({
+    query: searchProductsQuery,
+    variables: {
+      filters: {
+        searchTerm: query || '',
+      },
+    },
+  });
+
+  const productList = res.body.data.site.search.searchProducts.products.edges.map((item) => item.node);
+
+  return bigCommerceToVercelProducts(productList);
 }
 
 // ------------------------------------ other ----------------------------------

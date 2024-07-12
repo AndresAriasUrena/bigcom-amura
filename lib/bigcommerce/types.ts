@@ -267,6 +267,11 @@ export type BigCommerceSearchProductsOperation = {
       products: Connection<BigCommerceProduct>;
     };
   };
+  variables: {
+    filters: {
+      searchTerm: string;
+    };
+  };
 };
 
 export type BigCommerceMenuOperation = {

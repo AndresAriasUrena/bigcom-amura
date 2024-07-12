@@ -5,8 +5,9 @@ import Link from 'next/link';
 
 export async function Hero() {
   return (
-    <div className="relative flex min-h-screen items-center justify-center">
+    <div className="relative flex h-[400px] items-center justify-center xs:h-[500px] sm:h-[600px] md:h-[700px]">
       <video className="absolute left-0 top-0 hidden h-full w-full object-cover md:block" src="/herovideo.mp4" autoPlay loop muted />
+      <video className="absolute left-0 top-0  h-full w-full object-cover md:hidden" src="/m-herovideo.mp4" autoPlay loop muted />
       <div className="relative w-full">
         <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 text-white lg:text-black">
           <img src={el.src} alt="element" className="px-12 lg:px-0" />
