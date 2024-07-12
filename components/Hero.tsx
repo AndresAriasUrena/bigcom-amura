@@ -12,11 +12,11 @@ export async function Hero() {
         <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 text-white lg:text-black">
           <img src={el.src} alt="element" className="px-12 lg:px-0" />
           <div className="flex flex-col items-center justify-center gap-3">
-            <h2 className="text-center text-3xl font-semibold lg:text-5xl">Amura Dreams</h2>
-            <h2 className="text-center text-2xl font-light lg:text-5xl">el hogar de aromas extraordinarios</h2>
-            <div className="relative flex flex-col items-center justify-center pt-6 md:w-full">
+            <h2 className="font-Raleway text-center text-3xl font-medium lg:text-5xl">Amura Dreams</h2>
+            <h2 className="text-center text-2xl font-light lg:text-5xl ">el hogar de aromas extraordinarios</h2>
+            <div className="relative mt-8 flex flex-col items-center justify-center pt-6 md:w-full">
               <img src={el2.src} alt="element" className="w-full" />
-              <Link href={'/categories'} className="lg:font-md absolute top-2 bg-[#4E014F] px-3 py-2 text-xs font-extralight text-white duration-300 hover:bg-[#4f013e] lg:top-0 lg:px-12 lg:py-4 lg:text-lg">
+              <Link href={'/categories'} className="lg:font-md font-Julius_Sans_One absolute top-2 bg-[#4E014F] px-3 py-2 text-xs font-extralight text-white duration-300 hover:bg-[#4f013e] lg:top-0 lg:px-12 lg:py-4 lg:text-lg">
                 IR A LA TIENDA
               </Link>
             </div>

@@ -67,7 +67,7 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
     <div className="relative pb-12 ">
       <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover " alt="carousle background" />
       {/* tabs */}
-      <div className="mx-auto flex w-full flex-wrap bg-black/50 px-[5%] uppercase">
+      <div className=" mx-auto flex w-full flex-wrap bg-black/50 px-[5%] uppercase">
         <div onClick={() => setTab('designer')} className={`grow cursor-pointer border-2 p-4 text-center text-2xl font-light duration-200 hover:bg-black/50 ${tab === 'designer' ? 'border-white' : 'border-transparent'}`}>
           Diseñador
         </div>

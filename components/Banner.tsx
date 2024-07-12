@@ -13,7 +13,7 @@ export function Banner() {
         <div className="hidden lg:block"></div>
         <div className="flex flex-col items-center justify-center space-y-4 py-[4%] text-center text-white lg:scale-[0.85] xl:scale-100 xl:py-12">
           <Image src={logo} alt="logo" className="h-12 w-auto lg:h-20 " />
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl">Asesoría Amura</h2>
+          <h2 className="font-Raleway text-3xl sm:text-4xl lg:text-5xl">Asesoría Amura</h2>
           <p className="text-base font-extralight sm:text-lg md:text-xl">
             Encontramos el perfume <br />
             perfecto para vos

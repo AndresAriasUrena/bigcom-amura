@@ -6,6 +6,7 @@ import { CollectionCarousel } from '@/components/CollectionCarousel';
 import { GridSection } from '@/components/GridSection';
 import { Hero } from '@/components/Hero';
 import { CollectionProducts } from '@/lib/bigcommerce/types';
+import Head from 'next/head';
 
 import background from '@/assets/sliderBG.png';
 
