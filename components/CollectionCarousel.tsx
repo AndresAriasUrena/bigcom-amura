@@ -1,5 +1,7 @@
 'use client';
+
 import { useState } from 'react';
+import Link from 'next/link';
 import SlickSlider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -79,18 +81,21 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
       <SlickSlider {...settings} className="mx-2 mt-24 sm:mx-6 sm:px-4">
         {/* @ts-ignore */}
         {collections[tab].products.edges.map((item, index) => (
-          <div className="group relative" key={index}>
-            <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
-              <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
-              <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
-                <div className="w-full px-6 py-4 lg:h-[144px]">
-                  <h3 className="text-lg font-extralight uppercase md:text-xl">{item.node.brand.name}</h3>
-                  <p className="mt-2 truncate text-base font-normal italic lg:text-lg">{item.node.name}</p>
-                  <p className="mt-2 truncate text-base font-light lg:text-lg ">{item.node.prices.price.formatted}</p>
+          // @ts-ignore
+          <Link href={'/categories' + collections[tab].path + item.node.id} className={''} key={index}>
+            <div className="group relative">
+              <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
+                <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
+                <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
+                  <div className="w-full px-6 py-4 lg:h-[144px]">
+                    <h3 className="text-lg font-extralight uppercase md:text-xl">{item.node.brand.name}</h3>
+                    <p className="mt-2 truncate text-base font-normal italic lg:text-lg">{item.node.name}</p>
+                    <p className="mt-2 truncate text-base font-light lg:text-lg ">{item.node.prices.price.formatted}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </SlickSlider>
     </div>
