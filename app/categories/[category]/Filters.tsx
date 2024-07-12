@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 import Link from 'next/link';
 import { categoryItems, Product } from '@/lib/bigcommerce/types';
@@ -9,6 +9,12 @@ export default function Filters({ items, category }: { items: categoryItems; cat
   const [products, setProducts] = useState({ products: [...items.edges], totalItems: items.collectionInfo.totalItems });
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState('');
+
+  useEffect(() => {
+    if (window.innerWidth > 1200) {
+      setShowFilters(true);
+    }
+  }, [items]);
 
   const [filtersArr, setFiltersArr] = useState([
     { label: 'Para Él', key: 'para-el', active: false },
