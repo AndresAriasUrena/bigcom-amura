@@ -14,12 +14,12 @@ import { CollectionProducts } from '@/lib/bigcommerce/types';
 export function CollectionCarousel({ collections }: { collections: CollectionProducts }) {
   const [tab, setTab] = useState('designer');
 
-  const SampleNextArrow = (props: any) => {
+  const NextArrow = (props: any) => {
     const { onClick } = props;
     return <img onClick={onClick} src={arrow.src} className="absolute -top-16 right-4 h-9  w-11 cursor-pointer duration-200" alt="arrow-right" />;
   };
 
-  const SamplePrevArrow = (props: any) => {
+  const PrevArrow = (props: any) => {
     const { onClick } = props;
     return <img onClick={onClick} src={arrow.src} className="absolute -top-16 left-4 h-9 w-11  rotate-180 cursor-pointer duration-200" alt="arrow-left" />;
   };
@@ -29,8 +29,8 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
     speed: 500,
     slidesToScroll: 1,
     slidesToShow: 5,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1800,

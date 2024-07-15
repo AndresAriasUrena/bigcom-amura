@@ -13,7 +13,20 @@ export default async function page({ searchParams }: { searchParams?: { [key: st
   // -----------------------------
   let products: any[] = [];
   // -----------------------------
-  const filteredArray = productsRes.filter((str) => str.name.includes(searchValue) || str.brand?.name.includes(searchValue));
+
+  const filteredArray = productsRes.filter((str) => {
+    const name = str.name.toLowerCase();
+    const brand = str.brand?.name.toLowerCase();
+    const searchstr = searchValue.toLowerCase();
+
+    console.log(str.name);
+    console.log(name);
+
+    return searchValue && (name.includes(searchstr) || brand?.includes(searchstr));
+
+    // Return the condition if searchValue exists, otherwise include all items
+    // return searchValue ? name.includes(searchValue) || brand?.includes(searchValue) : true;
+  });
   products = filteredArray;
   // -----------------------------
   const resultsText = products.length > 1 ? 'results' : 'result';
@@ -39,7 +52,6 @@ export default async function page({ searchParams }: { searchParams?: { [key: st
           {displayProducts.map((product, index) => {
             const category = product.categories.edges[0].node.path;
             // console.log(category);
-
             // console.log(product.categories.edges[0].node.path);
 
             return (
