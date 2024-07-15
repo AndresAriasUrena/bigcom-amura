@@ -1,5 +1,6 @@
 import React from 'react';
-import { searchProducts } from '@/lib/bigcommerce';
+import { getProducts } from '@/lib/bigcommerce';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'Search',
@@ -7,21 +8,51 @@ export const metadata = {
 };
 export default async function page({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
   const { q: searchValue } = searchParams as { [key: string]: string };
-
-  const products = await searchProducts({ query: searchValue });
+  // -----------------------------
+  const productsRes = await getProducts();
+  // -----------------------------
+  let products: any[] = [];
+  // -----------------------------
+  const filteredArray = productsRes.filter((str) => str.name.includes(searchValue) || str.brand?.name.includes(searchValue));
+  products = filteredArray;
+  // -----------------------------
   const resultsText = products.length > 1 ? 'results' : 'result';
+  const displayProducts = products.length > 0 ? products : productsRes;
 
   return (
     <div className="bg-white">
-      <div className="mx-auto grid w-[90%] max-w-[1200px] gap-4 py-8 text-black md:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto w-[90%] max-w-[1200px] gap-4 py-8 text-black ">
         {searchValue ? (
           <p className="mb-4">
             {products.length === 0 ? 'There are no products that match ' : `Showing ${products.length} ${resultsText} for `}
             <span className="font-bold">&quot;{searchValue}&quot;</span>
           </p>
-        ) : null}
-        <div>
-          <h1 className="text-center text-xl font-semibold">Search page</h1>
+        ) : (
+          <>
+            <h3 className="mb-8 text-center text-2xl font-semibold">Please type something to search</h3>
+          </>
+        )}
+
+        {products.length === 0 && <h3 className="mt-6 text-base font-semibold ">Our Products</h3>}
+
+        <div className="mt-4 grid gap-4  md:grid-cols-2 lg:grid-cols-3">
+          {displayProducts.map((product, index) => {
+            return (
+              <div key={index} className="group overflow-hidden rounded-md border">
+                <Link href={`/categories`} className="relative block h-full w-full">
+                  {product.images.edges.length > 0 ? <img src={product.images.edges[0].node.url} className="size-full rounded-md object-cover" alt={product.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[400px] items-center justify-center rounded-md border border-white/15 bg-black/75">{product.name}</div>}
+                  <div className="absolute inset-0 z-[1] duration-200 hover:bg-black/35"></div>
+                  <div className="absolute bottom-0 left-0 right-0 z-[2] bg-black/30 p-4 text-white duration-200 group-hover:bg-black/35">
+                    <h4>{product.name}</h4>
+                    <b>{product.brand?.name}</b>
+                    <p>
+                      {product.prices.price.value} {product.prices.price.currencyCode}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

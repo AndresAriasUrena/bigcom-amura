@@ -364,20 +364,20 @@ export async function getCart(cartId: string): Promise<VercelCart | undefined> {
 
 // ------------------------------------ search ----------------------------------
 
-export async function searchProducts({ query, reverse, sortKey }: { query?: string; reverse?: boolean; sortKey?: string }): Promise<VercelProduct[]> {
-  const res = await bigCommerceFetch<BigCommerceSearchProductsOperation>({
-    query: searchProductsQuery,
-    variables: {
-      filters: {
-        searchTerm: query || '',
-      },
-    },
-  });
+// export async function searchProducts({ query, reverse, sortKey }: { query?: string; reverse?: boolean; sortKey?: string }): Promise<VercelProduct[]> {
+//   const res = await bigCommerceFetch<BigCommerceSearchProductsOperation>({
+//     query: searchProductsQuery,
+//     variables: {
+//       filters: {
+//         searchTerm: query || '',
+//       },
+//     },
+//   });
 
-  const productList = res.body.data.site.search.searchProducts.products.edges.map((item) => item.node);
+//   const productList = res.body.data.site.search.searchProducts.products.edges.map((item) => item.node);
 
-  return bigCommerceToVercelProducts(productList);
-}
+//   return bigCommerceToVercelProducts(productList);
+// }
 
 // ------------------------------------ other ----------------------------------
 export async function getPages(): Promise<VercelPage[]> {
