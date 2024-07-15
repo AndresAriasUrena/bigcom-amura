@@ -133,6 +133,15 @@ const productFragment = /* GraphQL */ `
       metaKeywords
     }
     path
+    categories {
+      edges {
+        node {
+          id
+          name
+          path
+        }
+      }
+    }
     prices {
       price {
         ...MoneyFields
