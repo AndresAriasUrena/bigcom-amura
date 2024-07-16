@@ -1,6 +1,14 @@
 import { getCategories } from '@/lib/bigcommerce';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Categories',
+  description: 'Categories in the store.',
+  openGraph: {
+    type: 'website',
+  },
+};
+
 export default async function Page() {
   const Categories = await getCategories();
 

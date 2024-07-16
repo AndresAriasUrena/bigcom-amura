@@ -5,14 +5,44 @@ import { Gallery } from '@/components/product/gallery';
 import { getProduct, getProductRecommendations } from '@/lib/bigcommerce';
 import { ProductDescription } from '@/components/product/product-description';
 import Background from '@/assets/product-page-background.png';
+import { notFound } from 'next/navigation';
+
+export async function generateMetadata({ params }: { params: { product: string; category: string } }) {
+  const decodedProductId = decodeURIComponent(params.product);
+  const product = await getProduct(decodedProductId);
+  return {
+    title: product.title,
+    description: product.description,
+  };
+}
 
 export default async function Page({ params }: { params: { product: string; category: string } }) {
   const decodedProductId = decodeURIComponent(params.product);
   const product = await getProduct(decodedProductId);
-  // console.log(params);
+  // console.log(product);
+
+  let productJsonLd = {};
+
+  if (product) {
+    productJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.title,
+      description: product.description,
+      image: product.featuredImage.url,
+      offers: {
+        '@type': 'AggregateOffer',
+        availability: product.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        priceCurrency: product.priceRange.minVariantPrice.currencyCode,
+        highPrice: product.priceRange.maxVariantPrice.amount,
+        lowPrice: product.priceRange.minVariantPrice.amount,
+      },
+    };
+  }
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <div className="relative">
         {/* background  */}
         <img src={Background.src} className="absolute z-[-1] size-full object-fill object-left-top" alt="" />

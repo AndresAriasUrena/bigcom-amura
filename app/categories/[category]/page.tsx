@@ -2,8 +2,16 @@ import { getCategories, getPage } from '@/lib/bigcommerce';
 import BannerImg from '@/assets/category-banner.png';
 import Filters from './Filters';
 
+export async function generateMetadata({ params, searchParams }: { params: { category: string }; searchParams: URLSearchParams }) {
+  const page = await getPage(params.category);
+  return {
+    title: page.name,
+  };
+}
+
 export default async function Page({ params }: { params: { category: string } }) {
   const page = await getPage(params.category);
+  console.log(page);
 
   return (
     <>
