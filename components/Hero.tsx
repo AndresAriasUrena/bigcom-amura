@@ -15,7 +15,7 @@ export async function Hero() {
             <h2 className="text-center font-Raleway text-3xl font-medium lg:text-5xl">Amura Dreams</h2>
             <h2 className="text-center text-2xl font-light lg:text-5xl ">el hogar de aromas extraordinarios</h2>
             <div className="relative mt-8 flex flex-col items-center justify-center pt-6 md:w-full">
-              <Image src={el2.src} alt="element" className="w-full" />
+              <Image width={400} height={400} src={el2.src} alt="element" className="w-full" />
               <Link href={'/categories'} className="lg:font-md absolute top-2 bg-[#4E014F] px-3 py-2 font-Julius_Sans_One text-xs font-extralight text-white duration-300 hover:bg-[#4f013e] lg:top-0 lg:px-12 lg:py-4 lg:text-lg">
                 IR A LA TIENDA
               </Link>

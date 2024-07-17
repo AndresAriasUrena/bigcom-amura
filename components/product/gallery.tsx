@@ -43,7 +43,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             </div>
           ) : null}
         </div>
-        <div className="relative aspect-square w-full overflow-hidden ">{images[imageIndex] && <Image className="h-[20%] w-full bg-white object-cover lg:h-full" fill sizes="(min-width: 1024px) 66vw, 100vw" alt={images[imageIndex]?.altText as string} src={images[imageIndex]?.src as string} priority={true} />}</div>
+        <div className="relative aspect-square w-full overflow-hidden ">{images[imageIndex] && <Image width={400} height={400} className="h-[20%] w-full bg-white object-cover lg:h-full" fill sizes="(min-width: 1024px) 66vw, 100vw" alt={images[imageIndex]?.altText as string} src={images[imageIndex]?.src as string} priority={true} />}</div>
       </div>
     </>
   );

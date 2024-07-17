@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { product: string; cate
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <div className="relative">
         {/* background  */}
-        <Image src={Background.src} className="absolute z-[-1] size-full object-fill object-left-top" alt="" />
+        <Image src={Background.src} width={512} height={512} className="absolute z-[-1] size-full object-fill object-left-top" alt="" />
         {/* back to button */}
         <Link href={`/categories/${params.category}`} className="absolute left-4 top-8 sm:left-6 md:left-9">
           <svg xmlns="http://www.w3.org/2000/svg" className="size-8" viewBox="0 0 12 24">

@@ -58,21 +58,21 @@ export function Boutique() {
           <div className="px-2">
             <div className="relative h-[320px] border-2 border-white md:h-[400px] xl:h-[512px]">
               <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Momentum</h3>
-              <Image src={momentum.src} className="size-full object-cover" alt="" />
+              <Image width={400} height={400} src={momentum.src} className="size-full object-cover" alt="" />
             </div>
           </div>
 
           <div className="px-2">
             <div className="relative h-[320px] border-2 border-white md:h-[400px] xl:h-[512px]">
               <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Sabana Sur</h3>
-              <Image src={sabana.src} className="size-full object-cover" alt="" />
+              <Image width={400} height={400} src={sabana.src} className="size-full object-cover" alt="" />
             </div>
           </div>
 
           <div className="px-2">
             <div className="relative h-[320px] border-2 border-white md:h-[400px] xl:h-[512px]">
               <h3 className="absolute bottom-[12%] w-full text-center text-2xl">Escazú</h3>
-              <Image src={escazu.src} className="size-full object-cover" alt="" />
+              <Image width={400} height={400} src={escazu.src} className="size-full object-cover" alt="" />
             </div>
           </div>
         </SlickSlider>

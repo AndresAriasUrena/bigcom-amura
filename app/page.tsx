@@ -10,6 +10,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import background from '@/assets/sliderBG.png';
+import { Suspense } from 'react';
 
 export const metadata = {
   title: 'Bigcom Amura',
@@ -29,19 +30,21 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero />
-      <GridSection />
-      <div className="relative w-full px-4 pb-16 md:px-16">
-        <Image src={background.src} width={1920} height={1080} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
-        <div className="mx-auto ">
-          <h1 className="py-16 text-center text-3xl font-normal uppercase lg:text-4xl">Ideas para Regalar</h1>
-          <GiftsCarousel gifts={gifts.products.edges} />
-          <h1 className="py-16 text-center text-3xl font-normal uppercase md:py-20 lg:py-24 lg:text-4xl">La colección de amura</h1>
-          <CollectionCarousel collections={collections} />
+      <Suspense>
+        <Hero />
+        <GridSection />
+        <div className="relative w-full px-4 pb-16 md:px-16">
+          <Image src={background.src} width={1920} height={1080} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
+          <div className="mx-auto ">
+            <h1 className="py-16 text-center text-3xl font-normal uppercase lg:text-4xl">Ideas para Regalar</h1>
+            <GiftsCarousel gifts={gifts.products.edges} />
+            <h1 className="py-16 text-center text-3xl font-normal uppercase md:py-20 lg:py-24 lg:text-4xl">La colección de amura</h1>
+            <CollectionCarousel collections={collections} />
+          </div>
         </div>
-      </div>
-      <Banner />
-      <Boutique />
+        <Banner />
+        <Boutique />
+      </Suspense>
     </>
   );
 }

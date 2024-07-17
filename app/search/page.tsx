@@ -60,7 +60,7 @@ export default async function page({ searchParams }: { searchParams?: { [key: st
               return (
                 <div key={index} className="group overflow-hidden rounded-md border">
                   <Link href={`/categories` + category + product.id} className="relative block h-full w-full">
-                    {product.images.edges.length > 0 ? <Image src={product.images.edges[0].node.url} className="size-full rounded-md object-cover" alt={product.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[400px] items-center justify-center rounded-md border border-white/15 bg-black/75">{product.name}</div>}
+                    {product.images.edges.length > 0 ? <Image src={product.images.edges[0].node.url} width={400} height={400} className="size-full rounded-md object-cover" alt={product.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[400px] items-center justify-center rounded-md border border-white/15 bg-black/75">{product.name}</div>}
                     <div className="absolute inset-0 z-[1] duration-200 hover:bg-black/35"></div>
                     <div className="absolute bottom-0 left-0 right-0 z-[2] bg-black/30 p-4 text-white duration-200 group-hover:bg-black/35">
                       <h4>{product.name}</h4>

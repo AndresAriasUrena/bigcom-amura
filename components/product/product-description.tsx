@@ -40,14 +40,14 @@ export function ProductDescription({ product }: { product: Product }) {
             </div>
             <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
           </div>
-          <Image src={elem} alt="none" className="mt-5 w-full max-w-[450px] " />
+          <Image src={elem} alt="none" width={500} height={500} className="mt-5 w-full max-w-[450px] " />
         </div>
 
         <div>
           <p className="text-xl">Notas Principales:</p>
           <div className="mt-2 flex flex-wrap gap-1">
             {finalnotas.map((nota, index) => (
-              <Image src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
+              <Image src={`/notas/${nota}.png`} width={60} height={60} className="size-16" alt={nota} key={index} />
             ))}
           </div>
         </div>

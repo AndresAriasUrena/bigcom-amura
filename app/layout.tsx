@@ -3,6 +3,7 @@ import { ensureStartsWith } from '@/lib/utils';
 import { ReactNode, Suspense } from 'react';
 import Footer from '@/components/layout/footer';
 import { Raleway, Julius_Sans_One } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import './globals.css';
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
@@ -36,7 +37,7 @@ const Julius_Sans_One_Font = Julius_Sans_One({
   variable: '--font-julius-sans-one',
 });
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={''}>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
@@ -49,3 +50,5 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     </html>
   );
 }
+
+export default dynamic(() => Promise.resolve(RootLayout), { ssr: false });

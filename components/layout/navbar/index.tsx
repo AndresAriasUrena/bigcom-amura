@@ -22,7 +22,7 @@ export default async function Navbar() {
       <div className="w-full bg-black py-3 text-center text-xs">Lorem ipsum dolor sit amet consectetur adipiscing elit</div>
       <div className="relative mx-[5%] flex items-center justify-center pb-[80px] pt-4 lg:py-8">
         <Link href="/" className=" text-white">
-          <Image src={LogoSquare} alt="logo" className="w-[85px]" />
+          <Image src={LogoSquare} alt="logo" width={85} height={85} className="w-[85px]" />
         </Link>
         {/* mobile menu */}
         <MobileMenu menu={menu} />

@@ -45,7 +45,7 @@ export default async function Footer() {
           </div>
 
           <div className="flex h-full w-2/4 items-center justify-center">
-            <Image src={logo} alt="logo" className="h-[200px] w-auto" />
+            <Image src={logo} alt="logo" width={200} height={200} className="h-[200px] w-auto" />
           </div>
 
           <div className="w-1/4 space-y-7  text-end font-extralight uppercase">
@@ -71,7 +71,7 @@ export default async function Footer() {
       </footer>
       <footer className="lg:text-md flex flex-col bg-black/90 px-[7%] py-[8%] text-sm  text-white md:flex lg:hidden lg:flex-row dark:text-neutral-400">
         <div className="flex  w-full flex-col items-center justify-center ">
-          <Image src={logo} alt="logo" className="h-[200px] w-auto" />
+          <Image src={logo} width={200} height={200} alt="logo" className="h-[200px] w-auto" />
         </div>
         <div className="flex w-full flex-col  items-center space-y-7 text-center font-extralight uppercase lg:w-1/4">
           <div className="flex justify-end gap-3">

@@ -17,12 +17,12 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
 
   const NextArrow = (props: any) => {
     const { onClick } = props;
-    return <Image onClick={onClick} src={arrow.src} className="absolute -top-16 right-4 h-9  w-11 cursor-pointer duration-200" alt="arrow-right" />;
+    return <Image onClick={onClick} src={arrow.src} width={100} height={100} className="absolute -top-16 right-4 h-9  w-11 cursor-pointer duration-200" alt="arrow-right" />;
   };
 
   const PrevArrow = (props: any) => {
     const { onClick } = props;
-    return <Image onClick={onClick} src={arrow.src} className="absolute -top-16 left-4 h-9 w-11  rotate-180 cursor-pointer duration-200" alt="arrow-left" />;
+    return <Image onClick={onClick} src={arrow.src} width={100} height={100} className="absolute -top-16 left-4 h-9 w-11  rotate-180 cursor-pointer duration-200" alt="arrow-left" />;
   };
 
   const settings = {

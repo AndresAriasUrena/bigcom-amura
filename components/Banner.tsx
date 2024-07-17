@@ -12,7 +12,7 @@ export function Banner() {
       <div className="grid items-center justify-center gap-[10%] py-4 lg:grid-cols-2 lg:py-0" style={{ backgroundImage: `linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)), url(${banner.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="hidden lg:block"></div>
         <div className="flex flex-col items-center justify-center space-y-4 py-[4%] text-center text-white lg:scale-[0.85] xl:scale-100 xl:py-12">
-          <Image src={logo} alt="logo" className="h-12 w-auto lg:h-20 " />
+          <Image width={200} height={200} src={logo} alt="logo" className="h-12 w-auto lg:h-20 " />
           <h2 className="font-Raleway text-3xl sm:text-4xl lg:text-5xl">Asesoría Amura</h2>
           <p className="text-base font-extralight sm:text-lg md:text-xl">
             Encontramos el perfume <br />
