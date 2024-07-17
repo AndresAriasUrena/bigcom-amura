@@ -1,4 +1,3 @@
-import { getMenu } from '@/lib/bigcommerce';
 import Image from 'next/image';
 import { CiFacebook, CiInstagram } from 'react-icons/ci';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -10,8 +9,6 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
-  const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
-  const menu = await getMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (

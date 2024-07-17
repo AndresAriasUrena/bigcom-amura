@@ -4,6 +4,7 @@ import Link from 'next/link';
 import SlickSlider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import Image from 'next/image';
 
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { giftProducts } from '@/lib/bigcommerce/types';
@@ -63,7 +64,7 @@ export function GiftsCarousel({ gifts }: { gifts: giftProducts[] }) {
       {gifts.map((item, index) => (
         <Link href={'categories/ideas-para-regalar/' + item.node.id} key={index}>
           <div className="group relative h-[600px] cursor-pointer overflow-hidden">
-            <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full max-w-[90%] object-cover sm:max-w-[95%]" />
+            <Image src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full max-w-[90%] object-cover sm:max-w-[95%]" />
             <div className="absolute inset-0 top-[calc(100%+400px)] flex items-center justify-center duration-300 group-hover:top-0 group-hover:bg-black/50">
               <div className="h-fit max-w-[400px] px-5 text-center">
                 <h3 className="text-3xl">B683</h3>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import Link from 'next/link';
 import { categoryItems, Product } from '@/lib/bigcommerce/types';
+import Image from 'next/image';
 
 export default function Filters({ items, category }: { items: categoryItems; category: string }) {
   const [products, setProducts] = useState({ products: [...items.edges], totalItems: items.collectionInfo.totalItems });
@@ -116,7 +117,7 @@ export default function Filters({ items, category }: { items: categoryItems; cat
               {products.products.map((item, index) => (
                 <div key={index}>
                   <Link href={`/categories/${category}/${item.node.id}`} className="block h-full max-h-[358px] w-full rounded-md border">
-                    {item.node.images.edges[0].node.url ? <img src={item.node.images.edges[0].node.url} className="size-full rounded-md object-cover" alt={item.node.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[175px] items-center justify-center rounded-md border border-white/15 bg-black sm:min-h-[275px] lg:min-h-[400px]">No Image Found</div>}
+                    {item.node.images.edges[0].node.url ? <Image src={item.node.images.edges[0].node.url} className="size-full rounded-md object-cover" alt={item.node.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[175px] items-center justify-center rounded-md border border-white/15 bg-black sm:min-h-[275px] lg:min-h-[400px]">No Image Found</div>}
                   </Link>
                 </div>
               ))}

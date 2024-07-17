@@ -5,6 +5,7 @@ import { createUrl } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem, SortFilterItem } from '.';
+import { Suspense } from 'react';
 
 function PathFilterItemComponent({ item, isSelected, onSelect }: { item: PathFilterItem; isSelected: boolean; onSelect: (path: string) => void }) {
   const pathname = usePathname();
@@ -23,22 +24,24 @@ function PathFilterItemComponent({ item, isSelected, onSelect }: { item: PathFil
   };
 
   return (
-    <li className="mt-2 flex items-center text-black dark:text-white" key={item.title} onClick={handleCheckboxChange}>
-      <input
-        type="checkbox"
-        className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
-        checked={active}
-        onChange={() => {}} // This is empty because checkbox state is handled by onClick
-      />
-      <Link
-        href={createUrl(item.path, newParams)}
-        className={clsx('w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100', {
-          'underline underline-offset-4': active,
-        })}
-      >
-        {item.title}
-      </Link>
-    </li>
+    <Suspense>
+      <li className="mt-2 flex items-center text-black dark:text-white" key={item.title} onClick={handleCheckboxChange}>
+        <input
+          type="checkbox"
+          className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
+          checked={active}
+          onChange={() => {}} // This is empty because checkbox state is handled by onClick
+        />
+        <Link
+          href={createUrl(item.path, newParams)}
+          className={clsx('w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100', {
+            'underline underline-offset-4': active,
+          })}
+        >
+          {item.title}
+        </Link>
+      </li>
+    </Suspense>
   );
 }
 

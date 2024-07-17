@@ -7,6 +7,7 @@ import { GridSection } from '@/components/GridSection';
 import { Hero } from '@/components/Hero';
 import { CollectionProducts } from '@/lib/bigcommerce/types';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import background from '@/assets/sliderBG.png';
 
@@ -31,7 +32,7 @@ export default async function HomePage() {
       <Hero />
       <GridSection />
       <div className="relative w-full px-4 pb-16 md:px-16">
-        <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
+        <Image src={background.src} width={1920} height={1080} className="absolute inset-0 z-[-1] h-full w-full object-cover object-left-top" alt="" />
         <div className="mx-auto ">
           <h1 className="py-16 text-center text-3xl font-normal uppercase lg:text-4xl">Ideas para Regalar</h1>
           <GiftsCarousel gifts={gifts.products.edges} />

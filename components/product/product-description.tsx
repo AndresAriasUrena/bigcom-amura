@@ -47,7 +47,7 @@ export function ProductDescription({ product }: { product: Product }) {
           <p className="text-xl">Notas Principales:</p>
           <div className="mt-2 flex flex-wrap gap-1">
             {finalnotas.map((nota, index) => (
-              <img src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
+              <Image src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
             ))}
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
 //---------------- queries ----------------//
 import { getMenuQuery } from './queries/menu';
 import { getEntityIdByRouteQuery } from './queries/route';
@@ -388,4 +389,8 @@ export async function getPages(): Promise<VercelPage[]> {
   const pagesList = res.body.data.site.content.pages.edges.map((item) => item.node);
 
   return pagesList.map((page) => bigCommerceToVercelPageContent(page));
+}
+
+export async function revalidate(req: NextRequest): Promise<NextResponse> {
+  return NextResponse.json({ status: 200, revalidated: true, now: Date.now() });
 }

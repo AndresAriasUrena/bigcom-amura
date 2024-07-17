@@ -5,6 +5,7 @@ import Link from 'next/link';
 import SlickSlider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import Image from 'next/image';
 
 import background from '@/assets/SliderBG2.png';
 import arrow from '../assets/icons/right-arrow.png';
@@ -16,12 +17,12 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
 
   const NextArrow = (props: any) => {
     const { onClick } = props;
-    return <img onClick={onClick} src={arrow.src} className="absolute -top-16 right-4 h-9  w-11 cursor-pointer duration-200" alt="arrow-right" />;
+    return <Image onClick={onClick} src={arrow.src} className="absolute -top-16 right-4 h-9  w-11 cursor-pointer duration-200" alt="arrow-right" />;
   };
 
   const PrevArrow = (props: any) => {
     const { onClick } = props;
-    return <img onClick={onClick} src={arrow.src} className="absolute -top-16 left-4 h-9 w-11  rotate-180 cursor-pointer duration-200" alt="arrow-left" />;
+    return <Image onClick={onClick} src={arrow.src} className="absolute -top-16 left-4 h-9 w-11  rotate-180 cursor-pointer duration-200" alt="arrow-left" />;
   };
 
   const settings = {
@@ -65,7 +66,7 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
 
   return (
     <div className="relative pb-12 ">
-      <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover " alt="carousle background" />
+      <Image src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover " alt="carousle background" />
       {/* tabs */}
       <div className=" mx-auto flex w-full flex-wrap bg-black/50 px-[5%] uppercase">
         <div onClick={() => setTab('designer')} className={`grow cursor-pointer border-2 p-4 text-center text-2xl font-light duration-200 hover:bg-black/50 ${tab === 'designer' ? 'border-white' : 'border-transparent'}`}>
@@ -85,7 +86,7 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
           <Link href={'/categories' + collections[tab].path + item.node.id} className={''} key={index}>
             <div className="group relative">
               <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
-                <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
+                <Image src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
                 <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
                   <div className="w-full px-6 py-4 lg:h-[144px]">
                     <h3 className="text-lg font-extralight uppercase md:text-xl">{item.node.brand.name}</h3>
