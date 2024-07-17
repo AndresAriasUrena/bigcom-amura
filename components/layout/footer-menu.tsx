@@ -22,7 +22,7 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
           'text-black dark:text-neutral-300': active,
         })}
       >
-        {item.title}
+        {item.name}
       </Link>
     </li>
   );
@@ -35,7 +35,7 @@ export default function FooterMenu({ menu }: { menu: Menu[] }) {
     <nav>
       <ul>
         {menu.map((item: Menu) => {
-          return <FooterMenuItem key={item.title} item={item} />;
+          return <FooterMenuItem key={item.name} item={item} />;
         })}
       </ul>
     </nav>

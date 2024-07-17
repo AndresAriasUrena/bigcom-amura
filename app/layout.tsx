@@ -1,14 +1,19 @@
-import Navbar from '@/components/layout/navbar';
+// import Navbar from '@/components/layout/navbar';
 import { ensureStartsWith } from '@/lib/utils';
 import { ReactNode, Suspense } from 'react';
 import Footer from '@/components/layout/footer';
 import { Raleway, Julius_Sans_One } from 'next/font/google';
 import './globals.css';
+import dynamic from 'next/dynamic';
 
 const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000';
 const twitterCreator = TWITTER_CREATOR ? ensureStartsWith(TWITTER_CREATOR, '@') : undefined;
 const twitterSite = TWITTER_SITE ? ensureStartsWith(TWITTER_SITE, 'https://') : undefined;
+
+const Navbar = dynamic(() => import('@/components/layout/navbar'), {
+  ssr: false,
+});
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
