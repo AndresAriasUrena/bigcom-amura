@@ -1,65 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import SlickSlider from 'react-slick';
-import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel/slick/slick.css';
-
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import Marquee from 'react-fast-marquee';
+// import SlickSlider from 'react-slick';
+// import 'slick-carousel/slick/slick-theme.css';
+// import 'slick-carousel/slick/slick.css';
 import { giftProducts } from '@/lib/bigcommerce/types';
 
 export function GiftsCarousel({ gifts }: { gifts: giftProducts[] }) {
-  const SampleNextArrow = (props: any) => {
-    const { className, style, onClick } = props;
-    return <FaChevronRight className="absolute -right-4 bottom-0 top-0 my-auto h-8 w-8 cursor-pointer text-white/25 duration-200 hover:text-white  md:-right-8" onClick={onClick} />;
-  };
-
-  const SamplePrevArrow = (props: any) => {
-    const { className, style, onClick } = props;
-    return <FaChevronLeft className="absolute -left-4 bottom-0 top-0 my-auto h-8 w-8 cursor-pointer text-white/25 duration-200 hover:text-white md:-left-8" onClick={onClick} />;
-  };
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToScroll: 1,
-    slidesToShow: 5,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1800,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
   return (
-    <SlickSlider {...settings} className="mx-2 sm:mx-6 sm:px-4">
+    <Marquee pauseOnHover={true}>
       {gifts.map((item, index) => (
         <Link href={'categories/ideas-para-regalar/' + item.node.id} key={index}>
           <div className="group relative h-[600px] cursor-pointer overflow-hidden">
@@ -73,6 +23,6 @@ export function GiftsCarousel({ gifts }: { gifts: giftProducts[] }) {
           </div>
         </Link>
       ))}
-    </SlickSlider>
+    </Marquee>
   );
 }
