@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SlickSlider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,6 +13,7 @@ import { CollectionProducts } from '@/lib/bigcommerce/types';
 
 export function CollectionCarousel({ collections }: { collections: CollectionProducts }) {
   const [tab, setTab] = useState('designer');
+  const [data, setData] = useState([]);
 
   const NextArrow = (props: any) => {
     const { onClick } = props;
@@ -29,6 +30,8 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
     speed: 500,
     slidesToScroll: 1,
     slidesToShow: 5,
+    autoplay: true,
+    autoplaySpeed: 2000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -63,6 +66,11 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
     ],
   };
 
+  useEffect(() => {
+    // @ts-ignore
+    setData([...collections[tab].products.edges, ...collections[tab].products.edges, ...collections[tab].products.edges]);
+  }, [tab]);
+
   return (
     <div className="relative pb-12 ">
       <img src={background.src} className="absolute inset-0 z-[-1] h-full w-full object-cover " alt="carousle background" />
@@ -80,23 +88,24 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
       </div>
       <SlickSlider {...settings} className="mx-2 mt-24 sm:mx-6 sm:px-4">
         {/* @ts-ignore */}
-        {collections[tab].products.edges.map((item, index) => (
-          // @ts-ignore
-          <Link href={'/categories' + collections[tab].path + item.node.id} className={''} key={index}>
-            <div className="group relative">
-              <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
-                <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
-                <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
-                  <div className="w-full px-6 py-4 lg:h-[144px]">
-                    <h3 className="text-lg font-extralight uppercase md:text-xl">{item.node.brand.name}</h3>
-                    <p className="mt-2 truncate text-base font-normal italic lg:text-lg">{item.node.name}</p>
-                    <p className="mt-2 truncate text-base font-light lg:text-lg ">{item.node.prices.price.formatted}</p>
+        {data.length > 0 &&
+          data.map((item: any, index: number) => (
+            // @ts-ignore
+            <Link href={'/categories' + collections[tab].path + item.node.id} className={''} key={index}>
+              <div className="group relative">
+                <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
+                  <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
+                  <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
+                    <div className="w-full px-6 py-4 lg:h-[144px]">
+                      <h3 className="text-lg font-extralight uppercase md:text-xl">{item.node.brand.name}</h3>
+                      <p className="mt-2 truncate text-base font-normal italic lg:text-lg">{item.node.name}</p>
+                      <p className="mt-2 truncate text-base font-light lg:text-lg ">{item.node.prices.price.formatted}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
       </SlickSlider>
     </div>
   );
