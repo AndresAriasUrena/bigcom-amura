@@ -23,16 +23,16 @@ function PathFilterItemComponent({ item, isSelected, onSelect }: { item: PathFil
   };
 
   return (
-    <li className="mt-2 flex items-center text-black dark:text-white" key={item.title} onClick={handleCheckboxChange}>
+    <li className="mt-2 flex items-center text-white" key={item.title} onClick={handleCheckboxChange}>
       <input
         type="checkbox"
         className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
         checked={active}
-        onChange={() => {}} // This is empty because checkbox state is handled by onClick
+        onChange={() => { }} // This is empty because checkbox state is handled by onClick
       />
       <Link
         href={createUrl(item.path, newParams)}
-        className={clsx('w-full text-sm underline-offset-4 hover:underline dark:hover:text-neutral-100', {
+        className={clsx('w-full text-sm underline-offset-4 hover:underline hover:text-neutral-100', {
           'underline underline-offset-4': active,
         })}
       >
@@ -64,12 +64,12 @@ function SortFilterItemComponent({ item, isSelected, onSelect }: { item: SortFil
   };
 
   return (
-    <li className="flex items-center text-sm text-black dark:text-white" key={item.title}>
+    <li className="flex items-center text-sm text-white" key={item.title}>
       <input
         type="checkbox"
         className="mr-2 h-[30px] w-[30px] border-2 border-black bg-transparent"
         checked={active}
-        onChange={() => {}} // This is empty because checkbox state is handled by onClick
+        onChange={() => { }} // This is empty because checkbox state is handled by onClick
       />
       <Link
         href={href}

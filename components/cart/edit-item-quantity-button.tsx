@@ -23,7 +23,7 @@ function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
         'ml-auto': type === 'minus',
       })}
     >
-      {pending ? <LoadingDots className="bg-black dark:bg-white" /> : type === 'plus' ? <PlusIcon className="h-4 w-4 dark:text-neutral-500" /> : <MinusIcon className="h-4 w-4 dark:text-neutral-500" />}
+      {pending ? <LoadingDots className="bg-white" /> : type === 'plus' ? <PlusIcon className="h-4 w-4 text-neutral-500" /> : <MinusIcon className="h-4 w-4 text-neutral-500" />}
     </button>
   );
 }

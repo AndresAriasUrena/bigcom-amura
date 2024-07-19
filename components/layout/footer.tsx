@@ -14,7 +14,7 @@ export default async function Footer() {
 
   return (
     <>
-      <footer className="text-md hidden flex-col  bg-black/90 px-[7%] text-white md:flex dark:text-neutral-400">
+      <footer className="text-md hidden flex-col  bg-black/90 px-[7%] md:flex text-neutral-400">
         <div className="flex py-[8%]">
           <div className="grid w-[60%] grid-cols-3 gap-3">
             <ul className="space-y-3 font-extralight">
@@ -70,7 +70,7 @@ export default async function Footer() {
           {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
         </p>
       </footer>
-      <footer className="lg:text-md flex flex-col bg-black/90 px-[7%] py-[8%] text-sm  text-white md:flex lg:hidden lg:flex-row dark:text-neutral-400">
+      <footer className="lg:text-md flex flex-col bg-black/90 px-[7%] py-[8%] text-sm md:flex lg:hidden lg:flex-row text-neutral-400">
         <div className="flex  w-full flex-col items-center justify-center ">
           <Image src={logo} alt="logo" className="h-[200px] w-auto" />
         </div>

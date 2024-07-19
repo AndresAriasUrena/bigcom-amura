@@ -22,7 +22,7 @@ function SubmitButton() {
         'cursor-not-allowed px-0': pending,
       })}
     >
-      {pending ? <LoadingDots className="bg-white" /> : <XMarkIcon className="hover:text-accent-3 mx-[1px] h-4 w-4 text-white dark:text-black" />}
+      {pending ? <LoadingDots className="bg-white" /> : <XMarkIcon className="hover:text-accent-3 mx-[1px] h-4 w-4 text-black" />}
     </button>
   );
 }

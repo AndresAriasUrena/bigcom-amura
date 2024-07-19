@@ -18,7 +18,7 @@ export function GridTileImage({
 } & React.ComponentProps<typeof Image>) {
   return (
     <div
-      className={clsx('group flex h-full w-full items-center justify-between overflow-hidden  bg-white hover:border-blue-600 dark:bg-black', {
+      className={clsx('group flex h-full w-full items-center justify-between overflow-hidden  hover:border-blue-600 bg-black', {
         relative: label,
         'border-2 border-blue-600': active,
         '': !active,
