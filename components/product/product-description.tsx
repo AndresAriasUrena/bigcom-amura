@@ -1,4 +1,6 @@
-// 'use client';
+'use client';
+
+import { useState } from 'react';
 import { AddToCart } from '@/components/cart/add-to-cart';
 import Price from '@/components/price';
 import Prose from '@/components/prose';
@@ -7,10 +9,17 @@ import Image from 'next/image';
 import elem from '../../assets/Group 11.png';
 
 export function ProductDescription({ product }: { product: Product }) {
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
   const notasarr = product.customFields.edges[0].node.value.split(',');
   const finalnotas = notasarr.map((nota) => nota.replace(/ /g, ''));
 
   const acordes = product.customFields.edges[1].node.value.split(',');
+
+  const handleChange = (event: any) => {
+    const quantity = Number(event.target.value);
+    setSelectedQuantity(quantity);
+  };
 
   return (
     <>
@@ -26,19 +35,26 @@ export function ProductDescription({ product }: { product: Product }) {
           <div className="mt-6 flex gap-2">
             <div className="relative">
               <span className="absolute bottom-0 right-4 top-0 my-auto flex items-center text-xs">▼</span>
-              <select className="appearance-none border-2 border-white bg-transparent py-3 pl-6 pr-8">
-                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                  100 ML
+
+              <select value={selectedQuantity} onChange={handleChange} className="appearance-none border-2 border-white bg-transparent py-3 pl-6 pr-8">
+                <option value="1" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  1
                 </option>
-                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                  200 ML
+                <option value="2" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  2
                 </option>
-                <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                  500 ML
+                <option value="3" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  3
+                </option>
+                <option value="4" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  4
+                </option>
+                <option value="5" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  5
                 </option>
               </select>
             </div>
-            <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+            <AddToCart variants={product.variants} availableForSale={product.availableForSale} quantity={selectedQuantity} />
           </div>
           <Image src={elem} alt="none" className="mt-5 w-full max-w-[450px] " />
         </div>

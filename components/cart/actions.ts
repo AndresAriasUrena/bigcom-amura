@@ -5,16 +5,7 @@ import { TAGS } from '@/lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function addItem(
-  prevState: any,
-  {
-    selectedProductId,
-    selectedVariantId,
-  }: {
-    selectedProductId: string | undefined;
-    selectedVariantId: string | undefined;
-  }
-) {
+export async function addItem(prevState: any, { selectedProductId, selectedVariantId, quantity }: { selectedProductId: string | undefined; selectedVariantId: string | undefined; quantity: number }) {
   const cartId = cookies().get('cartId')?.value;
 
   if (!selectedVariantId) {
@@ -22,7 +13,7 @@ export async function addItem(
   }
 
   try {
-    const { id } = await addToCart(cartId ?? '', [{ merchandiseId: selectedVariantId, quantity: 1, productId: selectedProductId }]);
+    const { id } = await addToCart(cartId ?? '', [{ merchandiseId: selectedVariantId, quantity: quantity, productId: selectedProductId }]);
     revalidateTag(TAGS.cart);
     cookies().set('cartId', id);
   } catch (e) {
@@ -49,15 +40,7 @@ export async function removeItem(prevState: any, lineId: string) {
   }
 }
 
-export async function updateItemQuantity(
-  prevState: any,
-  payload: {
-    lineId: string;
-    productSlug: string;
-    variantId: string;
-    quantity: number;
-  }
-) {
+export async function updateItemQuantity(prevState: any, payload: { lineId: string; productSlug: string; variantId: string; quantity: number }) {
   const cartId = cookies().get('cartId')?.value;
 
   if (!cartId) {
