@@ -5,10 +5,10 @@ import React from 'react';
 import Link from 'next/link';
 import { categoryItems, Product } from '@/lib/bigcommerce/types';
 
-export default function Filters({ items, category }: { items: categoryItems; category: string }) {
+export default function Filters({ items, category, brands }: { items: categoryItems; category: string; brands: any }) {
   const [products, setProducts] = useState({ products: [...items.edges], totalItems: items.collectionInfo.totalItems });
   const [showFilters, setShowFilters] = useState(false);
-  const [activeFilters, setActiveFilters] = useState('');
+  const [activeBrandFilter, setActiveBrandFilter] = useState('');
 
   const [filtersArr, setFiltersArr] = useState([
     { label: 'Para Él', key: 'para-el', active: false },
@@ -28,18 +28,6 @@ export default function Filters({ items, category }: { items: categoryItems; cat
     setFiltersArr(updatedFilterscategory);
   }, [items]);
 
-  const [filtersArr2, setFiltersArr2] = useState([
-    { label: 'frutales', key: 'frutales', active: false },
-    { label: 'florales', key: 'florales', active: false },
-    { label: 'herbales', key: 'herbales', active: false },
-    { label: 'maderosas', key: 'maderosas', active: false },
-    { label: 'sensuales', key: 'sensuales', active: false },
-    { label: 'especiadas', key: 'especiadas', active: false },
-    { label: 'dulces', key: 'dulces', active: false },
-    { label: 'cítricas', key: 'cítricas', active: false },
-    { label: 'balsamos', key: 'balsamos', active: false },
-  ]);
-
   const toggleFilters = () => {
     if (showFilters) {
       setShowFilters(false);
@@ -48,44 +36,70 @@ export default function Filters({ items, category }: { items: categoryItems; cat
     }
   };
 
-  const loadFilteredProducts = async (item: { label: string; key: string; active: boolean }, index: number) => {
-    const updatedFilters = filtersArr.map((product: { label: string; key: string; active: boolean }, i) => {
-      if (i === index) {
-        return { ...product, active: !product.active };
-      }
-      return product;
-    });
+  const loadFilteredProducts = async (item: { label: string; key: string; active: boolean } | string, index: number, type: string, brandID: string) => {
+    if (type === 'collection') {
+      const updatedFilters = filtersArr.map((product: { label: string; key: string; active: boolean }, i) => {
+        if (i === index) {
+          return { ...product, active: !product.active };
+        }
+        return product;
+      });
 
-    setFiltersArr(updatedFilters);
+      setFiltersArr(updatedFilters);
 
-    let allProducts: any[] = [];
-    let totalItemsCount = 0;
+      let allProducts: any[] = [];
+      let totalItemsCount = 0;
 
-    for (const filter of updatedFilters) {
-      if (filter.active) {
-        try {
-          const res = await fetch('/api/get-products', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ category: filter.key }),
-          });
+      for (const filter of updatedFilters) {
+        if (filter.active) {
+          try {
+            const res = await fetch('/api/get-products', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ category: filter.key }),
+            });
 
-          if (res.ok) {
-            const data = await res.json();
-            if (data.status === 'success') {
-              allProducts = [...allProducts, ...data.products.edges];
-              totalItemsCount += data.products.collectionInfo.totalItems;
-            } else {
-              alert(data.message);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.status === 'success') {
+                allProducts = [...allProducts, ...data.products.edges];
+                totalItemsCount += data.products.collectionInfo.totalItems;
+              } else {
+                alert(data.message);
+              }
             }
+          } catch (error) {
+            console.error('Failed to fetch products:', error);
           }
-        } catch (error) {
-          console.error('Failed to fetch products:', error);
         }
       }
-    }
 
-    setProducts({ products: allProducts, totalItems: totalItemsCount });
+      setProducts({ products: allProducts, totalItems: totalItemsCount });
+    } else {
+      try {
+        const res = await fetch('/api/get-all-products');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.status === 'success') {
+            const updatedFilters = filtersArr.map((product: { label: string; key: string; active: boolean }, i) => {
+              return { ...product, active: false };
+            });
+
+            setFiltersArr(updatedFilters);
+            setActiveBrandFilter(brandID);
+
+            const brandProducts = data.products.filter((product: any) => product.brand.name === item).map((product: any) => ({ node: product }));
+
+            // totalItemsCount += data.products.collectionInfo.totalItems;
+            setProducts({ products: brandProducts, totalItems: brandProducts.length });
+          } else {
+            alert(data.message);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    }
   };
 
   return (
@@ -107,7 +121,7 @@ export default function Filters({ items, category }: { items: categoryItems; cat
               {/* Coleccionesa */}
               <h4 className=" mt-0 text-[28px] font-light text-black">Colecciones</h4>
               {filtersArr.map((item, index) => (
-                <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item, index)}>
+                <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item, index, 'collection', '')}>
                   <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${item.active && 'active'} `}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="hidden size-[18px] text-black group-[.active]:block" viewBox="0 0 24 24">
                       <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
@@ -116,16 +130,16 @@ export default function Filters({ items, category }: { items: categoryItems; cat
                   <span className="text-xl font-light text-black">{item.label}</span>
                 </div>
               ))}
-              {/* Notas */}
-              <h4 className="!mt-8 text-[28px] font-light text-black">Notas</h4>
-              {filtersArr2.map((item, index) => (
-                <div className="flex cursor-pointer items-center gap-3" key={index}>
-                  <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${item.key === activeFilters && 'active'} ${item.key === category && activeFilters === '' && 'active'}`}>
+              {/* marcas */}
+              <h4 className="!mt-8 text-[28px] font-light text-black">Marcas</h4>
+              {brands.map((item: { node: { id: string; name: string } }, index: number) => (
+                <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item.node.name, index, 'brands', item.node.id)}>
+                  <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${item.node.id === activeBrandFilter && 'active'} `}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="hidden size-[18px] text-black group-[.active]:block" viewBox="0 0 24 24">
                       <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                     </svg>
                   </div>
-                  <span className="text-xl font-light text-black">{item.label}</span>
+                  <span className="text-xl font-light text-black">{item.node.name}</span>
                 </div>
               ))}
             </div>

@@ -440,6 +440,8 @@ export type BigCommercePagesOperation = {
   };
 };
 
+// export type getBrands = any;
+
 export type BigCommerceCheckout = {
   subtotal: BigCommerceMoney;
   grandTotal: BigCommerceMoney;

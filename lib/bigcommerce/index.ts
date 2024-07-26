@@ -7,7 +7,7 @@ import { getStoreProductsQuery, getCategoryProductsQuery, getProductQuery, getPr
 import { getCartQuery } from './queries/cart';
 import { getCheckoutQuery } from './queries/checkout';
 import { getStoreCategoriesQuery, getCategoryQuery } from './queries/category';
-import { getPagesQuery } from './queries/page';
+import { getPagesQuery, getBrandsQuery } from './queries/page';
 //---------------- mappers ----------------//
 // prettier-ignore
 import { bigCommerceToVercelCart, bigCommerceToVercelProduct, vercelFromBigCommerceLineItems,
@@ -393,4 +393,11 @@ export async function getPages(): Promise<VercelPage[]> {
 
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ status: 200, revalidated: true, now: Date.now() });
+}
+
+export async function getBrands() {
+  const res = await bigCommerceFetch<any>({
+    query: getBrandsQuery,
+  });
+  return res.body.data.site.brands.edges;
 }

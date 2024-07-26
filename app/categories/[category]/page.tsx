@@ -1,9 +1,10 @@
-import { getCategories, getPage } from '@/lib/bigcommerce';
+import { getCategories, getPage, getBrands } from '@/lib/bigcommerce';
 import BannerImg from '@/assets/category-banner.png';
 import Filters from './Filters';
 
 export async function generateMetadata({ params, searchParams }: { params: { category: string }; searchParams: URLSearchParams }) {
   const page = await getPage(params.category);
+
   return {
     title: page.name,
   };
@@ -11,6 +12,7 @@ export async function generateMetadata({ params, searchParams }: { params: { cat
 
 export default async function Page({ params }: { params: { category: string } }) {
   const page = await getPage(params.category);
+  const brands = await getBrands();
 
   return (
     <>
@@ -19,7 +21,7 @@ export default async function Page({ params }: { params: { category: string } })
       </div>
       <div className="bg-white">
         <div className="mx-auto w-[90%] max-w-[1200px] py-16">
-          <Filters items={page.products} category={params.category} />
+          <Filters brands={brands} items={page.products} category={params.category} />
         </div>
       </div>
     </>

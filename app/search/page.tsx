@@ -19,8 +19,8 @@ export default async function page({ searchParams }: { searchParams?: { [key: st
     const brand = str.brand?.name.toLowerCase();
     const searchstr = searchValue.toLowerCase();
 
-    console.log(str.name);
-    console.log(name);
+    // console.log(str.name);
+    // console.log(name);
 
     return searchValue && (name.includes(searchstr) || brand?.includes(searchstr));
 
