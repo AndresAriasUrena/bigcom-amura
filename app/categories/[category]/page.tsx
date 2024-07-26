@@ -11,7 +11,6 @@ export async function generateMetadata({ params, searchParams }: { params: { cat
 
 export default async function Page({ params }: { params: { category: string } }) {
   const page = await getPage(params.category);
-  console.log(page);
 
   return (
     <>

@@ -213,7 +213,7 @@ const getBigCommerceProductsWithCheckout = async (cartId: string, lines: { merch
 
 // ------------------------------ cart --------------------------------- //
 
-export async function addToCart(cartId: string, lines: { merchandiseId: string; quantity: number; productId?: string }[]): Promise<VercelCart> {
+export async function addToCart(cartId: string, lines: { merchandiseId: string; quantity: number; productId?: string; productURL: { decodedProductId: string; category: string } }[]): Promise<VercelCart> {
   let bigCommerceCart: BigCommerceCart;
 
   if (cartId) {

@@ -48,7 +48,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
           </Transition.Child>
           <Transition.Child as={Fragment} enter="transition-all ease-in-out duration-300" enterFrom="translate-x-full" enterTo="translate-x-0" leave="transition-all ease-in-out duration-200" leaveFrom="translate-x-0" leaveTo="translate-x-full">
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l p-6 backdrop-blur-xl md:w-[390px] border-neutral-700 bg-black/80 text-white">
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-700 bg-black/80 p-6 text-white backdrop-blur-xl md:w-[390px]">
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">My Cart</p>
 
@@ -68,6 +68,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                     {cart.lines.map((item, i) => {
                       const merchandiseSearchParams = {} as MerchandiseSearchParams;
                       let subTitleWithSelectedOptions = '';
+                      console.log(item);
 
                       item.merchandise.selectedOptions.forEach(({ name, value }) => {
                         subTitleWithSelectedOptions += `${name}: ${value} `;
@@ -110,15 +111,15 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                     })}
                   </ul>
                   <div className="py-4 text-sm text-neutral-400">
-                    <div className="mb-3 flex items-center justify-between border-b pb-1 border-neutral-700">
+                    <div className="mb-3 flex items-center justify-between border-b border-neutral-700 pb-1">
                       <p>Taxes</p>
                       <Price className="text-right text-base text-white" amount={cart.cost.totalTaxAmount.amount} currencyCode={cart.cost.totalTaxAmount.currencyCode || 'USD'} />
                     </div>
-                    <div className="mb-3 flex items-center justify-between border-b pb-1 pt-1 border-neutral-700">
+                    <div className="mb-3 flex items-center justify-between border-b border-neutral-700 pb-1 pt-1">
                       <p>Shipping</p>
                       <p className="text-right">Calculated at checkout</p>
                     </div>
-                    <div className="mb-3 flex items-center justify-between border-b pb-1 pt-1 border-neutral-700">
+                    <div className="mb-3 flex items-center justify-between border-b border-neutral-700 pb-1 pt-1">
                       <p>Total</p>
                       <Price className="text-right text-base text-white" amount={cart.cost.totalAmount.amount} currencyCode={cart.cost.totalAmount.currencyCode || 'USD'} />
                     </div>

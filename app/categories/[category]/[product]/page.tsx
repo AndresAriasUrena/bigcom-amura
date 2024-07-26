@@ -10,6 +10,7 @@ import Marquee from 'react-fast-marquee';
 export async function generateMetadata({ params }: { params: { product: string; category: string } }) {
   const decodedProductId = decodeURIComponent(params.product);
   const product = await getProduct(decodedProductId);
+
   return {
     title: product.title,
     description: product.description,
@@ -19,7 +20,6 @@ export async function generateMetadata({ params }: { params: { product: string; 
 export default async function Page({ params }: { params: { product: string; category: string } }) {
   const decodedProductId = decodeURIComponent(params.product);
   const product = await getProduct(decodedProductId);
-  // console.log(product);
 
   let productJsonLd = {};
 
@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { product: string; cate
           </div>
 
           <div className="basis-full ">
-            <ProductDescription product={product} />
+            <ProductDescription product={product} productURL={{ decodedProductId, category: params.category }} />
           </div>
         </div>
         <Suspense>

@@ -5,7 +5,7 @@ import { TAGS } from '@/lib/constants';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function addItem(prevState: any, { selectedProductId, selectedVariantId, quantity }: { selectedProductId: string | undefined; selectedVariantId: string | undefined; quantity: number }) {
+export async function addItem(prevState: any, { selectedProductId, selectedVariantId, quantity, productURL }: { selectedProductId: string | undefined; selectedVariantId: string | undefined; quantity: number; productURL: { decodedProductId: string; category: string } }) {
   const cartId = cookies().get('cartId')?.value;
 
   if (!selectedVariantId) {
@@ -13,7 +13,7 @@ export async function addItem(prevState: any, { selectedProductId, selectedVaria
   }
 
   try {
-    const { id } = await addToCart(cartId ?? '', [{ merchandiseId: selectedVariantId, quantity: quantity, productId: selectedProductId }]);
+    const { id } = await addToCart(cartId ?? '', [{ merchandiseId: selectedVariantId, quantity: quantity, productId: selectedProductId, productURL: productURL }]);
     revalidateTag(TAGS.cart);
     cookies().set('cartId', id);
   } catch (e) {

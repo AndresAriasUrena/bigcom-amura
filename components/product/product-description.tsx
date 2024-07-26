@@ -8,7 +8,7 @@ import { VercelProduct as Product } from '@/lib/bigcommerce/types';
 import Image from 'next/image';
 import elem from '../../assets/Group 11.png';
 
-export function ProductDescription({ product }: { product: Product }) {
+export function ProductDescription({ product, productURL }: { product: Product; productURL: { decodedProductId: string; category: string } }) {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   const notasarr = product.customFields.edges[0].node.value.split(',');
@@ -54,7 +54,7 @@ export function ProductDescription({ product }: { product: Product }) {
                 </option>
               </select>
             </div>
-            <AddToCart variants={product.variants} availableForSale={product.availableForSale} quantity={selectedQuantity} />
+            <AddToCart variants={product.variants} availableForSale={product.availableForSale} quantity={selectedQuantity} productURL={productURL} />
           </div>
           <Image src={elem} alt="none" className="mt-5 w-full max-w-[450px] " />
         </div>
