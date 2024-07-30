@@ -401,3 +401,13 @@ export async function getBrands() {
   });
   return res.body.data.site.brands.edges;
 }
+
+export async function getCategoryName() {
+  const res = await bigCommerceFetch<any>({
+    query: getCategoryQuery,
+    variables: {
+      entityId: 112,
+    },
+  });
+  return res;
+}

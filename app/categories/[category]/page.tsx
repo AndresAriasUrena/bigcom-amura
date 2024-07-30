@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { category: string } })
         <img src={BannerImg.src} className="size-full object-cover" alt="" />
       </div>
       <div className="bg-white">
-        <div className="mx-auto w-[90%] max-w-[1200px] py-16">
+        <div className="mx-auto w-[90%] max-w-[1600px] pb-16 pt-8">
           <Filters brands={brands} items={page.products} category={params.category} />
         </div>
       </div>

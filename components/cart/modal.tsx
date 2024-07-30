@@ -20,6 +20,7 @@ type MerchandiseSearchParams = {
 
 export default function CartModal({ cart }: { cart: Cart | undefined }) {
   const [isOpen, setIsOpen] = useState(false);
+
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -36,6 +37,28 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
       quantityRef.current = cart?.totalQuantity;
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
+
+  const getAllproducts = async () => {
+    const res = await fetch('/api/get-all-products');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'success') {
+        return data.products;
+      } else {
+        alert(data.message);
+        return [];
+      }
+    }
+  };
+
+  const getLink = async (id: string) => {
+    const products = await getAllproducts();
+    // @ts-ignore
+    const category = await products.find((product) => product.id === id);
+
+    // @ts-ignore
+    return category.categories.edges.length > 0 ? category.categories.edges[0].node.path + id : '/search';
+  };
 
   return (
     <>
@@ -65,10 +88,10 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-hidden p-1">
                   <ul className="flex-grow overflow-auto py-4">
-                    {cart.lines.map((item, i) => {
+                    {cart.lines.map(async (item, i) => {
                       const merchandiseSearchParams = {} as MerchandiseSearchParams;
                       let subTitleWithSelectedOptions = '';
-                      console.log(item);
+                      const productlinkwithcategory = await getLink(item.merchandise.product.id);
 
                       item.merchandise.selectedOptions.forEach(({ name, value }) => {
                         subTitleWithSelectedOptions += `${name}: ${value} `;
@@ -85,7 +108,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                             <div className="absolute z-40 -mt-2 ml-[55px]">
                               <DeleteItemButton item={item} />
                             </div>
-                            <Link href={merchandiseUrl} onClick={closeCart} className="z-30 flex flex-row space-x-4">
+                            <Link href={'/categories' + productlinkwithcategory} onClick={closeCart} className="z-30 flex flex-row space-x-4">
                               <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-700 bg-neutral-900 hover:bg-neutral-800">
                                 <Image className="h-full w-full object-cover" width={64} height={64} alt={item.merchandise.product.featuredImage.altText || item.merchandise.product.title} src={item.merchandise.product.featuredImage.url} />
                               </div>
