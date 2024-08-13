@@ -26,7 +26,7 @@ export default async function Navbar() {
         </Link>
         {/* mobile menu */}
         <MobileMenu menu={menu} />
-        <div className="absolute right-0 flex h-14 w-fit min-w-[100px] gap-4 text-white  maxlg:top-[85px]">
+        <div className="absolute right-0 flex h-14 w-fit min-w-[100px] text-white lg:gap-4  maxlg:top-[85px]">
           <Search />
           <Suspense fallback={<OpenCart />}>
             <Cart />

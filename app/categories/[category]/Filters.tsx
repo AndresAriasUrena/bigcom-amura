@@ -178,18 +178,18 @@ export default function Filters({ items, category, brands }: { items: categoryIt
       <>
         {/* filters */}
         <div className="sticky top-0 z-10 mb-4 flex w-full justify-between bg-white py-4 text-black lg:mb-8 ">
-          <button onClick={toggleFilters} className="text-sm font-bold sm:text-lg">
+          <button onClick={toggleFilters} className="font-Charm text-sm font-bold sm:text-lg md:text-xl">
             Filtros <span className="text-sm">▼</span>
           </button>
-          <p className="text-wrap text-sm font-semibold md:text-base">Ayudame a encontrar mi aroma ⓘ</p>
+          <p className="font-Charm text-wrap text-sm font-semibold sm:text-lg md:text-xl">Ayudame a encontrar mi aroma ⓘ</p>
         </div>
         {showFilters && (
           <>
             {/* mobile filters  */}
-            <div className="sticky top-12 grid grid-cols-2 gap-2 bg-white pb-4 lg:hidden ">
+            <div className="sticky top-12 grid grid-cols-2 gap-2 bg-white pb-4 sm:top-14 lg:hidden ">
               {/* collections */}
               <div>
-                <h3 className="mb-2 font-medium text-black">Colecciones</h3>
+                <h3 className="mb-2 font-Julius_Sans_One font-semibold text-black">Colecciones</h3>
                 <div className="relative flex h-[42px] items-center border-2 pl-3" onClick={() => setShowCategoryModal(true)}>
                   <span className="capitalize text-black">{selectedMobileFilter}</span>
                   <div className="absolute bottom-0 right-3 top-0 my-auto h-fit  text-black">
@@ -205,7 +205,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
               </div>
               {/* Marcas */}
               <div>
-                <h3 className="mb-2 font-medium text-black">Marcas</h3>
+                <h3 className="mb-2 font-Julius_Sans_One font-semibold text-black">Marcas</h3>
                 <div className="relative flex h-[42px] items-center border-2 pl-3" onClick={() => setShowBrandModal(true)}>
                   <span className="text-black">{selectedMobileFilterBrand ? selectedMobileFilterBrand : 'Seleccionar Marca'}</span>
                   <div className="absolute bottom-0 right-3 top-0 my-auto h-fit  text-black">
@@ -221,7 +221,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
               </div>
               {/* Ordenar por */}
               <div className="col-span-full">
-                <h3 className="mb-2 font-medium text-black">Ordenar por</h3>
+                <h3 className="mb-2 font-Julius_Sans_One font-semibold text-black">Ordenar por</h3>
                 <div className="relative flex h-[42px] items-center border-2 pl-3" onClick={() => setShowSortModal(true)}>
                   <span className="text-black">{selectedMobileFilterSort ? selectedMobileFilterSort : 'Seleccionar Ordenar por'}</span>
                   <div className="absolute bottom-0 right-3 top-0 my-auto h-fit  text-black">
@@ -249,7 +249,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                 </path>
               </svg>
               <div className=" space-y-3 p-8 pt-4 text-black">
-                <h4 className="mb-8 text-[28px] font-light text-black">Colecciones</h4>
+                <h4 className="mb-8 font-Julius_Sans_One text-2xl font-light text-black">Colecciones</h4>
                 {filtersArr.map((item, index) => (
                   <div
                     className="flex cursor-pointer items-center gap-3"
@@ -264,7 +264,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                         <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                       </svg>
                     </div>
-                    <span className="text-xl font-light text-black">{item.label}</span>
+                    <span className="font-Urbanist text-xl font-light text-black">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -281,7 +281,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                 </path>
               </svg>
               <div className=" space-y-3 p-8 pt-4 text-black">
-                <h4 className=" text-[28px] font-light text-black">Marcas</h4>
+                <h4 className=" font-Julius_Sans_One text-3xl font-light text-black ">Marcas</h4>
                 {brands.map((item: { node: { id: string; name: string } }, index: number) => (
                   <div
                     className="flex cursor-pointer items-center gap-3"
@@ -296,7 +296,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                         <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                       </svg>
                     </div>
-                    <span className="text-xl font-light text-black">{item.node.name}</span>
+                    <span className="font-Urbanist text-xl font-light text-black">{item.node.name}</span>
                   </div>
                 ))}
               </div>
@@ -314,7 +314,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
               </svg>
 
               <div className=" space-y-3 p-8 pt-4 text-black">
-                <h4 className="mb-9 text-[28px] font-light text-black">Ordenar por</h4>
+                <h4 className="mb-9 font-Julius_Sans_One text-2xl font-light text-black">Ordenar por</h4>
                 {sortBy.map((item: { label: string; key: string; active: boolean }, index: number) => (
                   <div
                     className="flex cursor-pointer items-center gap-3"
@@ -329,7 +329,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                         <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                       </svg>
                     </div>
-                    <span className="text-xl font-light text-black">{item.label}</span>
+                    <span className="font-Urbanist text-xl font-light text-black">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -343,16 +343,16 @@ export default function Filters({ items, category, brands }: { items: categoryIt
           {showFilters && (
             <>
               {/*  desktop filters */}
-              <div className="sticky top-12 h-fit min-w-[200px] space-y-3  maxlg:hidden">
+              <div className="sticky top-12 h-fit min-w-[240px] space-y-3  maxlg:hidden">
                 {/* Coleccionesa */}
-                <h4 className=" mt-0 text-[28px] font-light text-black">Colecciones</h4>
+                <h4 className=" mt-0 font-Julius_Sans_One text-[28px] font-light text-black">Colecciones</h4>
                 <div className="flex cursor-pointer items-center gap-3" onClick={loadall}>
                   <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${toda && 'active'} `}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="hidden size-[18px] text-black group-[.active]:block" viewBox="0 0 24 24">
                       <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                     </svg>
                   </div>
-                  <span className="text-xl font-light text-black">Toda</span>
+                  <span className="font-Urbanist text-xl font-light text-black">Toda</span>
                 </div>
                 {filtersArr.map((item, index) => (
                   <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item, index, 'collection', '')}>
@@ -361,11 +361,11 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                         <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                       </svg>
                     </div>
-                    <span className="text-xl font-light text-black">{item.label}</span>
+                    <span className="font-Urbanist text-xl font-light text-black">{item.label}</span>
                   </div>
                 ))}
                 {/* marcas */}
-                <h4 className="!mt-8 text-[28px] font-light text-black">Marcas</h4>
+                <h4 className="!mt-8 font-Julius_Sans_One text-[28px] font-light text-black">Marcas</h4>
                 {brands.map((item: { node: { id: string; name: string } }, index: number) => (
                   <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item.node.name, index, 'brands', item.node.id)}>
                     <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${item.node.id === activeBrandFilter && 'active'} `}>
@@ -373,7 +373,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                         <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                       </svg>
                     </div>
-                    <span className="text-xl font-light text-black">{item.node.name}</span>
+                    <span className="font-Urbanist text-xl font-light text-black">{item.node.name}</span>
                   </div>
                 ))}
               </div>
@@ -392,12 +392,12 @@ export default function Filters({ items, category, brands }: { items: categoryIt
               ))}
             </div>
           ) : (
-            <p className="w-full py-3 text-center text-2xl font-semibold text-black">No Products found</p>
+            <p className="w-full py-3 text-center font-Julius_Sans_One text-2xl font-semibold text-black">No Products found</p>
           )}
           {/* sort by */}
           {showFilters && (
             <div className="sticky top-12 h-fit min-w-[200px] space-y-3 maxlg:hidden">
-              <h4 className=" mt-0 text-[28px] font-light text-black">Ordenar por</h4>
+              <h4 className=" mt-0 font-Julius_Sans_One text-[28px] font-light text-black">Ordenar por</h4>
               {sortBy.map((item: { label: string; key: string; active: boolean }, index: number) => (
                 <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item, index, 'sortBy', '')}>
                   <div className={`custom-checkbox group size-6 cursor-pointer border-[3px] border-black ${item.active && 'active'}`}>
@@ -405,7 +405,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
                       <path fill="currentColor" d="m9 20.42l-6.21-6.21l2.83-2.83L9 14.77l9.88-9.89l2.83 2.83z" />
                     </svg>
                   </div>
-                  <span className="text-xl font-light text-black">{item.label}</span>
+                  <span className="font-Urbanist text-xl font-light text-black">{item.label}</span>
                 </div>
               ))}
             </div>
