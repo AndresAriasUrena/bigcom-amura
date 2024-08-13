@@ -27,24 +27,18 @@ export const metadata = {
   },
   ...(twitterCreator &&
     twitterSite && {
-    twitter: {
-      card: 'summary_large_image',
-      creator: twitterCreator,
-      site: twitterSite,
-    },
-  }),
+      twitter: {
+        card: 'summary_large_image',
+        creator: twitterCreator,
+        site: twitterSite,
+      },
+    }),
 };
-
-const Julius_Sans_One_Font = Julius_Sans_One({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-julius-sans-one',
-});
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={''}>
-      <body className="text-black bg-neutral-900 dark:text-white selection:bg-pink-500 selection:text-white">
+      <body className="bg-neutral-900 text-black selection:bg-pink-500 selection:text-white dark:text-white">
         <Navbar />
         <Suspense>
           <main>{children}</main>
