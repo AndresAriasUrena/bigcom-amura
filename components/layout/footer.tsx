@@ -15,7 +15,7 @@ export default async function Footer() {
   return (
     <>
       <footer className="gap-8">
-        <div className="grid bg-black/90 px-[5%] pb-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid bg-black/90 px-[5%] pb-6 pt-8 md:grid-cols-2 xl:grid-cols-3">
           {/* left */}
           <div className="grid grid-cols-2">
             <ul className="space-y-2 font-Julius_Sans_One text-lg font-extralight xl:text-xl">

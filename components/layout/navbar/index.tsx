@@ -1,5 +1,4 @@
 import LogoSquare from '@/assets/logo.png';
-import PatternImage from '@/assets/pattern.jpeg';
 import Cart from '@/components/cart';
 import OpenCart from '@/components/cart/open-cart';
 import { getMenu } from '@/lib/bigcommerce';
@@ -9,6 +8,9 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import MobileMenu from './mobile-menu';
 import Search from './search';
+import Bg from './bg';
+import Links from './links';
+import Logo from './logo';
 
 export default async function Navbar() {
   // Fetch the menu data from BigCommerce
@@ -18,11 +20,14 @@ export default async function Navbar() {
   const menu = res.filter((item: Menu) => AllowedListItems.includes(item.path));
 
   return (
-    <nav className="relative bg-black/85 text-white" style={{ backgroundImage: `url(${PatternImage.src})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.8 }}>
+    <nav className="relative  text-white">
       <div className="w-full bg-black py-3 text-center text-xs"></div>
+      {/* bg */}
+      <Bg />
+
       <div className="relative mx-[5%] flex items-center justify-center pb-[80px] pt-4 lg:py-8">
         <Link href="/" className=" text-white">
-          <Image src={LogoSquare} alt="logo" className="w-[85px] lg:w-[120px] 2xl:w-[125px]" />
+          <Logo />
         </Link>
         {/* mobile menu */}
         <MobileMenu menu={menu} />
@@ -34,19 +39,7 @@ export default async function Navbar() {
         </div>
       </div>
       {/* links */}
-      <div className="flex w-full justify-center lg:py-4 maxlg:hidden">
-        {menu.length ? (
-          <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 lg:max-w-[1000px]">
-            {menu.map((item) => (
-              <li key={item.name}>
-                <Link href={'/categories' + item.path} className="font-Julius_Sans_One text-base uppercase text-white underline-offset-4 duration-200 hover:!text-c2 lg:text-lg ">
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
+      <Links menu={menu} />
     </nav>
   );
 }

@@ -6,6 +6,7 @@ import { getProduct, getProductRecommendations } from '@/lib/bigcommerce';
 import { ProductDescription } from '@/components/product/product-description';
 import Background from '@/assets/product-page-background.png';
 import Marquee from 'react-fast-marquee';
+import PatternImage from '@/assets/navbar-pattern-white.png';
 
 export async function generateMetadata({ params }: { params: { product: string; category: string } }) {
   const decodedProductId = decodeURIComponent(params.product);

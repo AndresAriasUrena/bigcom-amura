@@ -59,7 +59,7 @@ export function AddToCart({ variants, availableForSale, quantity, productURL }: 
   const actionWithVariant = formAction.bind(null, { selectedProductId, selectedVariantId, quantity, productURL });
 
   return (
-    <form action={actionWithVariant}>
+    <form action={actionWithVariant} className="font-Julius_Sans_One">
       <SubmitButton availableForSale={availableForSale} selectedVariantId={selectedVariantId} />
       <p aria-live="polite" className="sr-only" role="status">
         {message}
