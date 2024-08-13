@@ -39,7 +39,7 @@ export default async function Navbar() {
           <ul className="flex w-full max-w-[800px] justify-between px-16 pb-4 lg:max-w-[1000px]">
             {menu.map((item) => (
               <li key={item.name}>
-                <Link href={'/categories' + item.path} className="hover:!text-c2 font-Julius_Sans_One text-base uppercase tracking-wider text-white underline-offset-4 ">
+                <Link href={'/categories' + item.path} className="font-Julius_Sans_One text-base uppercase text-white underline-offset-4 duration-200 hover:!text-c2 lg:text-lg ">
                   {item.name}
                 </Link>
               </li>

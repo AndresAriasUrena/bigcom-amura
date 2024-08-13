@@ -4,8 +4,11 @@ const config: Config = {
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     fontFamily: {
-      Julius_Sans_One: ['Julius Sans One', 'sans-serif'],
-      Raleway: ['Raleway', 'sans-serif'],
+      Julius_Sans_One: ['var(--font-julius-sans-one)'],
+      Raleway: ['var(--font-Raleway)'],
+      Charm: ['var(--font-Charm)'],
+      Judson: ['var(--font-Judson)'],
+      Urbanist: ['var(--font-Urbanist)'],
     },
     screens: {
       coxs: '375px',
@@ -35,6 +38,10 @@ const config: Config = {
       'lg-to-xl': { min: '992px', max: '1199px' },
     },
     extend: {
+      colors: {
+        c1: '#4E014F',
+        c2: '#50297a',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

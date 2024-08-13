@@ -14,11 +14,11 @@ export function Banner() {
         <div className="flex flex-col items-center justify-center space-y-4 py-[4%] text-center text-white lg:scale-[0.85] xl:scale-100 xl:py-12">
           <Image src={logo} alt="logo" className="h-12 w-auto lg:h-20 " />
           <h2 className="font-Raleway text-3xl sm:text-4xl lg:text-5xl">Asesoría Amura</h2>
-          <p className="text-base font-extralight sm:text-lg md:text-xl">
+          <p className="font-Julius_Sans_One text-base font-extralight sm:text-lg md:text-xl">
             Encontramos el perfume <br />
             perfecto para vos
           </p>
-          <button onClick={() => setOpen(true)} className="bg-[#3E191D] px-10 py-2 text-white transition duration-300 hover:bg-[#2b0f12] lg:px-16 lg:py-3">
+          <button onClick={() => setOpen(true)} className="font-Urbanist bg-[#3E191D] px-10 py-2 text-base text-white transition duration-300 hover:bg-[#2b0f12] lg:px-16 lg:py-3 lg:text-lg lg:tracking-widest">
             Consultar
           </button>
         </div>
