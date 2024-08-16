@@ -90,7 +90,7 @@ export const getPagesQuery = /* GraphQL */ `
 export const getBrandsQuery = /* GraphQL */ `
   query getBrands {
     site {
-      brands {
+      brands(first: 50) {
         edges {
           node {
             id

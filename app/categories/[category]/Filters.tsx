@@ -181,7 +181,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
           <button onClick={toggleFilters} className="font-Charm text-sm font-bold sm:text-lg md:text-xl">
             Filtros <span className="text-sm">▼</span>
           </button>
-          <p className="font-Charm text-wrap text-sm font-semibold sm:text-lg md:text-xl">Ayudame a encontrar mi aroma ⓘ</p>
+          <p className="text-wrap font-Charm text-sm font-semibold sm:text-lg md:text-xl">Ayudame a encontrar mi aroma ⓘ</p>
         </div>
         {showFilters && (
           <>
@@ -343,7 +343,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
           {showFilters && (
             <>
               {/*  desktop filters */}
-              <div className="sticky top-12 h-fit min-w-[240px] space-y-3  maxlg:hidden">
+              <div className="sticky top-14 h-fit min-w-[240px] space-y-3  maxlg:hidden">
                 {/* Coleccionesa */}
                 <h4 className=" mt-0 font-Julius_Sans_One text-[28px] font-light text-black">Colecciones</h4>
                 <div className="flex cursor-pointer items-center gap-3" onClick={loadall}>
@@ -396,7 +396,7 @@ export default function Filters({ items, category, brands }: { items: categoryIt
           )}
           {/* sort by */}
           {showFilters && (
-            <div className="sticky top-12 h-fit min-w-[200px] space-y-3 maxlg:hidden">
+            <div className="sticky top-14 h-fit min-w-[200px] space-y-3 maxlg:hidden">
               <h4 className=" mt-0 font-Julius_Sans_One text-[28px] font-light text-black">Ordenar por</h4>
               {sortBy.map((item: { label: string; key: string; active: boolean }, index: number) => (
                 <div className="flex cursor-pointer items-center gap-3" key={index} onClick={() => loadFilteredProducts(item, index, 'sortBy', '')}>
