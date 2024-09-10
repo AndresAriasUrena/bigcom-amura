@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { VercelMenu as Menu } from 'lib/bigcommerce/types';
+import { VercelMenu as Menu } from '@/lib/bigcommerce/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -18,14 +18,11 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
     <li>
       <Link
         href={item.path}
-        className={clsx(
-          'block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm',
-          {
-            'text-black dark:text-neutral-300': active
-          }
-        )}
+        className={clsx('block p-2 text-lg underline-offset-4 hover:underline md:inline-block md:text-sm hover:text-neutral-300', {
+          'text-neutral-300': active,
+        })}
       >
-        {item.title}
+        {item.name}
       </Link>
     </li>
   );
@@ -38,7 +35,7 @@ export default function FooterMenu({ menu }: { menu: Menu[] }) {
     <nav>
       <ul>
         {menu.map((item: Menu) => {
-          return <FooterMenuItem key={item.title} item={item} />;
+          return <FooterMenuItem key={item.name} item={item} />;
         })}
       </ul>
     </nav>

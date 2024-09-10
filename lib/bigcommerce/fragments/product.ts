@@ -104,6 +104,7 @@ const productFragment = /* GraphQL */ `
   fragment product on Product {
     id
     entityId
+    addToCartUrl
     sku
     upc
     name
@@ -132,6 +133,15 @@ const productFragment = /* GraphQL */ `
       metaKeywords
     }
     path
+    categories {
+      edges {
+        node {
+          id
+          name
+          path
+        }
+      }
+    }
     prices {
       price {
         ...MoneyFields
@@ -162,6 +172,14 @@ const productFragment = /* GraphQL */ `
         }
       }
     }
+    customFields {
+      edges {
+        node {
+          name
+          value
+        }
+      }
+    }
   }
   fragment ImageFields on Image {
     url: url(width: 1080)
@@ -171,6 +189,7 @@ const productFragment = /* GraphQL */ `
     value
     currencyCode
   }
+
   ${productOptionFragment}
   ${productVariantFragment}
 `;

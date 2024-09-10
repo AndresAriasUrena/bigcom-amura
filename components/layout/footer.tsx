@@ -1,123 +1,92 @@
-import { getMenu } from 'lib/bigcommerce';
 import Image from 'next/image';
-import { CiFacebook, CiInstagram } from 'react-icons/ci';
-import { FaWhatsapp } from 'react-icons/fa';
-
 import logo from '../../assets/completeLogo.png';
+import facebook from '@/assets/icons/facebook.png';
+import instagram from '@/assets/icons/instagram.png';
+import whatsapp from '@/assets/icons/whatsapp.png';
+import Link from 'next/link';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
-  const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
-  const menu = await getMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
     <>
-      <footer className="text-md hidden flex-col  bg-black/90 px-[7%] text-white md:flex dark:text-neutral-400">
-        <div className="flex py-[8%]">
-          <div className="grid w-[60%] grid-cols-3 gap-3">
-            <ul className="space-y-3 font-extralight">
-              <li className="pb-10">AROMAS</li>
+      <footer className="gap-8">
+        <div className="grid bg-black/90 px-[5%] pb-6 pt-8 md:grid-cols-2 xl:grid-cols-3">
+          {/* left */}
+          <div className="grid grid-cols-2">
+            <ul className="space-y-2 font-Julius_Sans_One text-lg font-extralight xl:text-xl">
+              <li className="pb-6">AROMAS</li>
 
-              <li>AMBAR</li>
-              <li>FRESCO</li>
-              <li>AHUMADO</li>
-              <li>FLORAL</li>
-              <li>GOURMET</li>
-              <li>ORIENTAL</li>
+              <li>
+                <Link href="/">AMBAR</Link>
+              </li>
+              <li>
+                <Link href="/">FRESCO</Link>
+              </li>
+              <li>
+                <Link href="/">AHUMADO</Link>
+              </li>
+              <li>
+                <Link href="/">FLORAL</Link>
+              </li>
+              <li>
+                <Link href="/">GOURMET</Link>
+              </li>
+              <li>
+                <Link href="/">ORIENTAL</Link>
+              </li>
             </ul>
-            <ul className="space-y-3 font-extralight">
-              <li className="pb-10">COLECCIONES</li>
+            <ul className="space-y-2 font-Julius_Sans_One text-lg font-extralight xl:text-xl">
+              <li className="pb-6">COLECCIONES</li>
 
-              <li>ÁRABES</li>
-              <li>ALTA</li>
-              <li>GAMA</li>
-              <li>DISEÑADOR</li>
-            </ul>
-            <ul className="space-y-3 font-extralight">
-              <li className="pb-10">SERVICIOS</li>
-
-              <li>ENTREGAS</li>
-              <li>DEVOLUCIONES Y</li>
-              <li>CAMBIOS</li>
-              <li>POLÍTICA DE PRIVACIDAD</li>
+              <li>
+                <Link href="/">ÁRABES</Link>
+              </li>
+              <li>
+                <Link href="/">ALTA</Link>
+              </li>
+              <li>
+                <Link href="/">GAMA</Link>
+              </li>
+              <li>
+                <Link href="/">DISEÑADOR</Link>
+              </li>
             </ul>
           </div>
-
-          <div className="flex h-full w-2/4 items-center justify-center">
-            <Image src={logo} alt="logo" className="h-[200px] w-auto" />
+          {/* center */}
+          <div className="flex justify-center xl:items-center">
+            <Image src={logo} alt="logo" className="h-[200px] w-auto lg:h-[260px]" />
           </div>
-
-          <div className="w-1/4 space-y-7  text-end font-extralight uppercase">
-            <div className="flex justify-end gap-3">
-              <CiFacebook size={35} />
-              <CiInstagram size={35} />
-              <FaWhatsapp size={35} />
+          {/* right */}
+          <div className="space-y-7 text-end font-extralight uppercase md:col-span-2 xl:col-span-1">
+            <div className="flex justify-center gap-3 xl:justify-end">
+              <Link href="/">
+                <img src={facebook.src} alt="" />
+              </Link>
+              <Link href="/">
+                <img src={instagram.src} alt="" />
+              </Link>
+              <Link href="/">
+                <img src={whatsapp.src} alt="" />
+              </Link>
             </div>
-            <p> oficentro ejecutivola sabana</p>
-            <p className="leading-7">
-              {' '}
-              horarios: <br />
-              lunes a viernes 9am — 7pm <br />
-              Sábado 8am — 6pm{' '}
-            </p>
-            <p> 6107-3851</p>
+            <div className="space-y-4 text-center text-xl tracking-widest xl:text-right">
+              <p>oficentro ejecutivola sabana</p>
+              <p className="leading-8">
+                horarios: <br />
+                lunes a viernes 9am — 7pm <br />
+                Sábado 8am — 6pm{' '}
+              </p>
+              <p className="tracking-[8px]">6107-3851</p>
+            </div>
           </div>
         </div>
-        <p className="pb-3 text-center text-neutral-400">
-          &copy; {copyrightDate} {copyrightName}
-          {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
-        </p>
-      </footer>
-      <footer className="lg:text-md flex flex-col bg-black/90 px-[7%] py-[8%] text-sm  text-white md:flex lg:hidden lg:flex-row dark:text-neutral-400">
-        <div className="flex  w-full flex-col items-center justify-center ">
-          <Image src={logo} alt="logo" className="h-[200px] w-auto" />
-        </div>
-        <div className="flex w-full flex-col  items-center space-y-7 text-center font-extralight uppercase lg:w-1/4">
-          <div className="flex justify-end gap-3">
-            <CiFacebook size={35} />
-            <CiInstagram size={35} />
-            <FaWhatsapp size={35} />
-          </div>
-          <p> oficentro ejecutivola sabana</p>
-          <p className="leading-7">
-            {' '}
-            horarios: <br />
-            lunes a viernes 9am — 7pm <br />
-            Sábado 8am — 6pm{' '}
-          </p>
-          <p> 6107-3851</p>
-        </div>
-        <div className="grid w-full grid-cols-3 gap-3 py-10">
-          <ul className="space-y-3 font-extralight">
-            <li className="pb-10">AROMAS</li>
-
-            <li>AMBAR</li>
-            <li>FRESCO</li>
-            <li>AHUMADO</li>
-            <li>FLORAL</li>
-            <li>GOURMET</li>
-            <li>ORIENTAL</li>
-          </ul>
-          <ul className="space-y-3  font-extralight">
-            <li className="pb-10">COLECCIONES</li>
-
-            <li>ÁRABES</li>
-            <li>ALTA</li>
-            <li>GAMA</li>
-            <li>DISEÑADOR</li>
-          </ul>
-          <ul className="space-y-3 font-extralight">
-            <li className="pb-10">SERVICIOS</li>
-
-            <li>ENTREGAS</li>
-            <li>DEVOLUCIONES Y</li>
-            <li>CAMBIOS</li>
-            <li>POLÍTICA DE PRIVACIDAD</li>
-          </ul>
+        <div className="bg-c3 py-3 text-center text-white/25">
+          <p>© 2023 Todos Los Derechos Reservados</p>
         </div>
       </footer>
     </>

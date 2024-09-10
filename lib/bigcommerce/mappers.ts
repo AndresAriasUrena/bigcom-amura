@@ -1,22 +1,5 @@
-import { BigCommerceSortKeys, VercelSortKeys, vercelToBigCommerceSortKeys } from 'lib/constants';
-import {
-  BigCommerceCart,
-  BigCommerceCheckout,
-  BigCommerceCollection,
-  BigCommercePage,
-  BigCommerceProduct,
-  BigCommerceProductOption,
-  BigCommerceProductVariant,
-  CartCustomItem,
-  DigitalOrPhysicalItem,
-  VercelCart,
-  VercelCartItem,
-  VercelCollection,
-  VercelPage,
-  VercelProduct,
-  VercelProductOption,
-  VercelProductVariant
-} from './types';
+import { BigCommerceSortKeys, VercelSortKeys, vercelToBigCommerceSortKeys } from '../constants';
+import { BigCommerceCart, BigCommerceCheckout, BigCommerceCollection, BigCommercePage, BigCommerceProduct, BigCommerceProductOption, BigCommerceProductVariant, CartCustomItem, DigitalOrPhysicalItem, VercelCart, VercelCartItem, VercelCollection, VercelPage, VercelProduct, VercelProductOption, VercelProductVariant } from './types';
 
 type ProductsList = { productId: number; productData: BigCommerceProduct }[];
 
@@ -24,7 +7,7 @@ const vercelFromBigCommerceLineItems = (lineItems: BigCommerceCart['lineItems'])
   const { physicalItems, digitalItems, customItems } = lineItems;
   const cartItemMapper = ({ entityId, quantity, productEntityId }: DigitalOrPhysicalItem | CartCustomItem) => ({
     merchandiseId: productEntityId ? productEntityId.toString() : entityId.toString(),
-    quantity
+    quantity,
   });
 
   return [physicalItems, digitalItems, customItems].flatMap((list) => list.map(cartItemMapper));
@@ -35,14 +18,11 @@ const bigCommerceToVercelOptions = (options: BigCommerceProductOption[]): Vercel
     return {
       id: option.entityId.toString(),
       name: option.displayName.toString(),
-      values: option.values ? option.values.edges.map(({ node: value }) => value.label) : []
+      values: option.values ? option.values.edges.map(({ node: value }) => value.label) : [],
     };
   });
 };
-const bigCommerceToVercelVariants = (
-  variants: BigCommerceProductVariant[],
-  productId: number
-): VercelProductVariant[] => {
+const bigCommerceToVercelVariants = (variants: BigCommerceProductVariant[], productId: number): VercelProductVariant[] => {
   return variants.map((variant) => {
     return {
       parentId: productId.toString(),
@@ -51,21 +31,17 @@ const bigCommerceToVercelVariants = (
       availableForSale: variant.isPurchasable,
       selectedOptions: variant.options?.edges.map(({ node: option }) => ({
         name: option.displayName ?? '',
-        value: option.values.edges.map(({ node }) => node.label)[0] ?? ''
+        value: option.values.edges.map(({ node }) => node.label)[0] ?? '',
       })) || [
         {
           name: '',
-          value: ''
-        }
+          value: '',
+        },
       ],
       price: {
-        amount:
-          variant.prices?.price.value.toString() ||
-          variant.prices?.priceRange.max.value.toString() ||
-          '0',
-        currencyCode:
-          variant.prices?.price.currencyCode || variant.prices?.priceRange.max.currencyCode || ''
-      }
+        amount: variant.prices?.price.value.toString() || variant.prices?.priceRange.max.value.toString() || '0',
+        currencyCode: variant.prices?.price.currencyCode || variant.prices?.priceRange.max.currencyCode || '',
+      },
     };
   });
 };
@@ -76,12 +52,10 @@ const bigCommerceToVercelProduct = (product: BigCommerceProduct): VercelProduct 
       url: img ? img.url : '',
       altText: img ? img.altText : '',
       width: 2048,
-      height: 2048
+      height: 2048,
     };
   };
-  const options = product.productOptions.edges.length
-    ? bigCommerceToVercelOptions(product.productOptions.edges.map((item) => item.node))
-    : [];
+  const options = product.productOptions.edges.length ? bigCommerceToVercelOptions(product.productOptions.edges.map((item) => item.node)) : [];
   const variants = product.variants.edges.length
     ? bigCommerceToVercelVariants(
         product.variants.edges.map((item) => item.node),
@@ -99,33 +73,154 @@ const bigCommerceToVercelProduct = (product: BigCommerceProduct): VercelProduct 
     options,
     priceRange: {
       maxVariantPrice: {
-        amount:
-          product.prices.priceRange.max.value.toString() ||
-          product.prices.price.value.toString() ||
-          '0',
-        currencyCode:
-          product.prices.priceRange.max.currencyCode || product.prices.price.currencyCode || ''
+        amount: product.prices.priceRange.max.value.toString() || product.prices.price.value.toString() || '0',
+        currencyCode: product.prices.priceRange.max.currencyCode || product.prices.price.currencyCode || '',
       },
       minVariantPrice: {
-        amount:
-          product.prices.priceRange.min.value.toString() ||
-          product.prices.price.value.toString() ||
-          '0',
-        currencyCode:
-          product.prices.priceRange.min.currencyCode || product.prices.price.currencyCode || ''
-      }
+        amount: product.prices.priceRange.min.value.toString() || product.prices.price.value.toString() || '0',
+        currencyCode: product.prices.priceRange.min.currencyCode || product.prices.price.currencyCode || '',
+      },
     },
     variants,
-    images: product.images
-      ? product.images.edges.map(({ node: img }) => createVercelProductImage(img))
-      : [],
+    images: product.images ? product.images.edges.map(({ node: img }) => createVercelProductImage(img)) : [],
     featuredImage: createVercelProductImage(product.defaultImage),
     seo: {
       title: product.seo.pageTitle || product.name,
-      description: product.seo.metaDescription || ''
+      description: product.seo.metaDescription || '',
     },
     tags: [product.seo.metaKeywords] || [],
-    updatedAt: product.createdAt.utc.toString()
+    updatedAt: product.createdAt.utc.toString(),
+    customFields: product.customFields,
+  };
+};
+
+const bigCommerceToVercelCartItems = (lineItems: BigCommerceCart['lineItems'], products: ProductsList) => {
+  const getItemMapper = (products: ProductsList, isCustomItem: boolean = false) => {
+    return (item: CartCustomItem | DigitalOrPhysicalItem): VercelCartItem => {
+      const vercelProductFallback = {
+        id: '',
+        handle: '',
+        availableForSale: false,
+        title: '',
+        description: '',
+        descriptionHtml: '',
+        options: [],
+        priceRange: {
+          maxVariantPrice: { amount: '', currencyCode: '' },
+          minVariantPrice: { amount: '', currencyCode: '' },
+        },
+        variants: [],
+        featuredImage: {
+          url: '',
+          altText: '',
+          width: 0,
+          height: 0,
+        },
+        images: [
+          {
+            url: '',
+            altText: '',
+            width: 0,
+            height: 0,
+          },
+        ],
+        seo: { title: '', description: '' },
+        tags: [],
+        updatedAt: '',
+      };
+      let product;
+      let selectedOptions;
+
+      if (isCustomItem) {
+        product = vercelProductFallback;
+        selectedOptions = [{ name: '', value: '' }];
+      } else {
+        const productData = products.filter(({ productId }) => productId === (item as DigitalOrPhysicalItem).productEntityId)[0]?.productData;
+
+        product = productData ? bigCommerceToVercelProduct(productData) : vercelProductFallback;
+        selectedOptions = (item as DigitalOrPhysicalItem).selectedOptions.map((option) => ({
+          name: option.name,
+          value: option.value || option.text || option.number?.toString() || option.fileName || '',
+        }));
+      }
+
+      return {
+        id: item.entityId.toString(), // NOTE: used as lineId || lineItemId
+        quantity: item.quantity,
+        cost: {
+          totalAmount: {
+            amount: item.extendedListPrice.value.toString() || item.listPrice.value.toString() || '0',
+            currencyCode: item.extendedListPrice.currencyCode || item.listPrice.currencyCode || '',
+          },
+        },
+        merchandise: {
+          id: isCustomItem ? item.entityId.toString() : (item as DigitalOrPhysicalItem).variantEntityId!.toString(),
+          title: `${item.name}`,
+          selectedOptions,
+          // @ts-ignore
+          product,
+        },
+      };
+    };
+  };
+
+  const { physicalItems, digitalItems, customItems } = lineItems;
+  const areCustomItemsInCart = customItems.length > 0;
+  const line1 = physicalItems.map((item) => getItemMapper(products)(item));
+  const line2 = digitalItems.map((item) => getItemMapper(products)(item));
+  const line3 = areCustomItemsInCart ? customItems.map((item) => getItemMapper(products, areCustomItemsInCart)(item)) : [];
+
+  return [...line1, ...line2, ...line3];
+};
+
+const bigCommerceToVercelCart = (cart: BigCommerceCart, products: ProductsList, checkout: BigCommerceCheckout, checkoutUrl?: string): VercelCart => {
+  return {
+    id: cart.entityId,
+    checkoutUrl: checkoutUrl ?? '',
+    cost: {
+      subtotalAmount: {
+        amount: checkout.subtotal.value.toString(),
+        currencyCode: checkout.subtotal.currencyCode,
+      },
+      totalAmount: {
+        amount: checkout.grandTotal.value.toString(),
+        currencyCode: checkout.grandTotal.currencyCode,
+      },
+      totalTaxAmount: {
+        amount: checkout.taxTotal.value.toString(),
+        currencyCode: checkout.taxTotal.currencyCode,
+      },
+    },
+    lines: bigCommerceToVercelCartItems(cart.lineItems, products),
+    totalQuantity: cart.lineItems.totalQuantity,
+  };
+};
+
+const bigCommerceToVercelCollection = (collection: BigCommerceCollection): VercelCollection => {
+  if (!collection) {
+    return {
+      handle: '',
+      title: '',
+      description: '',
+      seo: {
+        title: '',
+        description: '',
+      },
+      updatedAt: '',
+      path: '',
+    };
+  }
+
+  return {
+    handle: collection.entityId.toString() || collection.name,
+    title: collection.name,
+    description: collection.description,
+    seo: {
+      title: collection.seo.pageTitle,
+      description: collection.seo.metaDescription,
+    },
+    updatedAt: new Date().toISOString(),
+    path: `/search${collection.path}`,
   };
 };
 
@@ -145,162 +240,14 @@ const bigCommerceToVercelProducts = (products: BigCommerceProduct[]) => {
   return reshapedProducts;
 };
 
-const bigCommerceToVercelCartItems = (
-  lineItems: BigCommerceCart['lineItems'],
-  products: ProductsList
-) => {
-  const getItemMapper = (products: ProductsList, isCustomItem: boolean = false) => {
-    return (item: CartCustomItem | DigitalOrPhysicalItem): VercelCartItem => {
-      const vercelProductFallback = {
-        id: '',
-        handle: '',
-        availableForSale: false,
-        title: '',
-        description: '',
-        descriptionHtml: '',
-        options: [],
-        priceRange: {
-          maxVariantPrice: { amount: '', currencyCode: '' },
-          minVariantPrice: { amount: '', currencyCode: '' }
-        },
-        variants: [],
-        featuredImage: {
-          url: '',
-          altText: '',
-          width: 0,
-          height: 0
-        },
-        images: [
-          {
-            url: '',
-            altText: '',
-            width: 0,
-            height: 0
-          }
-        ],
-        seo: { title: '', description: '' },
-        tags: [],
-        updatedAt: ''
-      };
-      let product;
-      let selectedOptions;
+export { bigCommerceToVercelCart, bigCommerceToVercelCollection, bigCommerceToVercelProduct, bigCommerceToVercelProducts, vercelFromBigCommerceLineItems };
 
-      if (isCustomItem) {
-        product = vercelProductFallback;
-        selectedOptions = [{ name: '', value: '' }];
-      } else {
-        const productData = products.filter(
-          ({ productId }) => productId === (item as DigitalOrPhysicalItem).productEntityId
-        )[0]?.productData;
-
-        product = productData ? bigCommerceToVercelProduct(productData) : vercelProductFallback;
-        selectedOptions = (item as DigitalOrPhysicalItem).selectedOptions.map((option) => ({
-          name: option.name,
-          value: option.value || option.text || option.number?.toString() || option.fileName || ''
-        }));
-      }
-
-      return {
-        id: item.entityId.toString(), // NOTE: used as lineId || lineItemId
-        quantity: item.quantity,
-        cost: {
-          totalAmount: {
-            amount:
-            item.extendedListPrice.value.toString() || item.listPrice.value.toString() || '0',
-            currencyCode: item.extendedListPrice.currencyCode || item.listPrice.currencyCode || ''
-          }
-        },
-        merchandise: {
-          id: isCustomItem ? item.entityId.toString() : (item as DigitalOrPhysicalItem).variantEntityId!.toString(),
-          title: `${item.name}`,
-          selectedOptions,
-          product
-        }
-      };
-    };
-  };
-
-  const { physicalItems, digitalItems, customItems } = lineItems;
-  const areCustomItemsInCart = customItems.length > 0;
-  const line1 = physicalItems.map((item) => getItemMapper(products)(item));
-  const line2 = digitalItems.map((item) => getItemMapper(products)(item));
-  const line3 = areCustomItemsInCart
-    ? customItems.map((item) => getItemMapper(products, areCustomItemsInCart)(item))
-    : [];
-
-  return [...line1, ...line2, ...line3];
-};
-
-const bigCommerceToVercelCart = (
-  cart: BigCommerceCart,
-  products: ProductsList,
-  checkout: BigCommerceCheckout,
-  checkoutUrl?: string
-): VercelCart => {
-  return {
-    id: cart.entityId,
-    checkoutUrl: checkoutUrl ?? '',
-    cost: {
-      subtotalAmount: {
-        amount: checkout.subtotal.value.toString(),
-        currencyCode: checkout.subtotal.currencyCode
-      },
-      totalAmount: {
-        amount: checkout.grandTotal.value.toString(),
-        currencyCode: checkout.grandTotal.currencyCode
-      },
-      totalTaxAmount: {
-        amount: checkout.taxTotal.value.toString(),
-        currencyCode: checkout.taxTotal.currencyCode
-      }
-    },
-    lines: bigCommerceToVercelCartItems(cart.lineItems, products),
-    totalQuantity: cart.lineItems.totalQuantity
-  };
-};
-
-const bigCommerceToVercelCollection = (collection: BigCommerceCollection): VercelCollection => {
-  if (!collection) {
-    return {
-      handle: '',
-      title: '',
-      description: '',
-      seo: {
-        title: '',
-        description: ''
-      },
-      updatedAt: '',
-      path: ''
-    };
-  }
-
-  return {
-    handle: collection.entityId.toString() || collection.name,
-    title: collection.name,
-    description: collection.description,
-    seo: {
-      title: collection.seo.pageTitle,
-      description: collection.seo.metaDescription
-    },
-    updatedAt: new Date().toISOString(),
-    path: `/search${collection.path}`
-  };
-};
-
-export {
-  bigCommerceToVercelCart, bigCommerceToVercelCollection, bigCommerceToVercelProduct,
-  bigCommerceToVercelProducts, vercelFromBigCommerceLineItems
-};
-
-export const vercelToBigCommerceSorting = (
-  isReversed: boolean,
-  sortKey?: string
-): keyof typeof BigCommerceSortKeys | null => {
+export const vercelToBigCommerceSorting = (isReversed: boolean, sortKey?: string): keyof typeof BigCommerceSortKeys | null => {
   const VercelSorting: Record<string, string> = {
     RELEVANCE: 'RELEVANCE',
     BEST_SELLING: 'BEST_SELLING',
     CREATED_AT: 'CREATED_AT',
-    PRICE: 'PRICE'
+    PRICE: 'PRICE',
   };
 
   if (!sortKey || VercelSorting[sortKey] === undefined) {
@@ -308,9 +255,7 @@ export const vercelToBigCommerceSorting = (
   }
 
   if (sortKey === VercelSortKeys.PRICE) {
-    return isReversed
-      ? vercelToBigCommerceSortKeys.PRICE_ON_REVERSE
-      : vercelToBigCommerceSortKeys.PRICE;
+    return isReversed ? vercelToBigCommerceSortKeys.PRICE_ON_REVERSE : vercelToBigCommerceSortKeys.PRICE;
   }
 
   return vercelToBigCommerceSortKeys[sortKey as keyof typeof VercelSortKeys];
@@ -325,9 +270,9 @@ export const bigCommerceToVercelPageContent = (page: BigCommercePage): VercelPag
     bodySummary: page.plainTextSummary ?? '',
     seo: {
       title: page.seo.pageTitle,
-      description: page.seo.metaDescription
+      description: page.seo.metaDescription,
     },
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 };

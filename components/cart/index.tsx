@@ -1,4 +1,4 @@
-import { getCart } from 'lib/bigcommerce';
+import { getCart } from '@/lib/bigcommerce';
 import { cookies } from 'next/headers';
 import CartModal from './modal';
 
@@ -9,5 +9,6 @@ export default async function Cart() {
   if (cartId) {
     cart = await getCart(cartId);
   }
+
   return <CartModal cart={cart} />;
 }

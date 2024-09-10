@@ -1,5 +1,5 @@
 'use client';
-import { SortFilterItem as SortFilterItemType } from 'lib/constants'; // Renamed import for clarity
+import { SortFilterItem as SortFilterItemType } from '@/lib/constants'; // Renamed import for clarity
 import { useState } from 'react';
 import FilterItemDropdown from './dropdown';
 import { FilterItem } from './item';
@@ -21,12 +21,7 @@ function FilterItemList({ list }: { list: ListItem[] }) {
   return (
     <>
       {list.map((item: ListItem, i) => (
-        <FilterItem
-          key={i}
-          item={item}
-          isSelected={selectedItem === ('path' in item ? item.path : item.slug)}
-          onSelect={handleSelect}
-        />
+        <FilterItem key={i} item={item} isSelected={selectedItem === ('path' in item ? item.path : item.slug)} onSelect={handleSelect} />
       ))}
     </>
   );

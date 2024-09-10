@@ -1,81 +1,79 @@
 'use client';
-import { AddToCart } from 'components/cart/add-to-cart';
-import Price from 'components/price';
-import Prose from 'components/prose';
-import { VercelProduct as Product } from 'lib/bigcommerce/types';
-import Image from 'next/image';
-import { useState } from 'react';
-import elem from '../../assets/Group 11.png';
-import p1 from '../../assets/p1.png';
-import p2 from '../../assets/p2.png';
-import p3 from '../../assets/p3.png';
-import p4 from '../../assets/p4.png';
-import p5 from '../../assets/p5.png';
 
-export function ProductDescription({ product }: { product: Product }) {
-  const options: string[] = [p1, p2, p3, p4, p5].map((path) => path.src);
-  const [selectedImage, setSelectedImage] = useState(options[0]); // Set initial selected image URL
+import { useState } from 'react';
+import { AddToCart } from '@/components/cart/add-to-cart';
+import Price from '@/components/price';
+import Prose from '@/components/prose';
+import { VercelProduct as Product } from '@/lib/bigcommerce/types';
+import Image from 'next/image';
+import elem from '../../assets/Group 11.png';
+
+export function ProductDescription({ product, productURL }: { product: Product; productURL: { decodedProductId: string; category: string } }) {
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const notasarr = product.customFields.edges[0].node.value.split(',');
+  const finalnotas = notasarr.map((nota) => nota.replace(/ /g, ''));
+
+  const acordes = product.customFields.edges[1].node.value.split(',');
+
+  const handleChange = (event: any) => {
+    const quantity = Number(event.target.value);
+    setSelectedQuantity(quantity);
+  };
 
   return (
     <>
       <div className="flex flex-col gap-2 text-start text-white">
         <div className="space-y-2">
-          <h1 className="text-[30px] font-bold text-white lg:text-3xl">{product.title}</h1>
-          {product.descriptionHtml ? (
-            <Prose className="font-sm py-3 font-light text-white" html={product.descriptionHtml} />
-          ) : null}
-          <div className="text-2xl">
-            <Price
-              amount={product.priceRange.maxVariantPrice.amount}
-              currencyCode={product.priceRange.maxVariantPrice.currencyCode}
-            />
+          <h1 className="font-Raleway text-[30px] font-bold text-white lg:text-3xl maxlg:mt-8">{product.title}</h1>
+          {product.description ? <Prose className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl" html={product.description} /> : null}
+          <div className="font-Raleway text-2xl">
+            <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} />
           </div>
         </div>
         <div>
-          <div className="flex gap-2">
-            <select className="border-2 border-white bg-transparent px-[4%] py-3 ">
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                100 ml
-              </option>
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                200 ml
-              </option>
-              <option value="" className="bg-gray-700 px-[4%] py-3 text-white ">
-                500 ml
-              </option>
-            </select>
-            <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+          <div className="mt-6 flex gap-2">
+            <div className="relative">
+              <span className="absolute bottom-0 right-4 top-0 my-auto flex items-center text-xs">▼</span>
+
+              <select value={selectedQuantity} onChange={handleChange} className="appearance-none border-2 border-white bg-transparent py-3 pl-6 pr-8 font-Julius_Sans_One">
+                <option value="1" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  1
+                </option>
+                <option value="2" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  2
+                </option>
+                <option value="3" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  3
+                </option>
+                <option value="4" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  4
+                </option>
+                <option value="5" className="bg-gray-700 px-[4%] py-3 text-white ">
+                  5
+                </option>
+              </select>
+            </div>
+            <AddToCart variants={product.variants} availableForSale={product.availableForSale} quantity={selectedQuantity} productURL={productURL} />
           </div>
-          <Image src={elem} alt="none" className="w-full pt-3 lg:w-3/4" />
+          <Image src={elem} alt="none" className="mt-5 w-full max-w-[450px] " />
         </div>
 
         <div>
-          <p>{product?.options ? '' : 'Notas principales:'}</p>
-          <div className="grid w-[80%] grid-cols-5 gap-[2px] lg:w-[60%]">
-            {options.map((img, index) => (
-              <div
-                key={index}
-                className={`cursor-pointer ${selectedImage === img ? 'border-2 border-white' : ''}`}
-                onClick={() => setSelectedImage(img)}
-              >
-                <Image src={img} alt={`image-${index}`} />
-              </div>
+          <p className="font-Raleway text-xl">Notas Principales:</p>
+          <div className="mt-2 flex flex-wrap gap-1">
+            {finalnotas.map((nota, index) => (
+              <img src={`/notas/${nota}.png`} className="size-16" alt={nota} key={index} />
             ))}
           </div>
         </div>
 
         <div>
-          <p>Acordes:</p>
-          <div className="flex flex-col gap-2 space-x-[1px] lg:flex-row lg:gap-3">
-            <button className="w-[80%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">
-              intenso
-            </button>
-            <button className="w-[65%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">
-              sensual
-            </button>
-            <button className="w-[50%] border-2 border-white bg-[#DDDDDD]/50 px-[10%] py-1 lg:w-full">
-              cálido
-            </button>
+          <p className="font-Raleway text-xl">Acordes:</p>
+          <div className="mt-2 flex gap-1 maxlg:max-w-[240px] maxlg:flex-col">
+            <button className="font-Charm block grow border-2  border-white bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[40%] maxlg:w-full">{acordes[0]}</button>
+            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[35%] maxlg:w-4/5">{acordes[1]}</button>
+            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[25%] maxlg:w-2/3">{acordes[2]}</button>
           </div>
         </div>
       </div>

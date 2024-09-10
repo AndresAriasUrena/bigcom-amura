@@ -20,7 +20,7 @@ export type VercelPage = {
 };
 
 export type VercelMenu = {
-  title: string;
+  name: string;
   path: string;
 };
 
@@ -63,6 +63,9 @@ export type VercelProduct = {
   seo: VercelSEO;
   tags: string[];
   updatedAt: string;
+  customFields: {
+    edges: { node: { name: string; value: string } }[];
+  };
 };
 
 export type VercelProductOption = {
@@ -214,7 +217,7 @@ export type BigCommerceProductOperation = {
     };
   };
   variables: {
-    productId: number;
+    productId: string;
   };
 };
 
@@ -234,14 +237,7 @@ export type BigCommerceEntityIdOperation = {
     site: {
       route: {
         node: {
-          __typename:
-            | 'Product'
-            | 'Category'
-            | 'Brand'
-            | 'NormalPage'
-            | 'ContactPage'
-            | 'RawHtmlPage'
-            | 'BlogIndexPage';
+          __typename: 'Product' | 'Category' | 'Brand' | 'NormalPage' | 'ContactPage' | 'RawHtmlPage' | 'BlogIndexPage';
           entityId: number;
         };
       };
@@ -268,18 +264,13 @@ export type BigCommerceRecommendationsOperation = {
 export type BigCommerceSearchProductsOperation = {
   data: {
     site: {
-      search: {
-        searchProducts: {
-          products: Connection<BigCommerceProduct>;
-        };
-      };
+      products: Connection<BigCommerceProduct>;
     };
   };
   variables: {
     filters: {
       searchTerm: string;
     };
-    sort: string | null;
   };
 };
 
@@ -359,16 +350,85 @@ export type BigCommerceCollectionsOperation = {
   };
 };
 
-export type BigCommercePageOperation = {
+// --------------------------------------------
+type SEO = {
+  metaDescription: string;
+  metaKeywords: string;
+  pageTitle: string;
+};
+
+type ProductImage = {
+  altText: string;
+  url: string;
+};
+
+export type Product = {
+  id: string;
+  addToCartUrl: string;
+  availabilityV2: {
+    status: string;
+  };
+  description: string;
+  images: {
+    edges: {
+      node: ProductImage;
+    }[];
+  };
+  name: string;
+  path: string;
+  seo: SEO;
+  sku: string;
+};
+
+type Category = {
+  id: string;
+  entityId: number;
+  name: string;
+  path: string;
+  description: string;
+  defaultImage: ProductImage | null;
+  seo: SEO;
+  products: {
+    collectionInfo: {
+      totalItems: number;
+    };
+    edges: {
+      node: Product;
+    }[];
+  };
+};
+
+export type BigCommerceCategoryPageOperation = {
   data: {
     site: {
-      content: {
-        page: BigCommercePage;
-      };
+      category: Category;
     };
   };
-  variables: { entityId: number };
+  variables: {
+    entityId: number;
+  };
 };
+
+export type giftProducts = {
+  node: Product;
+};
+
+export type CollectionProducts = {
+  designer: Category;
+  highEnd: Category;
+  arabs: Category;
+};
+
+export type categoryItems = {
+  collectionInfo: {
+    totalItems: number;
+  };
+  edges: {
+    node: Product;
+  }[];
+};
+
+// --------------------------------------------
 
 export type BigCommercePagesOperation = {
   data: {
@@ -380,13 +440,15 @@ export type BigCommercePagesOperation = {
   };
 };
 
+// export type getBrands = any;
+
 export type BigCommerceCheckout = {
   subtotal: BigCommerceMoney;
   grandTotal: BigCommerceMoney;
   taxTotal: BigCommerceMoney;
 };
 
-export type BigCommerceCategoryWithId = Omit<BigCommerceCollection, 'description' | 'seo' | 'path'>;
+export type BigCommerceCategoryWithId = Omit<BigCommerceCollection, 'description' | 'seo'>;
 
 export type BigCommerceSEO = {
   pageTitle: string;
@@ -397,6 +459,11 @@ export type BigCommerceSEO = {
 export type BigCommerceCollection = {
   entityId: number;
   name: string;
+  productCount: number;
+  image: {
+    urlOriginal: string;
+    altText: string;
+  } | null;
   path: string;
   description: string;
   seo: BigCommerceSEO;
@@ -564,10 +631,13 @@ export type BigCommerceProductOption = {
 
 export type BigCommerceProduct = {
   id: number;
+  addToCartUrl: string;
   entityId: number;
   sku: string;
   upc: string | null;
   name: string;
+  handle: string;
+  updatedAt: Date;
   brand: {
     name: string;
   } | null;
@@ -600,6 +670,9 @@ export type BigCommerceProduct = {
   };
   createdAt: {
     utc: Date;
+  };
+  customFields: {
+    edges: { node: { name: string; value: string } }[];
   };
   variants: Connection<BigCommerceProductVariant>;
   productOptions: Connection<BigCommerceProductOption>;

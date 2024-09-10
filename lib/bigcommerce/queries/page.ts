@@ -87,3 +87,17 @@ export const getPagesQuery = /* GraphQL */ `
   }
   ${pageContentFragment}
 `;
+export const getBrandsQuery = /* GraphQL */ `
+  query getBrands {
+    site {
+      brands(first: 50) {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
