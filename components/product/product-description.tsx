@@ -16,6 +16,8 @@ export function ProductDescription({ product, productURL }: { product: Product; 
 
   const acordes = product.customFields.edges[1].node.value.split(',');
 
+  console.log(product);
+
   const handleChange = (event: any) => {
     const quantity = Number(event.target.value);
     setSelectedQuantity(quantity);
@@ -26,7 +28,7 @@ export function ProductDescription({ product, productURL }: { product: Product; 
       <div className="flex flex-col gap-2 text-start text-white">
         <div className="space-y-2">
           <h1 className="font-Raleway text-[30px] font-bold text-white lg:text-3xl maxlg:mt-8">{product.title}</h1>
-          {product.description ? <Prose className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl" html={product.description} /> : null}
+          {product.description ? <Prose className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl" html={product.descriptionHtml} /> : null}
           <div className="font-Raleway text-2xl">
             <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} />
           </div>
@@ -71,9 +73,9 @@ export function ProductDescription({ product, productURL }: { product: Product; 
         <div>
           <p className="font-Raleway text-xl">Acordes:</p>
           <div className="mt-2 flex gap-1 maxlg:max-w-[240px] maxlg:flex-col">
-            <button className="font-Charm block grow border-2  border-white bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[40%] maxlg:w-full">{acordes[0]}</button>
-            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[35%] maxlg:w-4/5">{acordes[1]}</button>
-            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[25%] maxlg:w-2/3">{acordes[2]}</button>
+            <button className="block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 font-Charm text-lg tracking-wider lg:w-[40%] maxlg:w-full">{acordes[0]}</button>
+            <button className="block grow border-2 border-white bg-[#DDDDDD]/50  p-2 font-Charm text-lg tracking-wider lg:w-[35%] maxlg:w-4/5">{acordes[1]}</button>
+            <button className="block grow border-2 border-white bg-[#DDDDDD]/50  p-2 font-Charm text-lg tracking-wider lg:w-[25%] maxlg:w-2/3">{acordes[2]}</button>
           </div>
         </div>
       </div>
