@@ -7,6 +7,8 @@ interface TextProps {
 }
 
 const Prose: FunctionComponent<TextProps> = ({ html, className }) => {
+  console.log("HTML passed to Prose component", html);
+
   return (
     <div
       className={clsx(

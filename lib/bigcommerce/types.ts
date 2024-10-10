@@ -52,6 +52,7 @@ export type VercelProduct = {
   title: string;
   description: string;
   descriptionHtml: string;
+  plainTextDescription?: string;
   options: VercelProductOption[];
   priceRange: {
     maxVariantPrice: VercelMoney;

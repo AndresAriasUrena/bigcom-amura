@@ -47,6 +47,8 @@ const bigCommerceToVercelVariants = (variants: BigCommerceProductVariant[], prod
 };
 
 const bigCommerceToVercelProduct = (product: BigCommerceProduct): VercelProduct => {
+  // console.log("Product before transformation:", product);
+
   const createVercelProductImage = (img: { url: string; altText: string }) => {
     return {
       url: img ? img.url : '',

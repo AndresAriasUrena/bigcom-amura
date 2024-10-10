@@ -86,7 +86,7 @@ export default async function Footer() {
           </div>
         </div>
         <div className="bg-c3 py-3 text-center text-white/25">
-          <p>© 2023 Todos Los Derechos Reservados</p>
+          <p>© 2024 Todos Los Derechos Reservados</p>
         </div>
       </footer>
     </>

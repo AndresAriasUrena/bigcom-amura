@@ -139,6 +139,8 @@ export async function getProduct(id: string) {
     },
   });
 
+  // console.log("Response from BigCommerce:", res.body.data.site.product); // Log the full response to inspect its structure
+
   return bigCommerceToVercelProduct(res.body.data.site.product);
 }
 

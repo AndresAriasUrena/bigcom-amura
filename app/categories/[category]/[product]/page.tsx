@@ -22,6 +22,11 @@ export default async function Page({ params }: { params: { product: string; cate
   const decodedProductId = decodeURIComponent(params.product);
   const product = await getProduct(decodedProductId);
 
+  // Log the plainTextDescription
+  console.log("plainTextDescription:", product.plainTextDescription);
+  console.log("Description:", product.description);
+  console.log("Product passed to ProductDescription:", product);
+
   let productJsonLd = {};
 
   if (product) {

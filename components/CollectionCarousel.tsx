@@ -12,7 +12,7 @@ import arrow from '../assets/icons/right-arrow.png';
 import { CollectionProducts } from '@/lib/bigcommerce/types';
 
 export function CollectionCarousel({ collections }: { collections: CollectionProducts }) {
-  const [tab, setTab] = useState('designer');
+  const [tab, setTab] = useState('highEnd');
   const [data, setData] = useState([]);
 
   const NextArrow = (props: any) => {
