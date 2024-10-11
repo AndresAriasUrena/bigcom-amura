@@ -32,13 +32,13 @@ export function ProductDescription({ product, productURL }: { product: Product; 
       <div className="flex flex-col gap-2 text-start text-white">
         <div className="space-y-2">
           <h1 className="font-Raleway text-[30px] font-bold text-white lg:text-3xl maxlg:mt-8">{product.title}</h1>
-          {/* {product.description ? <Prose className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl" html={product.description} /> : null} */}
-          {product.description ? (
+          {product.description ? <Prose className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl" html={product.descriptionHtml} /> : null}
+          {/* {product.description ? (
               <div
               className="font-sm py-3 font-Raleway font-light tracking-wider text-white lg:text-xl"
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
-            ) : null}
+            ) : null} */}
 
           <div className="font-Raleway text-2xl">
             <Price amount={product.priceRange.maxVariantPrice.amount} currencyCode={product.priceRange.maxVariantPrice.currencyCode} />
