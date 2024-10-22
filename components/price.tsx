@@ -18,6 +18,8 @@ const Price = ({
       style: 'currency',
       currency: currencyCode,
       currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 0,  // Ensure no decimal points
+      maximumFractionDigits: 0,  // Ensure no decimal points
     }).format(parseFloat(amount))}`}
     
     {/* Conditionally render the currency code if showCurrencyCode is true */}

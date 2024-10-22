@@ -83,7 +83,7 @@ async function RelatedProducts({ id, params }: { id: string; params: { product: 
 
   return (
     <div className="py-8">
-      <h2 className="py-12 pb-20 text-center text-3xl font-extralight uppercase  text-white lg:py-4 lg:pb-9">También te puede interesar</h2>
+      <h2 className="py-12 pb-20 text-center text-3xl font-Julius_Sans_One font-extralight uppercase  text-white lg:py-4 lg:pb-9">También te puede interesar</h2>
       <div className="w-full pb-10 pt-1">
         <Marquee autoFill={true}>
           {relatedProducts.map((product) => {

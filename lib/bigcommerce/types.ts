@@ -376,6 +376,11 @@ export type Product = {
     }[];
   };
   name: string;
+  prices?:{
+    price:{
+      value: number;
+    }
+  }
   path: string;
   seo: SEO;
   sku: string;

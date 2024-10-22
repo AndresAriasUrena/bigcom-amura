@@ -27,8 +27,10 @@ export default function Filters({ items, category, brands }: { items: categoryIt
   ]);
 
   const [sortBy, setSortBy] = useState([
-    { label: 'Bajo a alto', key: 'lth', active: false },
-    { label: 'De alto a bajo', key: 'htl', active: false },
+    { label: 'Menor a mayor precio', key: 'lth', active: false },
+    { label: 'Mayor a menor precio', key: 'htl', active: false },
+    { label: 'A a la Z', key: 'atoz', active: false },      // New option for A to Z sorting
+    { label: 'Z a la A', key: 'ztoa', active: false },      // New option for Z to A sorting
   ]);
 
   useEffect(() => {
@@ -145,6 +147,21 @@ export default function Filters({ items, category, brands }: { items: categoryIt
       if (item.key === 'htl') {
         // @ts-ignore
         products.products.sort((a, b) => b.node.prices.price.value - a.node.prices.price.value);
+      }
+       // Sort products alphabetically (A to Z)
+       if (typeof item !== 'string' && item.key === 'atoz') {
+        setProducts({
+          ...products,
+          products: [...products.products].sort((a, b) => a.node.name.localeCompare(b.node.name)),
+        });
+      }
+
+      // Sort products alphabetically (Z to A)
+      if (typeof item !== 'string' && item.key === 'ztoa') {
+        setProducts({
+          ...products,
+          products: [...products.products].sort((a, b) => b.node.name.localeCompare(a.node.name)),
+        });
       }
     }
     setToda(false);
@@ -379,14 +396,30 @@ export default function Filters({ items, category, brands }: { items: categoryIt
               </div>
             </>
           )}
-
           {/* cards */}
           {products.totalItems > 0 ? (
             <div className={`grid w-full gap-4 xs:grid-cols-2 md:grid-cols-3 ${showFilters ? 'lg:grid-cols-2 co2xl:grid-cols-3' : 'lg:grid-cols-3 co2xl:grid-cols-4'}`}>
               {products.products.map((item, index) => (
                 <div key={index}>
-                  <Link href={`/categories/${category}/${item.node.id}`} className="block h-full max-h-[358px] w-full rounded-md border p-4">
-                    {item.node.images.edges[0].node.url ? <img src={item.node.images.edges[0].node.url} className="size-full rounded-md object-cover" alt={item.node.images.edges[0].node.altText} /> : <div className="flex h-full min-h-[175px] items-center justify-center rounded-md border border-white/15 bg-black sm:min-h-[275px] lg:min-h-[400px]">No Image Found</div>}
+                  <Link href={`/categories/${category}/${item.node.id}`} className="flex flex-col h-full max-h-[358px] w-full rounded-md border p-4">
+                    {item.node.images.edges[0].node.url ? (
+                      <img
+                        src={item.node.images.edges[0].node.url}
+                        className="size-full rounded-md object-cover"
+                        alt={item.node.images.edges[0].node.altText}
+                      />
+                    ) : (
+                      <div className="flex h-full min-h-[175px] items-center justify-center rounded-md border border-white/15 bg-black sm:min-h-[275px] lg:min-h-[400px]">
+                        No Image Found
+                      </div>
+                    )}
+                    {/* Add product name and price below the image */}
+                    <div className="product-info mt-auto">
+                      <p className="text-md font-Julius_Sans_One text-gray-700">{item.node.name}</p>
+                      <p className="text-sm text-gray-600 font-Judson">
+                        ₡{item.node.prices?.price.value.toLocaleString()}
+                      </p>
+                    </div>
                   </Link>
                 </div>
               ))}

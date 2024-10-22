@@ -8,6 +8,45 @@ import { VercelProduct as Product } from '@/lib/bigcommerce/types';
 import Image from 'next/image';
 import elem from '../../assets/Group 11.png';
 
+const acordeColors: { [key: string]: string } = {
+  "Cacao": "#4B2E1E",
+  "Café": "#6F4E37",
+  "Ambar": "#FFBF00",
+  "Balsámico": "#8A5E34",
+  "Cuero": "#6A3D2B",
+  "Canela": "#D2691E",
+  "Oud": "#523A28",
+  "Amielado": "#FFD700",
+  "Amaderado": "#A0522D",
+  "Ahumado": "#708090",
+  "Afrutado": "#FF6347",
+  "Atalcado": "#E6E6FA",
+  "Rosa": "#FF69B4",
+  "Rosas": "#792021",
+  "Lavanda": "#8787C6",
+  "Cítrico": "#FFD700",
+  "Iris": "#5A4FCF",
+  "Chocolate": "#3D2B1F",
+  "Violeta": "#8A2BE2",
+  "Floral": "#FFB6C1",
+  "Dulce": "#FFA07A",
+  "Tabaco": "#8B4513",
+  "Vainilla": "#F3E5AB",
+  "Terroso": "#7B3F00",
+  "Verde": "#228B22",
+  "Floral Blanco": "#FFFAF0",
+  "Ron": "#8B3A62",
+  "Caramelo": "#AF6E4D",
+  "Fresco": "#00CED1",
+  "Leñoso": "#A0522D",
+  "Marina": "#4682B4",
+  "Almizclado": "#C0C0C0",
+  "default": "#D3D3D3"
+};
+
+const getAcordeColor = (acorde: string) => acordeColors[acorde] || acordeColors["default"];
+
+
 export function ProductDescription({ product, productURL }: { product: Product; productURL: { decodedProductId: string; category: string } }) {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
@@ -20,11 +59,16 @@ export function ProductDescription({ product, productURL }: { product: Product; 
   const notasarr = product.customFields.edges[0].node.value.split(',');
   const finalnotas = notasarr.map((nota) => nota.replace(/ /g, ''));
 
-  const acordes = product.customFields.edges[1].node.value.split(',');
+  const acordes = product.customFields.edges[1].node.value.split(',').map(acorde => acorde.trim());
+  console.log(acordes)
 
   const handleChange = (event: any) => {
     const quantity = Number(event.target.value);
     setSelectedQuantity(quantity);
+  };
+
+  const gradientStyle = {
+    background: `linear-gradient(to right, ${getAcordeColor(acordes[0])} 25%, ${getAcordeColor(acordes[1])} 50%, ${getAcordeColor(acordes[2])} 75%)`
   };
 
   return (
@@ -92,46 +136,27 @@ export function ProductDescription({ product, productURL }: { product: Product; 
             ))}
           </div>
         </div>
-
-        {/* <div>
-          <p className="font-Raleway text-xl">Acordes:</p>
-          <div className="mt-2 flex gap-1 maxlg:max-w-[240px] maxlg:flex-col">
-            <button className="font-Charm block grow border-2  border-white bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[40%] maxlg:w-full">{acordes[0]}</button>
-            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[35%] maxlg:w-4/5">{acordes[1]}</button>
-            <button className="font-Charm block grow border-2 border-white  bg-[#DDDDDD]/50 p-2 text-lg tracking-wider lg:w-[25%] maxlg:w-2/3">{acordes[2]}</button>
-          </div>
-        </div> */}
         <div>
           <p className="font-Raleway text-xl">Acordes:</p>
-          <div className="mt-2 flex flex-wrap gap-1">
-            {/* First Button - Largest (3/6 of the width) */}
-            <button
-              className="font-Charm block border-2 border-[#8B4513] p-2 text-lg tracking-wider bg-gradient-to-r from-[#F5DEB3] to-[#DEB887] text-[#8B4513]"
-              style={{ flex: '3 1 0%' }} /* Takes up 3/6 */
-            >
-              {acordes[0]}
-            </button>
-            
-            {/* Second Button - Medium (2/6 of the width) */}
-            <button
-              className="font-Charm block border-2 border-[#8B4513] p-2 text-lg tracking-wider bg-gradient-to-r from-[#DEB887] to-[#D2B48C] text-[#8B4513]"
-              style={{ flex: '2 1 0%' }} /* Takes up 2/6 */
-            >
-              {acordes[1]}
-            </button>
+          <div className="mt-2 flex flex-wrap">
+            <div className="flex w-full h-12 w-[80%]" style={gradientStyle}>
+              {/* Botón 1 - Acorde 1 */}
+              <button className="font-Charm h-full p-2 text-lg tracking-wider text-white" style={{ flex: '2 1 0%' }}>
+                {acordes[0]}
+              </button>
 
-            {/* Third Button - Smallest (1/6 of the width) */}
-            <button
-              className="font-Charm block border-2 border-[#8B4513] p-2 text-lg tracking-wider bg-gradient-to-r from-[#D2B48C] to-[#C5A16F] text-[#8B4513]"
-              style={{ flex: '1 1 0%' }} /* Takes up 1/6 */
-            >
-              {acordes[2]}
-            </button>
+              {/* Botón 2 - Acorde 2 */}
+              <button className="font-Charm h-full p-2 text-lg tracking-wider text-white" style={{ flex: '2 1 0%' }}>
+                {acordes[1]}
+              </button>
+
+              {/* Botón 3 - Acorde 3 */}
+              <button className="font-Charm h-full p-2 text-lg tracking-wider text-white" style={{ flex: '2 1 0%' }}>
+                {acordes[2]}
+              </button>
+            </div>
           </div>
         </div>
-
-
-
       </div>
     </>
   );

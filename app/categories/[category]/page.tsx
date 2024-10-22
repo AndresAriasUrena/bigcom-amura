@@ -14,6 +14,8 @@ export default async function Page({ params }: { params: { category: string } })
   const page = await getPage(params.category);
   const brands = await getBrands();
 
+  // console.log(page.products.edges[0].node);
+
   return (
     <>
       <div className="aspect-video h-[240px] w-full sm:h-[320px] md:h-[375px] lg:h-[475px] xl:h-[500px] co2xl:h-[570px] 2xl:h-[640px] 3xl:h-[740px] max:h-[1000px]">

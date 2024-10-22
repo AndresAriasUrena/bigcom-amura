@@ -7,7 +7,7 @@ const page = async () => {
   return (
     <div className="">
       <div className="mx-auto ">
-        <h1 className="py-16 text-center text-3xl font-normal uppercase lg:text-4xl">Ideas para Regalar</h1>
+        <h1 className="py-16 text-center text-3xl font-Julius_Sans_One uppercase lg:text-4xl">Ideas para Regalar</h1>
         <GiftsCarousel gifts={gifts.products.edges} />
       </div>
     </div>

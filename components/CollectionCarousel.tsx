@@ -93,13 +93,14 @@ export function CollectionCarousel({ collections }: { collections: CollectionPro
             // @ts-ignore
             <Link href={'/categories' + collections[tab].path + item.node.id} className={''} key={index}>
               <div className="group relative">
-                <div className="mx-auto h-[600px] max-w-[90%] sm:max-w-[95%]">
+                <div className="mx-auto h-[450px] max-w-[90%] sm:max-w-[95%]">
                   <img src={item.node.images.edges[0].node.url} alt="gift image" className="mx-auto h-full w-full  object-cover" />
-                  <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-black/50 duration-300 sm:max-w-[95%] ">
-                    <div className="w-full px-6 py-4 lg:h-[144px]">
-                      <h3 className="font-Julius_Sans_One text-lg font-extralight uppercase md:text-xl lg:text-2xl">{item.node.brand.name}</h3>
+                  <div className="absolute bottom-0 left-0 right-0 mx-auto flex max-w-[90%] items-center justify-center bg-gradient-to-t from-black/50 to-transparent via-black/50 duration-300 sm:max-w-[95%] ">
+                    <div className="w-full px-6 py-4 lg:h-[100px]">
+                      {/* <h3 className="font-Julius_Sans_One text-lg font-extralight uppercase md:text-xl lg:text-2xl">{item.node.brand.name}</h3> */}
                       <p className="font-Charm mt-2 truncate text-base font-normal lg:text-lg xl:text-xl">{item.node.name}</p>
-                      <p className="font-Judson mt-2 truncate text-base font-normal lg:text-lg">{item.node.prices.price.formatted}</p>
+                      {/* <p className="font-Judson mt-2 truncate text-base font-normal lg:text-lg">{item.node.prices.price.formatted}</p> */}
+                      <p className="font-Judson mt-2 truncate text-base font-normal lg:text-lg">₡{parseInt(item.node.prices.price.formatted.replace(/₡|,/g, '')).toLocaleString()}</p>
                     </div>
                   </div>
                 </div>
